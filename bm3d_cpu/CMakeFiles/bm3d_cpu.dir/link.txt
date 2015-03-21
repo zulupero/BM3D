@@ -1,1 +1,0 @@
-/usr/bin/c++    -g -std=c++0x -Wall -Wextra -Werror    CMakeFiles/bm3d_cpu.dir/main.cpp.o  -o bm3d_cpu -rdynamic /home/cuenat/BM3D/install_opencv/lib/libopencv_highgui.so /home/cuenat/BM3D/install_opencv/lib/libopencv_core.so /home/cuenat/BM3D/install_opencv/lib/libopencv_imgcodecs.so -Wl,-rpath,/home/cuenat/BM3D/install_opencv/lib 
