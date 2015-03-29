@@ -17,7 +17,11 @@ void ImgHelper::transform2D(Mat* image)
         Size s = planes[i].size();
         cout << "NORMAL: "<<s.width << "," << s.height << std::endl;
         planes[i].convertTo(planes[i], CV_32FC1);
+        for(int k = 0; k< 5; ++k) cout << planes[i].at<float>(0,k) <<",";
+        cout << endl;
         dct(planes[i], outplanes[i]);
+        for(int k = 0; k< 5; ++k) cout << outplanes[i].at<float>(0,k) <<",";
+        cout << endl;
     }
 
     merge(outplanes, *image);
@@ -25,37 +29,6 @@ void ImgHelper::transform2D(Mat* image)
 
 void ImgHelper::transform2DCuda(Mat* image)
 {
-    /*for(int i=0; i<10; ++i)
-    {
-        for(int k =0; k<10; ++k)
-        {
-            cout << image->at<float>(i,k) << ",";
-        }
-        cout << endl;
-    }
-    cout << endl;*/
-
-    //vector<cufftReal> array;
-    //array.assign(image->datastart, image->dataend);
-    //for(int i=0; i<10; ++i) cout << array[i] << ",";
-    //cout << endl;
-    //Size s = image->size();
-    //ImgHelperCuda::transform2D((cufftReal*)image->data, s.width, s.height);
-    //Mat* m = new Mat(array);
-    //m->copyTo(*image);
-    //delete m;
-
-    for(int i=0; i<10; ++i)
-    {
-        for(int k =0; k<10; ++k)
-        {
-            cout << image->at<float>(i,k) << ",";
-        }
-        cout << endl;
-    }
-    cout << endl;
-
-
     vector<Mat> planes;
     split(*image, planes);
 
@@ -65,52 +38,34 @@ void ImgHelper::transform2DCuda(Mat* image)
         Size s = planes[i].size();
         cout << "CUDA: " << s.width << "," << s.height << std::endl;
         planes[i].convertTo(planes[i], CV_32FC1);
-        //vector<cufftReal> array;
-        //array.assign(planes[i].datastart, planes[i].dataend);
-        //for(int i=0; i<10; ++i) cout << array[i] << ",";
-        //cout << endl;
-        //ImgHelperCuda::transform2D(&array[0], s.width, s.height);
 
-        cufftReal* data =  (cufftReal*)malloc(s.width * s.height *sizeof(cufftReal));
-        for(int n = 0; n < s.width; ++n)
-        {
-            for(int k= 0; k < s.height; ++k)
-            {
-                data[n*s.width+ k] = planes[i].at<float>(n,k);
-            }
-        }
 
-        ImgHelperCuda::transform2D(data, s.width, s.height);
-        //planes[i] = Mat(2, s.width * s.height, CV_32FC1, (float*)&array[0]);
+        int N1 = 8;
+        //cufftReal* data =  (cufftReal*)malloc(N1 * N1 * sizeof(cufftReal));
+        float* data =  (cufftReal*)malloc(N1 * N1 * sizeof(float));
+        std::vector<float> array;
+        array.assign((float*)planes[i].datastart, (float*)planes[i].dataend);
+        //data = (cufftReal*)&array[0];
+        data = &array[0];
 
-        for(int i=0; i<10; ++i)
-        {
-            cout << data[i] << ",";
-        }
-        cout << endl;
+        //int outX = 0;
+        //int outY = 0;
+        cout << "FORWARD" << endl;
+        //cufftComplex* out = ImgHelperCuda::Transform2D(data, N1, N1, &outX, &outY);
+        //cufftComplex* out = ImgHelperCuda::Transform2DTest(data, N1, N1);
+        cufftComplex* out= (cufftComplex*)malloc( N1 * N1 * sizeof(cufftComplex));
+        ImgHelperCuda::fft_device(data, out, N1, N1, N1 * sizeof(float), N1 * sizeof(cufftComplex));
+        cout << endl << endl << "INVERSE" << endl;
+        //cufftReal* out2 = ImgHelperCuda::Inversetransform2D(out, outX, outY, &outX, &outY);
+        //cufftReal* out2 = ImgHelperCuda::InverseTransform2DTest(out, N1, N1);
+        float* out2 = (float*)malloc( N1 * N1 * sizeof(float));
+        ImgHelperCuda::fft_inverse_device(out, out2, N1, N1, N1 * sizeof(cufftComplex), N1 * sizeof(float));
 
-        for(int n = 0; n < s.width; ++n)
-        {
-            for(int k= 0; k < s.height; ++k)
-            {
-                planes[i].at<float>(n,k) = data[n*s.width+ k];
-            }
-        }
-
-        free(data);
+        int sizes[] = {N1, N1};
+        outplanes[i] = Mat(2, sizes, CV_32FC1, (float*)out2);
+        //free(data);
 
     }
-
-    for(int i=0; i<10; ++i)
-    {
-        for(int k =0; k<10; ++k)
-        {
-            cout << image->at<float>(i,k) << ",";
-        }
-        cout << endl;
-    }
-    cout << endl;
-
     merge(outplanes, *image);
 }
 

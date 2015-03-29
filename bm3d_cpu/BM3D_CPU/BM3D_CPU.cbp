@@ -35,6 +35,8 @@
 		<Unit filename="../bm.h" />
 		<Unit filename="../imghelper.cpp" />
 		<Unit filename="../imghelper.h" />
+		<Unit filename="../imghelpercuda.cu" />
+		<Unit filename="../imghelpercuda.h" />
 		<Unit filename="../main.cpp" />
 		<Extensions>
 			<code_completion />

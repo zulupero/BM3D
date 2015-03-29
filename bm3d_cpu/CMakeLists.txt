@@ -1,19 +1,30 @@
-cmake_minimum_required(VERSION 2.8)
-project (BM3D_CPU)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(bm3d_cpu)
 
+SET(CUDA_TOOLKIT_ROOT_DIR "/usr/local/cuda-6.5/")
+FIND_PACKAGE(CUDA REQUIRED)
 
+INCLUDE(FindCUDA)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++0x -Wall -Wextra -Werror")
-set(OPENCV "/home/cuenat/BM3D/install_opencv")
+INCLUDE_DIRECTORIES(/usr/local/cuda/include)
+set(OPENCV "/home/cuenat/BM3D/BM3D/install_opencv")
 set(INCLUDE_OPENCV "${OPENCV}/include")
 include_directories ( "${INCLUDE_OPENCV}")
 
-set(bm3d_cpu 
-    main.cpp )
+FILE(GLOB SOURCES "*.cu" "*.cpp" "*.c" "*.h")
+CUDA_ADD_EXECUTABLE(bm3d_cpu ${SOURCES})
 
-add_executable (bm3d_cpu ${bm3d_cpu})
+LIST(APPEND CMAKE_CXX_FLAGS "-g -std=c++0x  -ffast-math -Wall") 
+#-O3
 
-target_link_libraries(bm3d_cpu
+LIST(APPEND CUDA_NVCC_FLAGS --compiler-options -fno-strict-aliasing -lineinfo -use_fast_math -Xptxas -dlcm=cg)
+LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_20,code=sm_20)
+LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_30,code=sm_30)
+LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_35,code=sm_35)
+
+TARGET_LINK_LIBRARIES(bm3d_cpu 
+		      /usr/local/cuda-6.5/lib64/libcudart.so
+		      /usr/local/cuda-6.5/lib64/libcufft.so
 		      ${OPENCV}/lib/libopencv_highgui.so
 		      ${OPENCV}/lib/libopencv_core.so
 		      ${OPENCV}/lib/libopencv_imgcodecs.so
