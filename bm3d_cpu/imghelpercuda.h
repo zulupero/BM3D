@@ -13,6 +13,8 @@ class ImgHelperCuda
         static void ApplyHardThresholdFilter(cufftComplex* data);
         static cufftComplex* Transform2DTest(cufftReal* data, int x, int y);
         static cufftReal* InverseTransform2DTest(cufftComplex* data, int x, int y);
+        static void fft_device_double(double* src, cufftDoubleComplex* dst, int width, int height, int srcPitch, int dstPitch);
+        static void fft_inverse_device_double(cufftDoubleComplex* src, double* dst, int width, int height, int srcPitch, int dstPitch);
         static void fft_device(float* src, cufftComplex* dst, int width, int height, int srcPitch, int dstPitch);
         static void fft_inverse_device(cufftComplex* src, float* dst, int width, int height, int srcPitch, int dstPitch);
 

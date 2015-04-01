@@ -2,6 +2,10 @@
 #include <vector>
 #include <stdio.h>
 
+#include <cuda.h>
+#include <cuda_runtime_api.h>
+#include <cufft.h>
+
 #define gpuErrchk(ans) { gpuAssert((ans), __FILE__, __LINE__); }
 inline void ImgHelperCuda::gpuAssert(cudaError_t code, const char *file, int line, bool abort)
 {
@@ -40,24 +44,121 @@ void ImgHelperCuda::CheckCufftError(cufftResult result, const char* method)
     printf("\n");
 }
 
-void ImgHelperCuda::fft_device(float* src, cufftComplex* dst, int width, int height, int srcPitch, int dstPitch)
+void ImgHelperCuda::fft_device_double(double* src, cufftDoubleComplex* dst, int width, int height, int srcPitch, int dstPitch)
 {
     //src and dst are device pointers allocated with cudaMallocPitch
 
     //Convert them to plain pointers. No padding of rows.
-    for(int i = 0; i < 5; ++i)
+    for(int i = 0; i < 10; ++i)
     {
         printf("%f,", src[i]);
     }
     printf("\n");
 
-    float *plainSrc;
-    cufftComplex *plainDst;
+    double* plainSrc;
+    cufftDoubleComplex* plainDst;
 
-    size_t pitch;
-    gpuErrchk(cudaMallocPitch<float>(&plainSrc,&pitch,width * sizeof(float), height));
-    gpuErrchk(cudaMalloc<cufftComplex>(&plainDst, width * height * sizeof(cufftComplex)));
-    gpuErrchk(cudaMemcpy2D(plainSrc,pitch,src,width * sizeof(float),width * sizeof(float),height,cudaMemcpyHostToDevice));
+    size_t pitchSrc, pitchDst;
+    gpuErrchk(cudaMallocPitch(&plainSrc,&pitchSrc,width * sizeof(double), height));
+    gpuErrchk(cudaMallocPitch(&plainDst, &pitchDst, width * sizeof(cufftDoubleComplex), height));
+    gpuErrchk(cudaMemcpy2D(plainSrc,pitchSrc,src,width * sizeof(double),width * sizeof(double),height,cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemset2D(plainSrc, pitchSrc, 0, width * sizeof(double), height));
+    gpuErrchk(cudaMemset2D(plainDst, pitchDst, 0, width * sizeof(cufftDoubleComplex), height));
+
+    cufftHandle handle;
+    cufftResult r = cufftPlan2d(&handle,width,height,CUFFT_D2Z);
+    CheckCufftError(r, "cufftPlan2d");
+
+    r = cufftSetCompatibilityMode(handle,CUFFT_COMPATIBILITY_NATIVE);
+    CheckCufftError(r, "cufftSetCompatibilityMode");
+
+    r = cufftExecD2Z(handle,plainSrc,plainDst);
+    CheckCufftError(r, "cufftExecD2Z");
+    cudaThreadSynchronize ();
+
+    gpuErrchk(cudaMemcpy2D(dst,dstPitch,plainDst,width * sizeof(cufftDoubleComplex),width * sizeof(cufftDoubleComplex),height,cudaMemcpyDeviceToHost));
+
+    r = cufftDestroy(handle);
+    CheckCufftError(r, "cufftDestroy");
+
+    cudaFree(plainSrc);
+    cudaFree(plainDst);
+
+    for(int i = 0; i < 10; ++i)
+    {
+        printf("%f,", dst[i].x);
+    }
+    printf("\n");
+}
+
+void ImgHelperCuda::fft_inverse_device_double(cufftDoubleComplex* src, double* dst, int width, int height, int srcPitch, int dstPitch)
+{
+    //src and dst are device pointers allocated with cudaMallocPitch
+
+    //Convert them to plain pointers. No padding of rows.
+    for(int i = 0; i < 10; ++i)
+    {
+        printf("%f,", src[i].x);
+    }
+    printf("\n");
+
+    cufftDoubleComplex* plainSrc;
+    double* plainDst;
+
+    size_t pitchSrc, pitchDst;
+    gpuErrchk(cudaMallocPitch(&plainSrc,&pitchSrc,width * sizeof(cufftDoubleComplex), height));
+    gpuErrchk(cudaMallocPitch(&plainDst, &pitchDst, width * sizeof(double), height));
+    gpuErrchk(cudaMemcpy2D(plainSrc,pitchSrc,src,width * sizeof(cufftDoubleComplex),width * sizeof(cufftDoubleComplex),height,cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemset2D(plainSrc, pitchSrc, 0, width * sizeof(cufftDoubleComplex), height));
+    gpuErrchk(cudaMemset2D(plainDst, pitchDst, 0, width * sizeof(double), height));
+
+    cufftHandle handle;
+    cufftResult r = cufftPlan2d(&handle,width,height,CUFFT_Z2D);
+    CheckCufftError(r, "cufftPlan2d");
+
+    r = cufftSetCompatibilityMode(handle,CUFFT_COMPATIBILITY_NATIVE);
+    CheckCufftError(r, "cufftSetCompatibilityMode");
+
+    r = cufftExecZ2D(handle,plainSrc,plainDst);
+    CheckCufftError(r, "cufftExecZ2D");
+    cudaThreadSynchronize ();
+
+    gpuErrchk(cudaMemcpy2D(dst,dstPitch,plainDst,width * sizeof(double),width * sizeof(double),height,cudaMemcpyDeviceToHost));
+
+
+    r = cufftDestroy(handle);
+    CheckCufftError(r, "cufftDestroy");
+
+    cudaFree(plainSrc);
+    cudaFree(plainDst);
+
+    for(int i = 0; i < 10; ++i)
+    {
+        printf("%f,", dst[i]);
+    }
+    printf("\n");
+}
+
+void ImgHelperCuda::fft_device(float* src, cufftComplex* dst, int width, int height, int srcPitch, int dstPitch)
+{
+    //src and dst are device pointers allocated with cudaMallocPitch
+
+    //Convert them to plain pointers. No padding of rows.
+    for(int i = 0; i < 10; ++i)
+    {
+        printf("%f,", src[i]);
+    }
+    printf("\n");
+
+    float* plainSrc;
+    cufftComplex* plainDst;
+
+    size_t pitchSrc, pitchDst;
+    gpuErrchk(cudaMallocPitch<float>(&plainSrc,&pitchSrc,width * sizeof(float), height));
+    gpuErrchk(cudaMallocPitch<cufftComplex>(&plainDst, &pitchDst, width * sizeof(cufftComplex), height));
+    gpuErrchk(cudaMemcpy2D(plainSrc,pitchSrc,src,width * sizeof(float),width * sizeof(float),height,cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemset2D(plainSrc, pitchSrc, 0, width * sizeof(float), height));
+    gpuErrchk(cudaMemset2D(plainDst, pitchDst, 0, width * sizeof(cufftComplex), height));
 
     cufftHandle handle;
     cufftResult r = cufftPlan2d(&handle,width,height,CUFFT_R2C);
@@ -72,13 +173,13 @@ void ImgHelperCuda::fft_device(float* src, cufftComplex* dst, int width, int hei
 
     gpuErrchk(cudaMemcpy2D(dst,dstPitch,plainDst,width * sizeof(cufftComplex),width * sizeof(cufftComplex),height,cudaMemcpyDeviceToHost));
 
-   /* r = cufftDestroy(handle);
+    r = cufftDestroy(handle);
     CheckCufftError(r, "cufftDestroy");
 
     cudaFree(plainSrc);
-    cudaFree(plainDst);*/
+    cudaFree(plainDst);
 
-    for(int i = 0; i < 5; ++i)
+    for(int i = 0; i < 10; ++i)
     {
         printf("%f,", dst[i].x);
     }
@@ -90,7 +191,7 @@ void ImgHelperCuda::fft_inverse_device(cufftComplex* src, float* dst, int width,
     //src and dst are device pointers allocated with cudaMallocPitch
 
     //Convert them to plain pointers. No padding of rows.
-    for(int i = 0; i < 5; ++i)
+    for(int i = 0; i < 10; ++i)
     {
         printf("%f,", src[i].x);
     }
@@ -99,10 +200,12 @@ void ImgHelperCuda::fft_inverse_device(cufftComplex* src, float* dst, int width,
     cufftComplex* plainSrc;
     float* plainDst;
 
-    size_t pitch;
-    gpuErrchk(cudaMallocPitch<cufftComplex>(&plainSrc,&pitch,width * sizeof(cufftComplex), height));
-    gpuErrchk(cudaMalloc<float>(&plainDst, width * height * sizeof(float)));
-    gpuErrchk(cudaMemcpy2D(plainSrc,pitch,src,width * sizeof(cufftComplex),width * sizeof(cufftComplex),height,cudaMemcpyHostToDevice));
+    size_t pitchSrc, pitchDst;
+    gpuErrchk(cudaMallocPitch<cufftComplex>(&plainSrc,&pitchSrc,width * sizeof(cufftComplex), height));
+    gpuErrchk(cudaMallocPitch<float>(&plainDst, &pitchDst, width * sizeof(float), height));
+    gpuErrchk(cudaMemcpy2D(plainSrc,pitchSrc,src,width * sizeof(cufftComplex),width * sizeof(cufftComplex),height,cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemset2D(plainSrc, pitchSrc, 0, width * sizeof(cufftComplex), height));
+    gpuErrchk(cudaMemset2D(plainDst, pitchDst, 0, width * sizeof(float), height));
 
     cufftHandle handle;
     cufftResult r = cufftPlan2d(&handle,width,height,CUFFT_C2R);
@@ -117,14 +220,14 @@ void ImgHelperCuda::fft_inverse_device(cufftComplex* src, float* dst, int width,
 
     gpuErrchk(cudaMemcpy2D(dst,dstPitch,plainDst,width * sizeof(float),width * sizeof(float),height,cudaMemcpyDeviceToHost));
 
-    /*
+
     r = cufftDestroy(handle);
     CheckCufftError(r, "cufftDestroy");
-    */
-    //cudaFree(plainSrc);
-    //cudaFree(plainDst);
 
-    for(int i = 0; i < 5; ++i)
+    cudaFree(plainSrc);
+    cudaFree(plainDst);
+
+    for(int i = 0; i < 10; ++i)
     {
         printf("%f,", dst[i]);
     }
