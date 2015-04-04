@@ -8,15 +8,8 @@ class ImgHelperCuda
         ~ImgHelperCuda()
         {}
 
-        static cufftComplex* Transform2D(cufftReal* data, int x, int y, int* outX, int* outY);
-        static cufftReal* Inversetransform2D(cufftComplex* data, int x, int y, int* outX, int* outY);
-        static void ApplyHardThresholdFilter(cufftComplex* data);
-        static cufftComplex* Transform2DTest(cufftReal* data, int x, int y);
-        static cufftReal* InverseTransform2DTest(cufftComplex* data, int x, int y);
-        static void fft_device_double(double* src, cufftDoubleComplex* dst, int width, int height);
-        static void fft_inverse_device_double(cufftDoubleComplex* src, double* dst, int width, int height);
-        static void fft_device(float* src, cufftComplex* dst, int width, int height);
-        static void fft_inverse_device(cufftComplex* src, float* dst, int width, int height);
+        static void fft(float* src, cufftComplex* dst, int width, int height);
+        static void ifft(cufftComplex* src, float* dst, int width, int height);
 
     private:
         ImgHelperCuda();

@@ -36,38 +36,37 @@ void ImgHelper::transform2DCuda(Mat* image)
     for(size_t i= 0; i<planes.size(); ++i)
     {
         //Size s = planes[i].size();
-        planes[i].convertTo(planes[i], CV_64FC1);
+        planes[i].convertTo(planes[i], CV_32FC1);
 
         int N1 = 8;
         cout << "CUFFT: " << N1 << "," << N1 << std::endl;
         writeMatToFile(planes[i], "in.txt", N1, N1);
 
-        double* data = (double*)malloc( N1 * N1 * sizeof(double));
-        memset(data, 0, N1 * N1 * sizeof(double));
+        float* data = (float*)malloc( N1 * N1 * sizeof(float));
+        memset(data, 0, N1 * N1 * sizeof(float));
         for(int j=0; j< N1; ++j)
             for(int k=0; k< N1; ++k)
-                data[j* N1 + k] = planes[i].at<double>(j, k);
+                data[j* N1 + k] = planes[i].at<float>(j, k);
 
         writeMatToFile(data, "in_2.txt", N1, N1);
 
         cout << "FORWARD..." << endl;
-        cufftDoubleComplex* out= (cufftDoubleComplex*)malloc( N1 * ((N1/2)+1) * sizeof(cufftDoubleComplex));
-        ImgHelperCuda::fft_device_double(data, out, N1, N1);
+        cufftComplex* out= (cufftComplex*)malloc( N1 * ((N1/2)+1) * sizeof(cufftComplex));
+        ImgHelperCuda::fft(data, out, N1, N1);
 
         writeComplexMatToFile(out, "in_3.txt", N1, ((N1/2) + 1));
 
         cout << "INVERSE..." << endl;
-        double* out2 = (double*)malloc( N1 * N1 * sizeof(double));
-        ImgHelperCuda::fft_inverse_device_double(out, out2, N1, N1);
+        float* out2 = (float*)malloc( N1 * N1 * sizeof(float));
+        ImgHelperCuda::ifft(out, out2, N1, N1);
 
-        double divisor = N1 * N1;
+        float divisor = N1 * N1;
         for(int j=0; j< N1 * N1; ++j)
             out2[j] = out2[j] / divisor;
 
         writeMatToFile(out2, "in_4.txt", N1, N1);
         free(out2);
         free(out);
-
     }
     //merge(outplanes, *image);
 }
@@ -93,7 +92,7 @@ void ImgHelper::writeMatToFile(cv::Mat& m, const char* filename, int x, int y)
     fout.close();
 }
 
-void ImgHelper::writeMatToFile(double* data, const char* filename, int x, int y)
+void ImgHelper::writeMatToFile(float* data, const char* filename, int x, int y)
 {
     ofstream fout(filename);
 
@@ -114,7 +113,7 @@ void ImgHelper::writeMatToFile(double* data, const char* filename, int x, int y)
     fout.close();
 }
 
-void ImgHelper::writeComplexMatToFile(cufftDoubleComplex* data, const char* filename, int x, int y)
+void ImgHelper::writeComplexMatToFile(cufftComplex* data, const char* filename, int x, int y)
 {
     ofstream fout(filename);
 
