@@ -11,4 +11,6 @@ echo "FFT:"
 head in_3.txt
 echo "iFFT:"
 head in_4.txt
+echo "Window (40x40):"
+head in_5.txt
 
