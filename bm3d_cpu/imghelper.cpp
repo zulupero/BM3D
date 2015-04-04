@@ -1,8 +1,8 @@
 #include "imghelper.h"
 #include "imghelpercuda.h"
-#include <vector>
 #include <iostream>
-#include <cufft.h>
+
+#include <fstream>
 using namespace std;
 
 void ImgHelper::transform2D(Mat* image)
@@ -32,49 +32,107 @@ void ImgHelper::transform2DCuda(Mat* image)
     vector<Mat> planes;
     split(*image, planes);
 
-    vector<Mat> outplanes(planes.size());
+    //vector<Mat> outplanes(planes.size());
     for(size_t i= 0; i<planes.size(); ++i)
     {
-        Size s = planes[i].size();
-        cout << "CUDA: " << s.width << "," << s.height << std::endl;
-        planes[i].convertTo(planes[i], CV_32F);
+        //Size s = planes[i].size();
+        planes[i].convertTo(planes[i], CV_64FC1);
 
+        int N1 = 8;
+        cout << "CUFFT: " << N1 << "," << N1 << std::endl;
+        writeMatToFile(planes[i], "in.txt", N1, N1);
 
-        int N1 = 64;
-        //cufftReal* data =  (cufftReal*)malloc(N1 * N1 * sizeof(cufftReal));
-        float* data;//(cufftReal*)malloc(N1 * N1 * sizeof(float));
-        std::vector<float> array;
-        array.assign((float*)planes[i].datastart, (float*)planes[i].dataend);
-        //data = (cufftReal*)&array[0];
-        data = &array[0];
+        double* data = (double*)malloc( N1 * N1 * sizeof(double));
+        memset(data, 0, N1 * N1 * sizeof(double));
+        for(int j=0; j< N1; ++j)
+            for(int k=0; k< N1; ++k)
+                data[j* N1 + k] = planes[i].at<double>(j, k);
 
-        //int outX = 0;
-        //int outY = 0;
-        cout << "FORWARD" << endl;
-        //cufftComplex* out = ImgHelperCuda::Transform2D(data, N1, N1, &outX, &outY);
-        //cufftComplex* out = ImgHelperCuda::Transform2DTest(data, N1, N1);
-        cufftComplex* out= (cufftComplex*)malloc( N1 * N1 * sizeof(cufftComplex));
-        ImgHelperCuda::fft_device(data, out, N1, N1, N1 * sizeof(float), N1 * sizeof(cufftComplex));
-        cout << endl << endl << "INVERSE" << endl;
-        //cufftReal* out2 = ImgHelperCuda::Inversetransform2D(out, outX, outY, &outX, &outY);
-        //cufftReal* out2 = ImgHelperCuda::InverseTransform2DTest(out, N1, N1);
-        float* out2 = (float*)malloc( N1 * N1 * sizeof(double));
-        ImgHelperCuda::fft_inverse_device(out, out2, N1, N1, N1 * sizeof(cufftComplex), N1 * sizeof(float));
+        writeMatToFile(data, "in_2.txt", N1, N1);
 
-        float* out3 = (float*)malloc( N1 * N1 * sizeof(float));
-        for(int i=0;i< N1; ++i)
-            for(int k=0; k<N1;++k)
-                out3[i*N1+k]=out[i*N1+k].x;
+        cout << "FORWARD..." << endl;
+        cufftDoubleComplex* out= (cufftDoubleComplex*)malloc( N1 * ((N1/2)+1) * sizeof(cufftDoubleComplex));
+        ImgHelperCuda::fft_device_double(data, out, N1, N1);
 
-        int sizes[] = {N1, N1};
-        outplanes[i] = Mat(2, sizes, CV_32F, (float*)out3);
+        writeComplexMatToFile(out, "in_3.txt", N1, ((N1/2) + 1));
 
+        cout << "INVERSE..." << endl;
+        double* out2 = (double*)malloc( N1 * N1 * sizeof(double));
+        ImgHelperCuda::fft_inverse_device_double(out, out2, N1, N1);
+
+        double divisor = N1 * N1;
+        for(int j=0; j< N1 * N1; ++j)
+            out2[j] = out2[j] / divisor;
+
+        writeMatToFile(out2, "in_4.txt", N1, N1);
         free(out2);
-        free(out3);
         free(out);
 
     }
-    merge(outplanes, *image);
+    //merge(outplanes, *image);
+}
+
+void ImgHelper::writeMatToFile(cv::Mat& m, const char* filename, int x, int y)
+{
+    ofstream fout(filename);
+
+    if(!fout)
+    {
+        cout<<"File Not Opened"<<endl;  return;
+    }
+
+    for(int i=0; i<x; i++)
+    {
+        for(int j=0; j<y; j++)
+        {
+            fout<<m.at<double>(i,j)<<"\t";
+        }
+        fout<<endl;
+    }
+
+    fout.close();
+}
+
+void ImgHelper::writeMatToFile(double* data, const char* filename, int x, int y)
+{
+    ofstream fout(filename);
+
+    if(!fout)
+    {
+        cout<<"File Not Opened"<<endl;  return;
+    }
+
+    for(int i=0; i<x; i++)
+    {
+        for(int j=0; j<y; j++)
+        {
+            fout<<data[i*x+j]<<"\t";
+        }
+        fout<<endl;
+    }
+
+    fout.close();
+}
+
+void ImgHelper::writeComplexMatToFile(cufftDoubleComplex* data, const char* filename, int x, int y)
+{
+    ofstream fout(filename);
+
+    if(!fout)
+    {
+        cout<<"File Not Opened"<<endl;  return;
+    }
+
+    for(int i=0; i<y; i++)
+    {
+        for(int j=0; j<x; j++)
+        {
+            fout<<data[i*x+j].x<<"\t";
+        }
+        fout<<endl;
+    }
+
+    fout.close();
 }
 
 

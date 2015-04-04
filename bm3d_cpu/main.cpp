@@ -26,14 +26,14 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    Mat image2 = image.clone();
-    ImgHelper::transform2D(&image);
-    ImgHelper::transform2DCuda(&image2);
+    //Mat image2 = image.clone();
+    //ImgHelper::transform2D(&image);
+    ImgHelper::transform2DCuda(&image);
 
-    imwrite("../BM3D_images/test.jpg", image);
-    imwrite("../BM3D_images/test2.jpg", image2);
+    //imwrite("../BM3D_images/test.jpg", image);
+    //imwrite("../BM3D_images/test2.jpg", image2);
 
-    cout << "Frequency image created: test.jpg" << std::endl;
-    cout << "Frequency image created: test2.jpg" << std::endl;
+    //cout << "Frequency image created: test.jpg" << std::endl;
+    //cout << "Frequency image created: test2.jpg" << std::endl;
     return 0;
 }
