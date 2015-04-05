@@ -11,7 +11,7 @@ using namespace std;
 
 int main( int argc, char** argv )
 {
-    if( argc != 2)
+    if( argc < 2)
     {
      cout <<" Usage: display_image ImageToLoadAndDisplay" << endl;
      return -1;
@@ -26,14 +26,21 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    //Mat image2 = image.clone();
-    //ImgHelper::transform2D(&image);
-    ImgHelper::transform2DCuda(&image);
+    bool debug = false;
+    if(argc >= 3)
+    {
+        debug = true;
+    }
+
+    int WINDOW_SIZE = 40;
+
+    BlockMatch bm(WINDOW_SIZE);
+    bm.setDebugMode(debug);
+    bm.processWindowBM(&image);
+
+    //TEST
+    //ImgHelper::transform2DCuda(&image);
 
     //imwrite("../BM3D_images/test.jpg", image);
-    //imwrite("../BM3D_images/test2.jpg", image2);
-
-    //cout << "Frequency image created: test.jpg" << std::endl;
-    //cout << "Frequency image created: test2.jpg" << std::endl;
     return 0;
 }

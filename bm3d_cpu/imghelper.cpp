@@ -5,6 +5,11 @@
 #include <fstream>
 using namespace std;
 
+void ImgHelper::setDebugMode(bool debug)
+{
+    _debug = debug;
+}
+
 void ImgHelper::transform2D(Mat* image)
 {
 
@@ -27,18 +32,49 @@ void ImgHelper::transform2D(Mat* image)
     merge(outplanes, *image);
 }
 
-void ImgHelper::getWindowBuffer(int x, int y, float* buffer, Mat image, int wSize)
+void ImgHelper::getWindowBuffer(int x, int y, float* buffer, Mat image, int wSize, int* outX, int* outY)
 {
+    Size s = image.size();
     int offsetY = y;
     int offsetX = x;
+    int oldOffsetX = 0;
     for(int i=0; i< wSize * wSize; ++i)
     {
-        int mod = i % wSize;
-        offsetX += mod;
-        if(mod == 0) { ++offsetY; }
-        offsetX += x;
-        buffer[i] = image.at<float>(x+offsetX, offsetY);
+        buffer[i] = image.at<float>(offsetY, offsetX);
+        ++offsetX;
+        if(offsetX == wSize || offsetX == s.width)
+        {
+            oldOffsetX = offsetX;
+            if(offsetX == wSize) offsetX -= wSize;
+            else offsetX -= s.width;
+            ++offsetY;
+            if(offsetY == s.height) break;
+        }
     }
+    (*outX) = oldOffsetX;
+    (*outY) = offsetY;
+}
+
+void ImgHelper::transform2DCuda(float* imageBuffer, int n1)
+{
+    if(_debug) cout << "CUFFT: " << n1 << "," << n1 << std::endl;
+    if(_debug) writeMatToFile(imageBuffer, "in.txt", n1, n1);
+
+    if(_debug) cout << "FORWARD..." << endl;
+    cufftComplex* out= (cufftComplex*)malloc( n1 * ((n1/2)+1) * sizeof(cufftComplex));
+    ImgHelperCuda::fft(imageBuffer, out, n1, n1);
+
+    if(_debug) writeComplexMatToFile(out, "in_2.txt", n1, ((n1/2) + 1));
+
+    if(_debug) cout << "INVERSE..." << endl;
+    ImgHelperCuda::ifft(out, imageBuffer, n1, n1);
+
+    float divisor = n1 * n1;
+    for(int i=0; i< n1 * n1; ++i)
+        imageBuffer[i] = imageBuffer[i] / divisor;
+
+    if(_debug) writeMatToFile(imageBuffer, "in_4.txt", n1, n1);
+    free(out);
 }
 
 void ImgHelper::transform2DCuda(Mat* image)
@@ -51,12 +87,6 @@ void ImgHelper::transform2DCuda(Mat* image)
     {
         //Size s = planes[i].size();
         planes[i].convertTo(planes[i], CV_32FC1);
-
-        int WINDOW_SIZE = 40;
-        float* windowBuffer = (float*)malloc(WINDOW_SIZE * WINDOW_SIZE * sizeof(float));
-        //getWindowBuffer(0, 0, windowBuffer, planes[i], WINDOW_SIZE);
-        //writeMatToFile(windowBuffer, "in_5.txt", WINDOW_SIZE, WINDOW_SIZE);
-        free(windowBuffer);
 
         int N1 = 8;
         cout << "CUFFT: " << N1 << "," << N1 << std::endl;
@@ -75,12 +105,6 @@ void ImgHelper::transform2DCuda(Mat* image)
         ImgHelperCuda::fft(data, out, N1, N1);
 
         writeComplexMatToFile(out, "in_3.txt", N1, ((N1/2) + 1));
-
-        /*outplanes[i] = Mat(N1, N1, CV_32FC1);
-        for(int j=0; j< N1; ++j)
-            for(int k=0; k< N1; ++k)
-                outplanes[i].at<float>(j, k) = out[j*N1 + k].x;
-        */
 
         cout << "INVERSE..." << endl;
         float* out2 = (float*)malloc( N1 * N1 * sizeof(float));
@@ -110,7 +134,7 @@ void ImgHelper::writeMatToFile(cv::Mat& m, const char* filename, int x, int y)
     {
         for(int j=0; j<y; j++)
         {
-            fout<<m.at<double>(i,j)<<"\t";
+            fout<<m.at<float>(i,j)<<"\t";
         }
         fout<<endl;
     }

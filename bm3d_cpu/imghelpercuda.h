@@ -1,6 +1,7 @@
 #ifndef IMGHELPERCUDA_H
+#define IMGHELPERCUDA_H
 #include <cufft.h>
-#endif // IMGHELPERCUDA_H
+
 
 class ImgHelperCuda
 {
@@ -17,3 +18,4 @@ class ImgHelperCuda
         static void CheckCufftError(cufftResult result, const char* method);
         static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 };
+#endif // IMGHELPERCUDA_H
