@@ -1,8 +1,7 @@
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 
-#include "bm.h"
-#include "imghelper.h"
+#include "bm3d.h"
 
 #include <iostream>
 
@@ -32,15 +31,9 @@ int main( int argc, char** argv )
         debug = true;
     }
 
-    int WINDOW_SIZE = 40;
-
-    BlockMatch bm(WINDOW_SIZE);
-    bm.setDebugMode(debug);
-    bm.processWindowBM(&image);
-
-    //TEST
-    //ImgHelper::transform2DCuda(&image);
-
-    //imwrite("../BM3D_images/test.jpg", image);
+    BM3D bm3d;
+    bm3d.setDebugMode(debug);
+    bm3d.process(&image);
+        //imwrite("../BM3D_images/test.jpg", image);
     return 0;
 }

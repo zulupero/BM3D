@@ -2,10 +2,19 @@
 
 #include <vector>
 
-BlockMatch::BlockMatch(int windowSize) :
-_imgHelper(), _windowSize(windowSize), _debug(false)
+Block::Block(int x, int y, float* startPtr) :
+_x(x), _y(y), _startPtr(startPtr)
 {
-    _imgHelper.setDebugMode(_debug);
+}
+
+Block::~Block()
+{
+}
+
+
+BlockMatch::BlockMatch() :
+_imgHelper(), _debug(false)
+{
 }
 
 BlockMatch::~BlockMatch()
@@ -18,21 +27,7 @@ void BlockMatch::setDebugMode(bool debug)
     _imgHelper.setDebugMode(debug);
 }
 
-void BlockMatch::processWindowBM(cv::Mat* image)
+void BlockMatch::processBM(float* imageBuffer, int blockSize)
 {
-    std::vector<Mat> planes;
-    split(*image, planes);
-
-    //vector<Mat> outplanes(planes.
-
-    for(size_t i= 0; i<planes.size(); ++i)
-    {
-        planes[i].convertTo(planes[i], CV_32FC1);
-
-        float* windowBuffer = (float*)malloc(_windowSize * _windowSize * sizeof(float));
-        int outX, outY;
-        _imgHelper.getWindowBuffer(9, 0, windowBuffer, planes[i], _windowSize, &outX, &outY);
-        _imgHelper.transform2DCuda(windowBuffer, 8);
-        free(windowBuffer);
-    }
+    _imgHelper.transform2DCuda(imageBuffer, blockSize);
 }

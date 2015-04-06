@@ -33,6 +33,8 @@
 		</Compiler>
 		<Unit filename="../bm.cpp" />
 		<Unit filename="../bm.h" />
+		<Unit filename="../bm3d.cpp" />
+		<Unit filename="../bm3d.h" />
 		<Unit filename="../imghelper.cpp" />
 		<Unit filename="../imghelper.h" />
 		<Unit filename="../imghelpercuda.cu" />

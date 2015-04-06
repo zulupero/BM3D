@@ -10,7 +10,7 @@ using namespace cv;
 class ImgHelper
 {
     public:
-        ImgHelper()
+        ImgHelper() : _debug(false)
         {}
 
         ~ImgHelper()
