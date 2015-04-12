@@ -7,6 +7,7 @@ using namespace cv;
 
 #include "imghelper.h"
 
+
 class Block
 {
     public:

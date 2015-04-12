@@ -72,6 +72,36 @@ void ImgHelperCuda::fft(float* src, cufftComplex* dst, int width, int height)
     cudaFree(plainDst);
 }
 
+cufftComplex* ImgHelperCuda::fft2(float* src, int width, int height)
+{
+    float* plainSrc;
+    cufftComplex* plainDst;
+
+    gpuErrchk(cudaMalloc(&plainSrc, width * height * sizeof(float)));
+    gpuErrchk(cudaMalloc(&plainDst,  width * ((height/2) + 1) * sizeof(cufftComplex)));
+    gpuErrchk(cudaMemcpy(plainSrc,src,width * height * sizeof(float),cudaMemcpyHostToDevice));
+
+    cufftHandle handle;
+    cufftResult r = cufftPlan2d(&handle,width,height,CUFFT_R2C);
+    CheckCufftError(r, "cufftPlan2d");
+
+    r = cufftSetCompatibilityMode(handle,CUFFT_COMPATIBILITY_NATIVE);
+    CheckCufftError(r, "cufftSetCompatibilityMode");
+
+    r = cufftExecR2C(handle,plainSrc,plainDst);
+    CheckCufftError(r, "cufftExecR2C");
+    cudaThreadSynchronize ();
+
+    //gpuErrchk(cudaMemcpy(dst, plainDst, width * ((height/2) + 1) * sizeof(cufftComplex),cudaMemcpyDeviceToHost));
+
+    r = cufftDestroy(handle);
+    CheckCufftError(r, "cufftDestroy");
+
+    //cudaFree(plainSrc);
+    //cudaFree(plainDst);
+    return plainDst;
+}
+
 void ImgHelperCuda::ifft(cufftComplex* src, float* dst, int width, int height)
 {
     cufftComplex* plainSrc;
@@ -100,5 +130,55 @@ void ImgHelperCuda::ifft(cufftComplex* src, float* dst, int width, int height)
     cudaFree(plainSrc);
     cudaFree(plainDst);
 }
+
+float* ImgHelperCuda::ifft2(cufftComplex* src, int width, int height)
+{
+    cufftComplex* plainSrc;
+    float* plainDst;
+
+    //gpuErrchk(cudaMalloc(&plainSrc, width * ((height/2) + 1) * sizeof(cufftComplex)));
+    gpuErrchk(cudaMalloc(&plainDst, width * height * sizeof(float)));
+    //gpuErrchk(cudaMemcpy(plainSrc,src,width * ((height/2) + 1) * sizeof(cufftComplex),cudaMemcpyHostToDevice));
+
+    cufftHandle handle;
+    cufftResult r = cufftPlan2d(&handle,width,height,CUFFT_C2R);
+    CheckCufftError(r, "cufftPlan2d");
+
+    r = cufftSetCompatibilityMode(handle,CUFFT_COMPATIBILITY_NATIVE);
+    CheckCufftError(r, "cufftSetCompatibilityMode");
+
+    r = cufftExecC2R(handle,src,plainDst);
+    CheckCufftError(r, "cufftExecZ2D");
+    cudaThreadSynchronize ();
+
+    float* dst = (float*)malloc(width * height * sizeof(float));
+    gpuErrchk(cudaMemcpy(dst,plainDst,width * height * sizeof(float),cudaMemcpyDeviceToHost));
+
+    r = cufftDestroy(handle);
+    CheckCufftError(r, "cufftDestroy");
+
+    //cudaFree(plainSrc);
+    //cudaFree(plainDst);
+
+    return dst;
+}
+
+__global__
+void Process2DHT_intern(cufftComplex* src, int gamma)
+{
+    int i = blockIdx.x * blockDim.x + threadIdx.x + blockIdx.y * blockDim.y + threadIdx.y;
+    if(src[i].x <= gamma) src[i].x = 0;
+}
+
+
+void ImgHelperCuda::Process2DHT(cufftComplex* src, int gamma)
+{
+    dim3 blocks(5,5);
+    dim3 threads(8,8);
+    Process2DHT_intern<<<blocks,threads>>>(src, gamma);
+    cudaThreadSynchronize ();
+}
+
+
 
 

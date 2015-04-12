@@ -55,6 +55,16 @@ void ImgHelper::getWindowBuffer(int x, int y, float* buffer, Mat image, int wSiz
     (*outY) = offsetY;
 }
 
+cufftComplex* ImgHelper::fft(float* imageBuffer, int n1)
+{
+    return ImgHelperCuda::fft2(imageBuffer, n1, n1);
+}
+
+float* ImgHelper::ifft(cufftComplex* imageBuffer, int n1)
+{
+    return ImgHelperCuda::ifft2(imageBuffer, n1, n1);
+}
+
 void ImgHelper::transform2DCuda(float* imageBuffer, int n1)
 {
     if(_debug) cout << "CUFFT: " << n1 << "," << n1 << std::endl;
