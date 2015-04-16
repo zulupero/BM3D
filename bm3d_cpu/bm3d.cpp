@@ -17,16 +17,20 @@ BM3D::~BM3D()
 
 void BM3D::process(Mat* image)
 {
+    printf("\n-----START BM3D ----");
     processBasicHT(image);
     processFinalWien(image);
+    printf("\n-----END BM3D ----\n");
 }
 
 void BM3D::processFinalWien(Mat* image)
 {
+    printf("\n>>> FINAL ESTIMATE (WIEN)");
 }
 
 void BM3D::processBasicHT(Mat* image)
 {
+    printf("\n>>> BASIC ESTIMATE (HT)");
     ///Block mathing (create 3D array)
     std::vector<Mat> planes;
     split(*image, planes);
@@ -39,9 +43,11 @@ void BM3D::processBasicHT(Mat* image)
 
         float* windowBuffer = (float*)malloc(BM3D::WINDOW_SIZE * BM3D::WINDOW_SIZE * sizeof(float));
         int outX, outY;
+
+        printf("\nTreat window (0,0)");
         _imgHelper.getWindowBuffer(0, 0, windowBuffer, planes[i], BM3D::WINDOW_SIZE, &outX, &outY);
 
-        _bm.processBM(windowBuffer, BM3D::BLOCK_SIZE);
+        _bm.processBM(windowBuffer, BM3D::WINDOW_SIZE);
 
         free(windowBuffer);
     }

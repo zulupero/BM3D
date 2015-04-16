@@ -25,7 +25,6 @@ class BM3D
         void processFinalWien(Mat* image);
 
         const int WINDOW_SIZE = 40; //40x40 window
-        const int BLOCK_SIZE = 8;   //8x8 block
 };
 
 #endif // BM3D_H
