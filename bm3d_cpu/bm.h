@@ -30,7 +30,7 @@ class BlockMatch
         BlockMatch();
         ~BlockMatch();
 
-        void processBM(float* imageBuffer, int windowSize);
+        float** processBM(float* imageBuffer, int windowSize);
         void setDebugMode(bool debug);
 
     private:

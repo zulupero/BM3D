@@ -9,7 +9,7 @@ class ImgHelperCuda
         ~ImgHelperCuda()
         {}
 
-        static void ProcessBM(cufftComplex* src, int gamma, int windowSize, int blockSize);
+        static int16_t* ProcessBM(cufftComplex* src, int gamma, int windowSize, int blockSize);
         static void fft(float* src, cufftComplex* dst, int width, int height);
         static cufftComplex* fft2(float* src, int width, int height);
         static void ifft(cufftComplex* src, float* dst, int width, int height);

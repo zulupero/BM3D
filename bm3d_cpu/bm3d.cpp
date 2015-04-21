@@ -45,19 +45,16 @@ void BM3D::processBasicHT(Mat* image)
         int outX, outY;
 
         printf("\nTreat window (0,0)");
-        _imgHelper.getWindowBuffer(0, 0, windowBuffer, planes[i], BM3D::WINDOW_SIZE, &outX, &outY);
+        _imgHelper.getWindowBuffer(40, 40, windowBuffer, planes[i], BM3D::WINDOW_SIZE, &outX, &outY);
 
-        _bm.processBM(windowBuffer, BM3D::WINDOW_SIZE);
+        float** stackedBlocks = _bm.processBM(windowBuffer, BM3D::WINDOW_SIZE);
+
+        ///Filter (HT)
+
+        ///Calculate basic estimates
 
         free(windowBuffer);
     }
-
-
-    ///3D FFT
-
-    ///Filter (HT)
-
-    ///Calculate basic estimates
 }
 
 void BM3D::setDebugMode(bool debug)

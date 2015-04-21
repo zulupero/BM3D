@@ -199,10 +199,43 @@ void ProcessNorm_intern(cufftComplex* src, float* normVector, int windowSize, in
                 int pos2 = i2 * windowSize + j2;
 
                 //Verify the formula!!!
-                if(pos2 < (windowSize * windowSize)) norm += (src[pos2].x * src[pos2].x);
+                if(pos2 < (windowSize * windowSize) && src[pos2].x >= 0) norm += src[pos2].x;
+                else if(pos2 < (windowSize * windowSize) && src[pos2].x < 0) norm += -1 * src[pos2].x;
+                else {}
             }
         }
         normVector[outIndex] = norm;
+    }
+}
+
+__global__
+void ProcessMatching_intern(float* normVector, int16_t* matching, int size, int blockSize, int threshold)
+{
+    int i = (blockIdx.x * blockDim.x) + threadIdx.x;
+    if(i < size)
+    {
+        float reference = normVector[i];
+        int matchingIndex = i * blockSize;
+        int matchingOffset = 0;
+        matching[matchingIndex+matchingOffset] = i;
+        ++matchingOffset;
+        for(int k= 0; k< size; ++k)
+        {
+            if(k != i)
+            {
+                float diff = (reference - normVector[k]);
+                float distance = diff * diff;
+                distance = distance / (blockSize * blockSize);
+                if(distance < threshold)
+                {
+                    matching[matchingIndex+matchingOffset] = k;
+                    if(matchingOffset < blockSize -1) ++matchingOffset;
+                }
+                else
+                {
+                }
+            }
+        }
     }
 }
 
@@ -220,7 +253,7 @@ float* ImgHelperCuda::get(float* src, int width, int height)
     return dst;
 }
 
-void ImgHelperCuda::ProcessBM(cufftComplex* src, int gamma, int windowSize, int blockSize)
+int16_t* ImgHelperCuda::ProcessBM(cufftComplex* src, int gamma, int windowSize, int blockSize)
 {
     dim3 threadsPerBlock(ImgHelperCuda::HT_2D_THREADS, ImgHelperCuda::HT_2D_THREADS);
     dim3 numBlocks(windowSize/threadsPerBlock.x, windowSize/threadsPerBlock.y);
@@ -244,12 +277,29 @@ void ImgHelperCuda::ProcessBM(cufftComplex* src, int gamma, int windowSize, int 
     printf("\n\n----- BLOCKS VALUE (TEST) ------\n");
     for(int i= 0; i < sizeNormVector * sizeNormVector; ++i)
     {
-        printf("B%i: %f\n", (i+1), normVector_h[i] );
+        printf("B%i: %f\n", i, normVector_h[i] );
     }
     printf("\n");
 
     printf("\n\tMatching - 3D groups");
-    printf("\n");
+
+    int16_t* matching_d;
+    gpuErrchk(cudaMalloc(&matching_d, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t)));
+    gpuErrchk(cudaMemset(matching_d, -1, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t)));
+
+    dim3 threadsPerBlockMatching(sizeNormVector * sizeNormVector);
+    dim3 numBlocksMatching(1);
+
+    ProcessMatching_intern<<<numBlocksMatching,threadsPerBlockMatching>>>(normVector_d, matching_d, sizeNormVector * sizeNormVector, blockSize, 500);
+    cudaThreadSynchronize();
+
+    //only for test;
+    int16_t* matching = (int16_t*)malloc(sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t));
+    gpuErrchk(cudaMemcpy(matching,matching_d, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t), cudaMemcpyDeviceToHost));
+
+
+
+    return matching;
 }
 
 
