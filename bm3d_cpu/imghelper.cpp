@@ -55,6 +55,25 @@ void ImgHelper::getWindowBuffer(int x, int y, float* buffer, Mat image, int wSiz
     (*outY) = offsetY;
 }
 
+void ImgHelper::stackBlock(int x, int y, float* buffer, float* stackBlock, int bSize, int position)
+{
+    int offsetY = y;
+    int offsetX = x;
+
+    for(int i=0; i< bSize * bSize; ++i)
+    {
+        int index = offsetX * bSize + offsetY;
+        stackBlock[position] = buffer[index];
+        ++position;
+        ++offsetX;
+        if(offsetX - x >= bSize)
+        {
+            offsetX -= bSize;
+            ++offsetY;
+        }
+    }
+}
+
 cufftComplex* ImgHelper::fft(float* imageBuffer, int n1)
 {
     return ImgHelperCuda::fft2(imageBuffer, n1, n1);

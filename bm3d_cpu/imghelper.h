@@ -25,6 +25,7 @@ class ImgHelper
         void writeMatToFile(float* data, const char* filename, int x, int y);
         void writeComplexMatToFile(cufftComplex* data, const char* filename, int x, int y);
         void getWindowBuffer(int x, int y, float* buffer, Mat image, int wSize, int* outX, int* outY);
+        void stackBlock(int x, int y, float* buffer, float* stackBlock, int bSize, int position);
         void setDebugMode(bool debug);
 
     private:
