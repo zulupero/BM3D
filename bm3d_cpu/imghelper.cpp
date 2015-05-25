@@ -32,27 +32,49 @@ void ImgHelper::transform2D(Mat* image)
     merge(outplanes, *image);
 }
 
-void ImgHelper::getWindowBuffer(int x, int y, float* buffer, Mat image, int wSize, int* outX, int* outY)
+float* ImgHelper::getWindowBuffer(int x, int y, Mat image, int wSize)
 {
+    float* buffer = (float*)malloc(wSize * wSize * sizeof(float));
     Size s = image.size();
     int offsetY = y;
     int offsetX = x;
-    int oldOffsetX = 0;
+    //int oldOffsetX = 0;
     for(int i=0; i< wSize * wSize; ++i)
     {
         buffer[i] = image.at<float>(offsetY, offsetX);
         ++offsetX;
         if(offsetX == wSize || offsetX == s.width)
         {
-            oldOffsetX = offsetX;
+            //oldOffsetX = offsetX;
             if(offsetX == wSize) offsetX -= wSize;
             else offsetX -= s.width;
             ++offsetY;
             if(offsetY == s.height) break;
         }
     }
-    (*outX) = oldOffsetX;
-    (*outY) = offsetY;
+    return buffer;
+}
+
+float* ImgHelper::getWindowBuffer(int x, int y, float* source, int wSize, int width, int height)
+{
+    float* buffer = (float*)malloc(wSize * wSize * sizeof(float));
+    int offsetY = y;
+    int offsetX = x;
+    //int oldOffsetX = 0;
+    for(int i=0; i< wSize * wSize; ++i)
+    {
+        buffer[i] = source[offsetY * wSize + offsetX];
+        ++offsetX;
+        if(offsetX == wSize || offsetX == width)
+        {
+            //oldOffsetX = offsetX;
+            if(offsetX == wSize) offsetX -= wSize;
+            else offsetX -= width;
+            ++offsetY;
+            if(offsetY == height) break;
+        }
+    }
+    return buffer;
 }
 
 void ImgHelper::stackBlock(int x, int y, float* buffer, float* stackBlock, int bSize, int position)
@@ -74,6 +96,11 @@ void ImgHelper::stackBlock(int x, int y, float* buffer, float* stackBlock, int b
     }
 }
 
+void ImgHelper::Process3DHT(cufftComplex* src, int windowSize)
+{
+    ImgHelperCuda::Process3DHT(src, windowSize);
+}
+
 cufftComplex* ImgHelper::fft(float* imageBuffer, int n1)
 {
     return ImgHelperCuda::fft2(imageBuffer, n1, n1);
@@ -82,6 +109,16 @@ cufftComplex* ImgHelper::fft(float* imageBuffer, int n1)
 float* ImgHelper::ifft(cufftComplex* imageBuffer, int n1)
 {
     return ImgHelperCuda::ifft2(imageBuffer, n1, n1);
+}
+
+cufftComplex* ImgHelper::fft3D(float* imageBuffer, int n1)
+{
+    return ImgHelperCuda::fft3D(imageBuffer, n1, n1, n1);
+}
+
+float* ImgHelper::ifft3D(cufftComplex* imageBuffer, int n1)
+{
+    return ImgHelperCuda::ifft3D(imageBuffer, n1, n1, n1);
 }
 
 void ImgHelper::transform2DCuda(float* imageBuffer, int n1)

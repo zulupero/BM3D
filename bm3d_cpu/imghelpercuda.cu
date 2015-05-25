@@ -102,6 +102,36 @@ cufftComplex* ImgHelperCuda::fft2(float* src, int width, int height)
     return plainDst;
 }
 
+cufftComplex* ImgHelperCuda::fft3D(float* src, int x, int y, int z)
+{
+    float* plainSrc;
+    cufftComplex* plainDst;
+
+    gpuErrchk(cudaMalloc(&plainSrc, x * y * z * sizeof(float)));
+    gpuErrchk(cudaMalloc(&plainDst,  x * y * ((z/2) + 1) * sizeof(cufftComplex)));
+    gpuErrchk(cudaMemcpy(plainSrc,src, x * y * z * sizeof(float), cudaMemcpyHostToDevice));
+
+    cufftHandle handle;
+    cufftResult r = cufftPlan3d(&handle,x,y,z,CUFFT_R2C);
+    CheckCufftError(r, "cufftPlan3d");
+
+    r = cufftSetCompatibilityMode(handle,CUFFT_COMPATIBILITY_NATIVE);
+    CheckCufftError(r, "cufftSetCompatibilityMode");
+
+    r = cufftExecR2C(handle,plainSrc,plainDst);
+    CheckCufftError(r, "cufftExecR2C");
+    cudaThreadSynchronize ();
+
+    //gpuErrchk(cudaMemcpy(dst, plainDst, x * y * ((z/2) + 1) * sizeof(cufftComplex),cudaMemcpyDeviceToHost));
+
+    r = cufftDestroy(handle);
+    CheckCufftError(r, "cufftDestroy");
+
+    //cudaFree(plainSrc);
+    //cudaFree(plainDst);
+    return plainDst;
+}
+
 void ImgHelperCuda::ifft(cufftComplex* src, float* dst, int width, int height)
 {
     cufftComplex* plainSrc;
@@ -163,6 +193,38 @@ float* ImgHelperCuda::ifft2(cufftComplex* src, int width, int height)
     return dst;
 }
 
+float* ImgHelperCuda::ifft3D(cufftComplex* src, int x, int y, int z)
+{
+    //cufftComplex* plainSrc;
+    float* plainDst;
+
+    //gpuErrchk(cudaMalloc(&plainSrc, x * y * ((z/2) + 1) * sizeof(cufftComplex)));
+    gpuErrchk(cudaMalloc(&plainDst, x * y * z * sizeof(float)));
+    //gpuErrchk(cudaMemcpy(plainSrc,src,x * y * ((z/2) + 1) * sizeof(cufftComplex),cudaMemcpyHostToDevice));
+
+    cufftHandle handle;
+    cufftResult r = cufftPlan3d(&handle,x,y,z,CUFFT_C2R);
+    CheckCufftError(r, "cufftPlan3d");
+
+    r = cufftSetCompatibilityMode(handle,CUFFT_COMPATIBILITY_NATIVE);
+    CheckCufftError(r, "cufftSetCompatibilityMode");
+
+    r = cufftExecC2R(handle,src,plainDst);
+    CheckCufftError(r, "cufftExecZ2D");
+    cudaThreadSynchronize ();
+
+    float* dst = (float*)malloc(x * y * z * sizeof(float));
+    gpuErrchk(cudaMemcpy(dst,plainDst,x * y * z * sizeof(float),cudaMemcpyDeviceToHost));
+
+    r = cufftDestroy(handle);
+    CheckCufftError(r, "cufftDestroy");
+
+    //cudaFree(plainSrc);
+    //cudaFree(plainDst);
+
+    return dst;
+}
+
 
 //this call could be avoided if we add this logic into the method ""ProcessNorm_intern"
 __global__
@@ -184,7 +246,7 @@ void ProcessNorm_intern(cufftComplex* src, float* normVector, int windowSize, in
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     int j = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int pos = i * windowSize + j;
+    int pos = j * windowSize + i;
     if((pos < (windowSize * windowSize)) && (pos % blockSize == 0))
     {
         int outIndex = (pos /blockSize) -1;
@@ -239,6 +301,21 @@ void ProcessMatching_intern(float* normVector, int16_t* matching, int size, int 
     }
 }
 
+__global__
+void Process3DHT_intern(cufftComplex* src, int threshold, int windowSize)
+{
+    int i = (blockIdx.x * blockDim.x) + threadIdx.x;
+    int j = (blockIdx.y * blockDim.y) + threadIdx.y;
+    int k = (blockIdx.z * blockDim.z) + threadIdx.z;
+    int pos = j * windowSize + k * windowSize + i;
+    if(pos < windowSize * windowSize * windowSize)
+    {
+        //avoid if (perf)!!! - GPU branching!!!
+        if(src[pos].x < 0 && (src[pos].x * -1) < threshold ) { src[pos].x = 0; src[pos].y = 0; }
+        if(src[pos].x > 0 && src[pos].x < threshold) { src[pos].x = 0; src[pos].y = 0; }
+    }
+}
+
 cufftComplex* ImgHelperCuda::get(cufftComplex* src, int width, int height)
 {
     cufftComplex* dst = (cufftComplex*)malloc(width * (height/2) * sizeof(cufftComplex));
@@ -253,14 +330,24 @@ float* ImgHelperCuda::get(float* src, int width, int height)
     return dst;
 }
 
-int16_t* ImgHelperCuda::ProcessBM(cufftComplex* src, int gamma, int windowSize, int blockSize)
+void ImgHelperCuda::Process3DHT(cufftComplex* src, int windowSize)
 {
-    dim3 threadsPerBlock(ImgHelperCuda::HT_2D_THREADS, ImgHelperCuda::HT_2D_THREADS);
+    dim3 threadsPerBlock(ImgHelperCuda::HT_THREADS, ImgHelperCuda::HT_THREADS, ImgHelperCuda::HT_THREADS);
+    dim3 numBlocks(windowSize/threadsPerBlock.x, windowSize/threadsPerBlock.y, windowSize/threadsPerBlock.z);
+
+    //printf("\n\tprocess 3D HT");
+    Process3DHT_intern<<<numBlocks,threadsPerBlock>>>(src, ImgHelperCuda::HT_3D_THRESHOLD, windowSize);
+    cudaThreadSynchronize();
+}
+
+int16_t* ImgHelperCuda::ProcessBM(cufftComplex* src, int threshold, int windowSize, int blockSize)
+{
+    dim3 threadsPerBlock(ImgHelperCuda::HT_THREADS, ImgHelperCuda::HT_THREADS);
     dim3 numBlocks(windowSize/threadsPerBlock.x, windowSize/threadsPerBlock.y);
 
-    printf("\n\tprocess 2D HT");
-    Process2DHT_intern<<<numBlocks,threadsPerBlock>>>(src, gamma, windowSize);
-    cudaThreadSynchronize();
+    //printf("\n\tprocess 2D HT");
+    //Process2DHT_intern<<<numBlocks,threadsPerBlock>>>(src, threshold, windowSize);
+    //cudaThreadSynchronize();
 
     printf("\n\tComputes blocks value");
     float* normVector_d;
@@ -272,14 +359,14 @@ int16_t* ImgHelperCuda::ProcessBM(cufftComplex* src, int gamma, int windowSize, 
     cudaThreadSynchronize();
 
     //Only for testing
-    float* normVector_h = (float*)malloc(sizeNormVector * sizeNormVector * sizeof(float));
+    /*float* normVector_h = (float*)malloc(sizeNormVector * sizeNormVector * sizeof(float));
     gpuErrchk(cudaMemcpy(normVector_h,normVector_d, sizeNormVector * sizeNormVector * sizeof(float), cudaMemcpyDeviceToHost));
     printf("\n\n----- BLOCKS VALUE (TEST) ------\n");
     for(int i= 0; i < sizeNormVector * sizeNormVector; ++i)
     {
         printf("B%i: %f\n", i, normVector_h[i] );
     }
-    printf("\n");
+    printf("\n");*/
 
     printf("\n\tMatching - 3D groups");
 
@@ -293,11 +380,8 @@ int16_t* ImgHelperCuda::ProcessBM(cufftComplex* src, int gamma, int windowSize, 
     ProcessMatching_intern<<<numBlocksMatching,threadsPerBlockMatching>>>(normVector_d, matching_d, sizeNormVector * sizeNormVector, blockSize, 500);
     cudaThreadSynchronize();
 
-    //only for test;
     int16_t* matching = (int16_t*)malloc(sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t));
     gpuErrchk(cudaMemcpy(matching,matching_d, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t), cudaMemcpyDeviceToHost));
-
-
 
     return matching;
 }

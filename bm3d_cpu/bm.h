@@ -30,16 +30,19 @@ class BlockMatch
         BlockMatch();
         ~BlockMatch();
 
-        float** processBM(float* imageBuffer, int windowSize);
+        float** processBM(float* imageBuffer, float** blocks, int windowSize);
+        float** getBlocks(float* imageBuffer, int windowSize);
         void setDebugMode(bool debug);
+
+        static const int BLOCK_SIZE = 8;
 
     private:
         ImgHelper _imgHelper;
         int _windowSize;
         bool _debug;
 
-        const int BLOCK_SIZE = 8;
-        const int GAMMA = 40;//8x8 block
+
+        const int THRESHOLD = 40;//8x8 block
 };
 
 #endif // BM_H

@@ -41,19 +41,46 @@ void BM3D::processBasicHT(Mat* image)
     {
         planes[i].convertTo(planes[i], CV_32FC1);
 
-        float* windowBuffer = (float*)malloc(BM3D::WINDOW_SIZE * BM3D::WINDOW_SIZE * sizeof(float));
-        int outX, outY;
+        Size s = planes[i].size();
+        int x = 0;
+        int y = 0;
+        while(y < s.height)
+        {
+            printf("\nTreat window (%d,%d)", x, y);
+            float* windowBuffer = _imgHelper.getWindowBuffer(x, y, planes[i], BM3D::WINDOW_SIZE);
 
-        printf("\nTreat window (0,0)");
-        _imgHelper.getWindowBuffer(40, 40, windowBuffer, planes[i], BM3D::WINDOW_SIZE, &outX, &outY);
+            ///Block matching
+            float** blocks = _bm.getBlocks(windowBuffer, BM3D::WINDOW_SIZE);
+            float** stackedBlocks = _bm.processBM(windowBuffer, blocks, BM3D::WINDOW_SIZE);
 
-        float** stackedBlocks = _bm.processBM(windowBuffer, BM3D::WINDOW_SIZE);
+            ///3D transform + Filter (HT)
+            int nbOfBlocks = BM3D::WINDOW_SIZE / BlockMatch::BLOCK_SIZE;
+            for(int i=0; i< nbOfBlocks * nbOfBlocks; ++i)
+            {
+                cufftComplex* out = _imgHelper.fft3D(stackedBlocks[i], BlockMatch::BLOCK_SIZE);
+                _imgHelper.Process3DHT(out, BlockMatch::BLOCK_SIZE);
+                float* out2 = _imgHelper.ifft3D(out, BlockMatch::BLOCK_SIZE);
 
-        ///Filter (HT)
+                int fSize = BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE;
+                for(int q= 0; q <  fSize; ++q)
+                {
+                    out2[q] = out2[q]/fSize;
+                    //printf("%f, ", (out2[q]/fSize));
+                    //if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) printf("\n\t\t");
+                }
+            }
 
-        ///Calculate basic estimates
+            ///Calculate basic estimates
 
-        free(windowBuffer);
+            free(windowBuffer);
+
+            x += BM3D::WINDOW_SIZE;
+            if(x > s.width)
+            {
+                x = 0;
+                y += BM3D::WINDOW_SIZE;
+            }
+        }
     }
 }
 
