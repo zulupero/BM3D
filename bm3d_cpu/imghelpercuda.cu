@@ -228,7 +228,7 @@ float* ImgHelperCuda::ifft3D(cufftComplex* src, int x, int y, int z)
 
 //this call could be avoided if we add this logic into the method ""ProcessNorm_intern"
 __global__
-void Process2DHT_intern(cufftComplex* src, int gamma, int windowSize)
+void Process2DHT_intern(cufftComplex* src, int threshold, int windowSize)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     int j = (blockIdx.y * blockDim.y) + threadIdx.y;
@@ -236,58 +236,71 @@ void Process2DHT_intern(cufftComplex* src, int gamma, int windowSize)
     if(pos < windowSize * windowSize)
     {
         //avoid if (perf)!!! - GPU branching!!!
-        if(src[pos].x < 0 && (src[pos].x * -1) < gamma ) { src[pos].x = 0; src[pos].y = 0; }
-        if(src[pos].x > 0 && src[pos].x < gamma) { src[pos].x = 0; src[pos].y = 0; }
+        if(src[pos].x < 0 && (src[pos].x * -1) < threshold ) { src[pos].x = 0; src[pos].y = 0; }
+        if(src[pos].x > 0 && src[pos].x < threshold) { src[pos].x = 0; src[pos].y = 0; }
     }
 }
 
 __global__
-void ProcessNorm_intern(cufftComplex* src, float* normVector, int windowSize, int blockSize)
+void ProcessNorm_intern(cufftComplex* src, float* normVector, int size, int windowSize, int blockSize)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
-    int j = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int pos = j * windowSize + i;
-    if((pos < (windowSize * windowSize)) && (pos % blockSize == 0))
+    if(i < size * size)
     {
-        int outIndex = (pos /blockSize) -1;
-        //perf O(n2)!!!!
+        int hBlock = blockSize / 2;
+        int pos = ((i % size) * blockSize) + (int(i/size) * size * windowSize);
+
         float norm = 0;
-        for(int k =0; i < blockSize; ++i)
+        for(int k =0; k < hBlock; ++k)
         {
-            for(int n=0; k < blockSize; ++k)
+            for(int n=0; n < blockSize; ++n)
             {
-                int i2 = i + k;
-                int j2 = j + n;
-                int pos2 = i2 * windowSize + j2;
-
-                //Verify the formula!!!
-                if(pos2 < (windowSize * windowSize) && src[pos2].x >= 0) norm += src[pos2].x;
-                else if(pos2 < (windowSize * windowSize) && src[pos2].x < 0) norm += -1 * src[pos2].x;
-                else {}
+                norm += src[pos].x * src[pos].x + src[pos].y + src[pos].y;
+                pos += n;
             }
+            pos += windowSize;
         }
-        normVector[outIndex] = norm;
+        normVector[i] = norm;
     }
 }
 
 __global__
-void ProcessMatching_intern(float* normVector, int16_t* matching, int size, int blockSize, int threshold)
+void ProcessMatching_intern(cufftComplex* src, int16_t* matching, int size, int windowSize, int blockSize, int threshold)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
-    if(i < size)
+    if(i < size * size)
     {
-        float reference = normVector[i];
+        int hBlock = blockSize / 2;
+        int pos = (int(i/ size) * blockSize) + ((i%size) * size * windowSize);
+
         int matchingIndex = i * blockSize;
         int matchingOffset = 0;
         matching[matchingIndex+matchingOffset] = i;
         ++matchingOffset;
-        for(int k= 0; k< size; ++k)
+        for(int k= 0; k< size * size; ++k)
         {
             if(k != i)
             {
-                float diff = (reference - normVector[k]);
-                float distance = diff * diff;
-                distance = distance / (blockSize * blockSize);
+                int pos2 = (int(k / size) * blockSize) + ((k%size) * size * windowSize);
+                int pos2s = pos2;
+                int pos1 = pos;
+                float norm = 0;
+                int diff = 0;
+                for(int m =0; m < hBlock; ++m)
+                {
+                    for(int n=0; n < blockSize; ++n)
+                    {
+                        diff = abs(src[pos1].x - src[pos2].x);
+                        norm += diff * diff;
+                        pos1 += n;
+                        pos2 += n;
+                    }
+                    pos1 += windowSize;
+                    pos2 += windowSize;
+                }
+                norm = sqrt(norm);
+
+                float distance = norm / (blockSize * blockSize);
                 if(distance < threshold)
                 {
                     matching[matchingIndex+matchingOffset] = k;
@@ -296,6 +309,11 @@ void ProcessMatching_intern(float* normVector, int16_t* matching, int size, int 
                 else
                 {
                 }
+                int x1 = pos1 % windowSize;
+                int y1 = int(pos1 / windowSize);
+                int x2 = pos2s % windowSize;
+                int y2 = int(pos2s / windowSize);
+                printf("\n\tCPB %d,%d, pos1 = %d, pos2 = %d, (%d,%d), (%d,%d), norm = %f, distance = %f", i,k, pos1, pos2s, x1, y1, x2, y2, norm, distance);
             }
         }
     }
@@ -342,42 +360,44 @@ void ImgHelperCuda::Process3DHT(cufftComplex* src, int windowSize)
 
 int16_t* ImgHelperCuda::ProcessBM(cufftComplex* src, int threshold, int windowSize, int blockSize)
 {
-    dim3 threadsPerBlock(ImgHelperCuda::HT_THREADS, ImgHelperCuda::HT_THREADS);
-    dim3 numBlocks(windowSize/threadsPerBlock.x, windowSize/threadsPerBlock.y);
+    //dim3 threadsPerBlock(ImgHelperCuda::HT_THREADS, ImgHelperCuda::HT_THREADS);
+    //dim3 numBlocks(windowSize/threadsPerBlock.x, windowSize/threadsPerBlock.y);
 
     //printf("\n\tprocess 2D HT");
     //Process2DHT_intern<<<numBlocks,threadsPerBlock>>>(src, threshold, windowSize);
     //cudaThreadSynchronize();
 
-    printf("\n\tComputes blocks value");
+    int sizeNormVector = (windowSize / blockSize) ;
+
+    /*printf("\n\tComputes blocks value");
     float* normVector_d;
     int sizeNormVector = (windowSize / blockSize) ;
+    dim3 threadsPerBlockMatching(sizeNormVector * sizeNormVector);
+    dim3 numBlocksMatching(1);
     gpuErrchk(cudaMalloc(&normVector_d, sizeNormVector * sizeNormVector * sizeof(float)));
-
-    ///--> we have to reduce the number of blocks and threads!!!!
-    ProcessNorm_intern<<<numBlocks,threadsPerBlock>>>(src, normVector_d, windowSize, blockSize);
+    ProcessNorm_intern<<<numBlocksMatching,threadsPerBlockMatching>>>(src, normVector_d, sizeNormVector, windowSize, blockSize);
     cudaThreadSynchronize();
 
-    //Only for testing
-    /*float* normVector_h = (float*)malloc(sizeNormVector * sizeNormVector * sizeof(float));
+    //Only for testing-----
+    float* normVector_h = (float*)malloc(sizeNormVector * sizeNormVector * sizeof(float));
     gpuErrchk(cudaMemcpy(normVector_h,normVector_d, sizeNormVector * sizeNormVector * sizeof(float), cudaMemcpyDeviceToHost));
     printf("\n\n----- BLOCKS VALUE (TEST) ------\n");
     for(int i= 0; i < sizeNormVector * sizeNormVector; ++i)
     {
         printf("B%i: %f\n", i, normVector_h[i] );
     }
-    printf("\n");*/
-
-    printf("\n\tMatching - 3D groups");
-
-    int16_t* matching_d;
-    gpuErrchk(cudaMalloc(&matching_d, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t)));
-    gpuErrchk(cudaMemset(matching_d, -1, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t)));
+    printf("\n");
+    //---------------------
+    */
 
     dim3 threadsPerBlockMatching(sizeNormVector * sizeNormVector);
     dim3 numBlocksMatching(1);
 
-    ProcessMatching_intern<<<numBlocksMatching,threadsPerBlockMatching>>>(normVector_d, matching_d, sizeNormVector * sizeNormVector, blockSize, 500);
+    printf("\n\tMatching - 3D groups");
+    int16_t* matching_d;
+    gpuErrchk(cudaMalloc(&matching_d, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t)));
+    gpuErrchk(cudaMemset(matching_d, -1, sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t)));
+    ProcessMatching_intern<<<numBlocksMatching,threadsPerBlockMatching>>>(src, matching_d, sizeNormVector, windowSize, blockSize, threshold);
     cudaThreadSynchronize();
 
     int16_t* matching = (int16_t*)malloc(sizeNormVector * sizeNormVector * blockSize * sizeof(int16_t));

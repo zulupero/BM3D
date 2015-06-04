@@ -44,8 +44,8 @@ void BM3D::processBasicHT(Mat* image)
         Size s = planes[i].size();
         int x = 0;
         int y = 0;
-        while(y < s.height)
-        {
+        //while(y < s.height)
+        //{
             printf("\nTreat window (%d,%d)", x, y);
             float* windowBuffer = _imgHelper.getWindowBuffer(x, y, planes[i], BM3D::WINDOW_SIZE);
 
@@ -62,12 +62,18 @@ void BM3D::processBasicHT(Mat* image)
                 float* out2 = _imgHelper.ifft3D(out, BlockMatch::BLOCK_SIZE);
 
                 int fSize = BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE;
-                for(int q= 0; q <  fSize; ++q)
+
+                if(i==24)
                 {
-                    out2[q] = out2[q]/fSize;
-                    //printf("%f, ", (out2[q]/fSize));
-                    //if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) printf("\n\t\t");
+                    printf(":\n\t\t");
+                    for(int q= 0; q <  fSize; ++q)
+                    {
+                        out2[q] = out2[q]/fSize;
+                        printf("%f, ", (out2[q]/fSize));
+                        if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) printf("\n\t\t");
+                    }
                 }
+
             }
 
             ///Calculate basic estimates
@@ -80,7 +86,7 @@ void BM3D::processBasicHT(Mat* image)
                 x = 0;
                 y += BM3D::WINDOW_SIZE;
             }
-        }
+        //}
     }
 }
 
