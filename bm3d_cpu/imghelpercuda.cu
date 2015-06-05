@@ -271,27 +271,30 @@ void ProcessMatching_intern(cufftComplex* src, int16_t* matching, int size, int 
     if(i < size * size)
     {
         int hBlock = blockSize / 2;
-        int pos = (int(i/ size) * blockSize) + ((i%size) * size * windowSize);
+        int val1 = (i % size) * blockSize;
+        int val2 = int(i/size) * (size - 1) * windowSize;
+        int pos = val1 + val2;
 
         int matchingIndex = i * blockSize;
         int matchingOffset = 0;
         matching[matchingIndex+matchingOffset] = i;
         ++matchingOffset;
-        for(int k= 0; k< size * size; ++k)
+        int divisor = blockSize * blockSize;
+        int loop = size * size;
+        for(int k= 0; k < loop; ++k)
         {
             if(k != i)
             {
-                int pos2 = (int(k / size) * blockSize) + ((k%size) * size * windowSize);
+                int pos2 = ((k % size) * blockSize) + (int(k/size) * (size - 1)  * windowSize);
                 int pos2s = pos2;
                 int pos1 = pos;
-                float norm = 0;
-                int diff = 0;
-                for(int m =0; m < hBlock; ++m)
+                double norm = 0;
+                for(int m =0; m < hBlock -1; ++m)
                 {
                     for(int n=0; n < blockSize; ++n)
                     {
-                        diff = abs(src[pos1].x - src[pos2].x);
-                        norm += diff * diff;
+                        double diff = fabs(src[pos1].x) - fabs(src[pos2].x);
+                        norm += (diff * diff);
                         pos1 += n;
                         pos2 += n;
                     }
@@ -300,7 +303,7 @@ void ProcessMatching_intern(cufftComplex* src, int16_t* matching, int size, int 
                 }
                 norm = sqrt(norm);
 
-                float distance = norm / (blockSize * blockSize);
+                double distance = norm / divisor;
                 if(distance < threshold)
                 {
                     matching[matchingIndex+matchingOffset] = k;
@@ -309,11 +312,12 @@ void ProcessMatching_intern(cufftComplex* src, int16_t* matching, int size, int 
                 else
                 {
                 }
-                int x1 = pos1 % windowSize;
-                int y1 = int(pos1 / windowSize);
+                int x1 = pos % windowSize;
+                int y1 = int(pos / windowSize);
                 int x2 = pos2s % windowSize;
                 int y2 = int(pos2s / windowSize);
-                printf("\n\tCPB %d,%d, pos1 = %d, pos2 = %d, (%d,%d), (%d,%d), norm = %f, distance = %f", i,k, pos1, pos2s, x1, y1, x2, y2, norm, distance);
+                printf("\n\tCPB %d,%d, pos1 = %d, pos2 = %d, (%d,%d), (%d,%d), norm = %f, distance = %f, val1 = %d, val2 = %d",
+                        i,k, pos, pos2s, x1, y1, x2, y2, norm, distance, val1, val2);
             }
         }
     }
@@ -328,9 +332,8 @@ void Process3DHT_intern(cufftComplex* src, int threshold, int windowSize)
     int pos = j * windowSize + k * windowSize + i;
     if(pos < windowSize * windowSize * windowSize)
     {
-        //avoid if (perf)!!! - GPU branching!!!
-        if(src[pos].x < 0 && (src[pos].x * -1) < threshold ) { src[pos].x = 0; src[pos].y = 0; }
-        if(src[pos].x > 0 && src[pos].x < threshold) { src[pos].x = 0; src[pos].y = 0; }
+        if(fabs(src[pos].x) < threshold ) { src[pos].x = 0; src[pos].y = 0; }
+        else {}
     }
 }
 
