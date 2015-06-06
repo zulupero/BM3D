@@ -2,6 +2,7 @@
 #include "imghelpercuda.h"
 
 #include <vector>
+#include "util.h"
 
 Block::Block(int x, int y, float* startPtr) :
 _x(x), _y(y), _startPtr(startPtr)
@@ -46,7 +47,10 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
 {
     _imgHelper.writeMatToFile(imageBuffer, "in_1.txt", windowSize, windowSize);
     printf("\nprocess fft (CUFFT)");
+
+    Timer::start();
     cufftComplex* out = _imgHelper.fft(imageBuffer, windowSize);
+    Timer::add("[BM] FFT window buffer");
 
 
     cufftComplex* temp = ImgHelperCuda::get(out, windowSize, windowSize);
@@ -55,9 +59,12 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
     temp = 0;
 
     printf("\nprocess Block matching (GPU)");
+    Timer::start();
     int16_t* matching = ImgHelperCuda::ProcessBM(out, BlockMatch::THRESHOLD, windowSize, BlockMatch::BLOCK_SIZE);
+    Timer::add("[BM] Process BM (GPU)");
 
     printf("\n\n----- Matching blocks (TEST) ------\n");
+    Timer::start();
     int sizeNormVector = windowSize / BlockMatch::BLOCK_SIZE;
     float** stackedBlocks = (float**)malloc(sizeNormVector * sizeNormVector * sizeof(float*));
     for(int i= 0; i < sizeNormVector * sizeNormVector; ++i)
@@ -102,6 +109,7 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
         stackedBlocks[i] = stackBlock;
     }
     printf("\n");
+    Timer::add("[BM] 3D Group creation");
 
     free(matching);
     return stackedBlocks;

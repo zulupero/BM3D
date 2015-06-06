@@ -40,6 +40,8 @@
 		<Unit filename="../imghelpercuda.cu" />
 		<Unit filename="../imghelpercuda.h" />
 		<Unit filename="../main.cpp" />
+		<Unit filename="../util.cpp" />
+		<Unit filename="../util.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -1,6 +1,7 @@
 #include "bm3d.h"
 
 #include "imghelper.h"
+#include "util.h"
 #include <vector>
 
 
@@ -44,16 +45,22 @@ void BM3D::processBasicHT(Mat* image)
         Size s = planes[i].size();
         int x = 0;
         int y = 0;
-        //while(y < s.height)
-        //{
-            printf("\nTreat window (%d,%d)", x, y);
+        while(y < s.height)
+        {
+            Timer::start();
             float* windowBuffer = _imgHelper.getWindowBuffer(x, y, planes[i], BM3D::WINDOW_SIZE);
+            Timer::add("GetWindowBuffer");
+
 
             ///Block matching
+            Timer::start();
             float** blocks = _bm.getBlocks(windowBuffer, BM3D::WINDOW_SIZE);
+            Timer::add("GetBlocks");
+
             float** stackedBlocks = _bm.processBM(windowBuffer, blocks, BM3D::WINDOW_SIZE);
 
             ///3D transform + Filter (HT)
+            Timer::start();
             int nbOfBlocks = BM3D::WINDOW_SIZE / BlockMatch::BLOCK_SIZE;
             for(int i=0; i< nbOfBlocks * nbOfBlocks; ++i)
             {
@@ -75,10 +82,12 @@ void BM3D::processBasicHT(Mat* image)
                 }
 
             }
+            Timer::add("3D Filter");
 
             ///Calculate basic estimates
 
             free(windowBuffer);
+
 
             x += BM3D::WINDOW_SIZE;
             if(x > s.width)
@@ -87,6 +96,8 @@ void BM3D::processBasicHT(Mat* image)
                 y += BM3D::WINDOW_SIZE;
             }
         //}
+
+        Timer::showResults();
     }
 }
 
