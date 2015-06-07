@@ -27,6 +27,6 @@ class ImgHelperCuda
         static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 
         static const int HT_THREADS = 8;
-        static const int HT_3D_THRESHOLD = 40;
+        static const int HT_3D_THRESHOLD = 243; ///2.7 * gamma (here gamma is equal to 90)
 };
 #endif // IMGHELPERCUDA_H

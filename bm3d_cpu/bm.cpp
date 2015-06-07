@@ -45,18 +45,20 @@ float** BlockMatch::getBlocks(float* imageBuffer, int windowSize)
 
 float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize)
 {
-    _imgHelper.writeMatToFile(imageBuffer, "in_1.txt", windowSize, windowSize);
+    //_imgHelper.writeMatToFile(imageBuffer, "in_1.txt", windowSize, windowSize);
     printf("\nprocess fft (CUFFT)");
 
     Timer::start();
     cufftComplex* out = _imgHelper.fft(imageBuffer, windowSize);
-    Timer::add("[BM] FFT window buffer");
+    Timer::add("[BM] FFT window buffer (GPU - no kernel)");
 
 
+    /*
     cufftComplex* temp = ImgHelperCuda::get(out, windowSize, windowSize);
     _imgHelper.writeComplexMatToFile(temp, "in_2.txt", windowSize, windowSize/2);
     free(temp);
     temp = 0;
+    */
 
     printf("\nprocess Block matching (GPU)");
     Timer::start();
@@ -69,7 +71,7 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
     float** stackedBlocks = (float**)malloc(sizeNormVector * sizeNormVector * sizeof(float*));
     for(int i= 0; i < sizeNormVector * sizeNormVector; ++i)
     {
-        printf("\nB%i:\n", i );
+        //printf("\nB%i:\n", i );
         float* stackBlock = (float*)malloc(BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * sizeof(float));
         memset(stackBlock, 0, BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * sizeof(float));
         int offset = 0;
@@ -77,10 +79,10 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
         {
             if(matching[k] > -1)
             {
-                printf("\n\tblock %i", matching[k]);
+               // printf("\n\tblock %i", matching[k]);
                 memcpy(&stackBlock[offset], &blocks[matching[k]][0], BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * sizeof(float));
 
-                if(i==24)
+                /*if(i==24)
                 {
                     printf(":\n\t\t");
                     for(int q= 0; q < BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE; q++)
@@ -88,7 +90,7 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
                         printf("%f, ", blocks[matching[k]][q]);
                         if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) printf("\n\t\t");
                     }
-                }
+                }*/
 
                 offset += BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE;
                 //int x = matching[k] * BlockMatch::BLOCK_SIZE;
@@ -109,7 +111,7 @@ float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize
         stackedBlocks[i] = stackBlock;
     }
     printf("\n");
-    Timer::add("[BM] 3D Group creation");
+    Timer::add("[BM] 3D Group creation (CPU)");
 
     free(matching);
     return stackedBlocks;

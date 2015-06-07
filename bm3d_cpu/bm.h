@@ -43,6 +43,7 @@ class BlockMatch
 
 
         const int THRESHOLD = 5000;//8x8 block
+
 };
 
 #endif // BM_H

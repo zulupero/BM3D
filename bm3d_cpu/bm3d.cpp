@@ -45,44 +45,64 @@ void BM3D::processBasicHT(Mat* image)
         Size s = planes[i].size();
         int x = 0;
         int y = 0;
-        while(y < s.height)
-        {
+        //while(y < s.height)
+        //{
             Timer::start();
             float* windowBuffer = _imgHelper.getWindowBuffer(x, y, planes[i], BM3D::WINDOW_SIZE);
-            Timer::add("GetWindowBuffer");
+            Timer::add("[Pre-Process] GetWindowBuffer (CPU)");
 
 
             ///Block matching
             Timer::start();
             float** blocks = _bm.getBlocks(windowBuffer, BM3D::WINDOW_SIZE);
-            Timer::add("GetBlocks");
+            Timer::add("[Pre-Process] GetBlocks (CPU)");
 
             float** stackedBlocks = _bm.processBM(windowBuffer, blocks, BM3D::WINDOW_SIZE);
 
             ///3D transform + Filter (HT)
-            Timer::start();
+            Timer::startTotal();
             int nbOfBlocks = BM3D::WINDOW_SIZE / BlockMatch::BLOCK_SIZE;
             for(int i=0; i< nbOfBlocks * nbOfBlocks; ++i)
             {
+                Timer::start();
                 cufftComplex* out = _imgHelper.fft3D(stackedBlocks[i], BlockMatch::BLOCK_SIZE);
+                Timer::add("[3D Filter] 3D FFT (GPU - no kernel)");
+
+                Timer::start();
                 _imgHelper.Process3DHT(out, BlockMatch::BLOCK_SIZE);
+                Timer::add("[3D Filter] 3D HT (GPU)");
+
+                Timer::start();
                 float* out2 = _imgHelper.ifft3D(out, BlockMatch::BLOCK_SIZE);
+                Timer::add("[3D Filter] 3D iFFT (GPU - no kernel)");
 
-                int fSize = BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE;
+                //int fSize = BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE * BlockMatch::BLOCK_SIZE;
 
-                if(i==24)
+                /*if(i==24)
                 {
                     printf(":\n\t\t");
+                    int line = 0;
+                    printf("%d: ", line);
+                    for(int q= 0; q <  fSize; ++q)
+                    {
+                        printf("%f, ", out2[q]);
+                        if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) { ++line; printf("\n\t\t%d: ", line); }
+                    }*/
+
+                    /*printf(":\n\t\t");
+                    int line = 0;
+                    printf("%d: ", line);
                     for(int q= 0; q <  fSize; ++q)
                     {
                         out2[q] = out2[q]/fSize;
-                        printf("%f, ", (out2[q]/fSize));
-                        if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) printf("\n\t\t");
+                        int r = int(out2[q]);
+                        printf("%d, ", r);
+                        if(q % BlockMatch::BLOCK_SIZE == BlockMatch::BLOCK_SIZE -1) { ++line; printf("\n\t\t%d: ", line); }
                     }
                 }
-
+                */
             }
-            Timer::add("3D Filter");
+            Timer::addTotal("3D Filter (total time)");
 
             ///Calculate basic estimates
 
