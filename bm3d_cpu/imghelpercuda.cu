@@ -325,6 +325,14 @@ void ProcessMatching_intern(cufftComplex* src, int16_t* matching, int size, int 
     }
 }
 
+float* ImgHelperCuda::getCudaBuffer(float* source, int n)
+{
+    float* deviceBuffer;
+    gpuErrchk(cudaMalloc(&deviceBuffer, n * sizeof(float)));
+    gpuErrchk(cudaMemcpy(deviceBuffer,source, n * sizeof(float), cudaMemcpyHostToDevice));
+    return deviceBuffer;
+}
+
 __global__
 void Process3DHT_intern(cufftComplex* src, int threshold, int windowSize)
 {

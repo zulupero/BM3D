@@ -29,6 +29,19 @@ void BM3D::processFinalWien(Mat* image)
     printf("\n>>> FINAL ESTIMATE (WIEN)");
 }
 
+void BM3D::processBasicHT2(Mat* image)
+{
+    std::vector<Mat> planes;
+    split(*image, planes);
+
+    for(size_t i= 0; i<planes.size(); ++i)
+    {
+        planes[i].convertTo(planes[i], CV_32FC1);
+        Size s = planes[i].size();
+        float image* = ImgHelperCuda::getCudaBuffer(planes[i], s.width * s.height);
+
+}
+
 void BM3D::processBasicHT(Mat* image)
 {
     printf("\n>>> BASIC ESTIMATE (HT)");

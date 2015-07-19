@@ -1,0 +1,1 @@
+/usr/bin/c++   -g -std=c++0x  -ffast-math -Wall    CMakeFiles/bm3d_cpu.dir/bm3d.cpp.o CMakeFiles/bm3d_cpu.dir/main.cpp.o CMakeFiles/bm3d_cpu.dir/utilities.cpp.o CMakeFiles/bm3d_cpu.dir/lib_transforms.cpp.o CMakeFiles/bm3d_cpu.dir/mt19937ar.c.o CMakeFiles/bm3d_cpu.dir/io_png.c.o  -o bm3d_cpu -rdynamic fftw-3.3.4/bin/lib/libfftw3f.a -lpng 

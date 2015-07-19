@@ -22,6 +22,7 @@ class BM3D
         bool _debug;
 
         void processBasicHT(Mat* image);
+        void processBasicHT2(Mat* image);
         void processFinalWien(Mat* image);
 
         const int WINDOW_SIZE = 40; //40x40 window

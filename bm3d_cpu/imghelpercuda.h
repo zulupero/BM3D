@@ -19,6 +19,7 @@ class ImgHelperCuda
         static float* get(float* src, int width, int height);
         static cufftComplex* fft3D(float* src, int x, int y, int z);
         static float* ifft3D(cufftComplex* src, int x, int y, int z);
+        static float* getCudaBuffer(float* source, int n);
 
     private:
         ImgHelperCuda();

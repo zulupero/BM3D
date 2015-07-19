@@ -42,6 +42,9 @@ float** BlockMatch::getBlocks(float* imageBuffer, int windowSize)
     return blocks;
 }
 
+void BlockMatch::processBM2(float* imageBuffer)
+{
+}
 
 float** BlockMatch::processBM(float* imageBuffer, float** blocks, int windowSize)
 {
