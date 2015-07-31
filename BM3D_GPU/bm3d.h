@@ -16,11 +16,14 @@ public:
 	   public: 
 		int img_width;
 	  	int img_height;
+		int img_widthWithBorder;
+		int img_heightWithBorder;
 	   	int pHard;
 		int nHard; 
 	   	SourceImage sourceImage;
 		float* deviceImage;
 		float* deviceBlocks;
+		int nbBlocks;
 	};
 
 private:	
