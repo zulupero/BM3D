@@ -19,6 +19,7 @@
  **/
 
 #include <iostream>
+#include <fstream>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
@@ -691,6 +692,20 @@ unsigned ind_size(
         k++;
 
     return k;
+}
+
+void saveDeviceArray(float* array, int size, int w, const char* filename)
+{
+    ofstream fout(filename);
+    float* hArray = (float*)malloc(size * sizeof(float));
+    cudaMemcpy(hArray, array, size * sizeof(float), cudaMemcpyDeviceToHost);
+    for(int i =0; i< size; ++i)
+    {
+        fout << hArray[i] << ", ";
+        if(i == w) fout << std::endl;
+    }
+    free(hArray);
+    fout.close();
 }
 
 

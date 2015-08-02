@@ -3,11 +3,11 @@
 
 # compile C with /usr/bin/gcc
 # compile CXX with /usr/bin/c++
-C_FLAGS = -I/usr/local/cuda/include -I/usr/local/cuda-6.5/include   
+C_FLAGS = -I/usr/local/cuda/include -I/usr/local/cuda-7.0/include   
 
 C_DEFINES = 
 
-CXX_FLAGS = -g -std=c++0x  -ffast-math -Wall -I/usr/local/cuda/include -I/usr/local/cuda-6.5/include   
+CXX_FLAGS = -g -std=c++0x  -ffast-math -Wall -I/usr/local/cuda/include -I/usr/local/cuda-7.0/include   
 
 CXX_DEFINES = 
 

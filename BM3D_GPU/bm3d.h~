@@ -23,6 +23,8 @@ public:
 	   	SourceImage sourceImage;
 		float* deviceImage;
 		float* deviceBlocks;
+		int nbBlocks;
+        int nbBlocksPerLine;
 	};
 
 private:	

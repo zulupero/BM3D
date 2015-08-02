@@ -24,6 +24,7 @@ public:
 		float* deviceImage;
 		float* deviceBlocks;
 		int nbBlocks;
+        int nbBlocksPerLine;
 	};
 
 private:	
@@ -36,7 +37,7 @@ public:
 	{}
 
 private:
-	static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=false);
+	static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 	static void BM3D_CreateBlocks();
 	static void BM3D_BasicEstimate();
 	

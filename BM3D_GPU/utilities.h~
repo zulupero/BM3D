@@ -5,8 +5,6 @@
 #include <cuda.h>
 #include <cufft.h>
 
-#define gpuErrchk(ans) { gpuAssert((ans), __FILE__, __LINE__); }
-void gpuAssert(cudaError_t code, const char *file, int line);
 void CheckCufftError(cufftResult result, const char* method);
 
 //! Read image and check number of channels
@@ -26,6 +24,8 @@ int save_image(
 ,   const unsigned height
 ,   const unsigned chnls
 );
+
+void saveDeveiceArray(float* array, int size, int w, const char* filename);
 
 //! Add noise
 void add_noise(

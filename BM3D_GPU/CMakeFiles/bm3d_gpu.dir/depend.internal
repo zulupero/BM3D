@@ -23,6 +23,8 @@ CMakeFiles/bm3d_gpu.dir/main.cpp.o
  /usr/local/cuda/include/surface_types.h
  /usr/local/cuda/include/texture_types.h
  /usr/local/cuda/include/vector_types.h
+CMakeFiles/bm3d_gpu.dir/timeutil.cpp.o
+ /home/cuenat/BM3D/BM3D/BM3D_GPU/timeutil.cpp
 CMakeFiles/bm3d_gpu.dir/utilities.cpp.o
  /home/cuenat/BM3D/BM3D/BM3D_GPU/io_png.h
  /home/cuenat/BM3D/BM3D/BM3D_GPU/mt19937ar.h

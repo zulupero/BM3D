@@ -183,6 +183,30 @@ mt19937ar.c.s:
 	$(MAKE) -f CMakeFiles/bm3d_gpu.dir/build.make CMakeFiles/bm3d_gpu.dir/mt19937ar.c.s
 .PHONY : mt19937ar.c.s
 
+timeutil.o: timeutil.cpp.o
+.PHONY : timeutil.o
+
+# target to build an object file
+timeutil.cpp.o:
+	$(MAKE) -f CMakeFiles/bm3d_gpu.dir/build.make CMakeFiles/bm3d_gpu.dir/timeutil.cpp.o
+.PHONY : timeutil.cpp.o
+
+timeutil.i: timeutil.cpp.i
+.PHONY : timeutil.i
+
+# target to preprocess a source file
+timeutil.cpp.i:
+	$(MAKE) -f CMakeFiles/bm3d_gpu.dir/build.make CMakeFiles/bm3d_gpu.dir/timeutil.cpp.i
+.PHONY : timeutil.cpp.i
+
+timeutil.s: timeutil.cpp.s
+.PHONY : timeutil.s
+
+# target to generate assembly for a file
+timeutil.cpp.s:
+	$(MAKE) -f CMakeFiles/bm3d_gpu.dir/build.make CMakeFiles/bm3d_gpu.dir/timeutil.cpp.s
+.PHONY : timeutil.cpp.s
+
 utilities.o: utilities.cpp.o
 .PHONY : utilities.o
 
@@ -225,6 +249,9 @@ help:
 	@echo "... mt19937ar.o"
 	@echo "... mt19937ar.i"
 	@echo "... mt19937ar.s"
+	@echo "... timeutil.o"
+	@echo "... timeutil.i"
+	@echo "... timeutil.s"
 	@echo "... utilities.o"
 	@echo "... utilities.i"
 	@echo "... utilities.s"

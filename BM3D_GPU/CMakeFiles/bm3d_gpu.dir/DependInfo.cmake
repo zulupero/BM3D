@@ -11,6 +11,7 @@ SET(CMAKE_DEPENDS_CHECK_C
 SET(CMAKE_C_COMPILER_ID "GNU")
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/cuenat/BM3D/BM3D/BM3D_GPU/main.cpp" "/home/cuenat/BM3D/BM3D/BM3D_GPU/CMakeFiles/bm3d_gpu.dir/main.cpp.o"
+  "/home/cuenat/BM3D/BM3D/BM3D_GPU/timeutil.cpp" "/home/cuenat/BM3D/BM3D/BM3D_GPU/CMakeFiles/bm3d_gpu.dir/timeutil.cpp.o"
   "/home/cuenat/BM3D/BM3D/BM3D_GPU/utilities.cpp" "/home/cuenat/BM3D/BM3D/BM3D_GPU/CMakeFiles/bm3d_gpu.dir/utilities.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
@@ -22,7 +23,7 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/local/cuda/include"
-  "/usr/local/cuda-6.5/include"
+  "/usr/local/cuda-7.0/include"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

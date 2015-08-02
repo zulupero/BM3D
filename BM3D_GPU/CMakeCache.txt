@@ -169,7 +169,7 @@ CUDA_BUILD_CUBIN:BOOL=OFF
 CUDA_BUILD_EMULATION:BOOL=OFF
 
 //"cudart" library
-CUDA_CUDART_LIBRARY:FILEPATH=/usr/local/cuda-6.5/lib64/libcudart.so
+CUDA_CUDART_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcudart.so
 
 //"cuda" library (older versions only).
 CUDA_CUDA_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcuda.so
@@ -182,7 +182,7 @@ CUDA_GENERATED_OUTPUT_DIR:PATH=
 CUDA_HOST_COMPILATION_CPP:BOOL=ON
 
 //Path to a program.
-CUDA_NVCC_EXECUTABLE:FILEPATH=/usr/local/cuda-6.5/bin/nvcc
+CUDA_NVCC_EXECUTABLE:FILEPATH=/usr/local/cuda-7.0/bin/nvcc
 
 //Semi-colon delimit multiple arguments.
 CUDA_NVCC_FLAGS:STRING=
@@ -206,7 +206,7 @@ CUDA_PROPAGATE_HOST_FLAGS:BOOL=ON
 CUDA_SDK_ROOT_DIR:PATH=CUDA_SDK_ROOT_DIR-NOTFOUND
 
 //Path to a file.
-CUDA_TOOLKIT_INCLUDE:PATH=/usr/local/cuda-6.5/include
+CUDA_TOOLKIT_INCLUDE:PATH=/usr/local/cuda-7.0/include
 
 //Print out the commands run while compiling the CUDA source file.
 //  With the Makefile generator this defaults to VERBOSE variable
@@ -215,19 +215,19 @@ CUDA_TOOLKIT_INCLUDE:PATH=/usr/local/cuda-6.5/include
 CUDA_VERBOSE_BUILD:BOOL=OFF
 
 //Version of CUDA as computed from nvcc.
-CUDA_VERSION:STRING=6.5
+CUDA_VERSION:STRING=7.0
 
 //"cublas" library
-CUDA_cublas_LIBRARY:FILEPATH=/usr/local/cuda-6.5/lib64/libcublas.so
+CUDA_cublas_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcublas.so
 
 //"cufft" library
-CUDA_cufft_LIBRARY:FILEPATH=/usr/local/cuda-6.5/lib64/libcufft.so
+CUDA_cufft_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcufft.so
 
 //"curand" library
-CUDA_curand_LIBRARY:FILEPATH=/usr/local/cuda-6.5/lib64/libcurand.so
+CUDA_curand_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcurand.so
 
 //"cusparse" library
-CUDA_cusparse_LIBRARY:FILEPATH=/usr/local/cuda-6.5/lib64/libcusparse.so
+CUDA_cusparse_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcusparse.so
 
 //"npp" library
 CUDA_npp_LIBRARY:FILEPATH=CUDA_npp_LIBRARY-NOTFOUND
@@ -400,7 +400,7 @@ CUDA_SDK_ROOT_DIR_INTERNAL:INTERNAL=CUDA_SDK_ROOT_DIR-NOTFOUND
 CUDA_TOOLKIT_INCLUDE-ADVANCED:INTERNAL=1
 //This is the value of the last time CUDA_TOOLKIT_ROOT_DIR was
 // set successfully.
-CUDA_TOOLKIT_ROOT_DIR_INTERNAL:INTERNAL=/usr/local/cuda-6.5/
+CUDA_TOOLKIT_ROOT_DIR_INTERNAL:INTERNAL=/usr/local/cuda-7.0/
 //ADVANCED property for variable: CUDA_VERSION
 CUDA_VERSION-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_cublas_LIBRARY
@@ -420,5 +420,5 @@ CUDA_parse_cubin:INTERNAL=/usr/share/cmake-2.8/Modules/FindCUDA/parse_cubin.cmak
 //Location of run_nvcc.cmake
 CUDA_run_nvcc:INTERNAL=/usr/share/cmake-2.8/Modules/FindCUDA/run_nvcc.cmake
 //Details about finding CUDA
-FIND_PACKAGE_MESSAGE_DETAILS_CUDA:INTERNAL=[/usr/local/cuda-6.5/][/usr/local/cuda-6.5/bin/nvcc][/usr/local/cuda-6.5/include][/usr/local/cuda-6.5/lib64/libcudart.so][v6.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_CUDA:INTERNAL=[/usr/local/cuda-7.0/][/usr/local/cuda-7.0/bin/nvcc][/usr/local/cuda-7.0/include][/usr/local/cuda-7.0/lib64/libcudart.so][v7.0()]
 

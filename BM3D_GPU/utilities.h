@@ -25,6 +25,8 @@ int save_image(
 ,   const unsigned chnls
 );
 
+void saveDeviceArray(float* array, int size, int w, const char* filename);
+
 //! Add noise
 void add_noise(
     const std::vector<float> &img
