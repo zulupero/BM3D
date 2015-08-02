@@ -51,6 +51,7 @@ include CMakeFiles/bm3d_gpu.dir/flags.make
 
 CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o: bm3d.cu
 CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o: bm3d.h
+CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o: timeutil.h
 CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o: utilities.h
 CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o: /usr/include/_G_config.h
 CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o: /usr/include/alloca.h

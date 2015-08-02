@@ -2,6 +2,7 @@
 SET(CUDA_NVCC_DEPEND
   "/home/cuenat/BM3D/BM3D/BM3D_GPU/bm3d.cu"
  "/home/cuenat/BM3D/BM3D/BM3D_GPU/bm3d.h"
+ "/home/cuenat/BM3D/BM3D/BM3D_GPU/timeutil.h"
  "/home/cuenat/BM3D/BM3D/BM3D_GPU/utilities.h"
  "/usr/include/_G_config.h"
  "/usr/include/alloca.h"
