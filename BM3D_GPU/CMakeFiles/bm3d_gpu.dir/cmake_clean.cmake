@@ -1,5 +1,6 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o"
+  "CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_dct.cu.o"
   "CMakeFiles/bm3d_gpu.dir/timeutil.cpp.o"
   "CMakeFiles/bm3d_gpu.dir/main.cpp.o"
   "CMakeFiles/bm3d_gpu.dir/utilities.cpp.o"

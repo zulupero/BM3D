@@ -22,9 +22,11 @@ public:
 		int nHard; 
 	   	SourceImage sourceImage;
 		float* deviceImage;
-		float* deviceBlocks;
+		//float* deviceBlocks;
+        float** deviceBlocks2;
 		int nbBlocks;
         int nbBlocksPerLine;
+        cufftComplex** deviceBlocksDCT;
 	};
 
 private:	
@@ -39,6 +41,7 @@ public:
 private:
 	static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 	static void BM3D_CreateBlocks();
+    static void BM3D_2DDCT();
 	static void BM3D_BasicEstimate();
 	
 
