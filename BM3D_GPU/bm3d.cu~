@@ -16,14 +16,50 @@ inline void BM3D::gpuAssert(cudaError_t code, const char *file, int line, bool a
    }
 }
 
-__global__
-void BlocksInitialization(float** blocks, cufftComplex** dctBlocks, int nHard)
+__global__ void BlocksInitialization(float** blocks, float** dctBlocks, int nHard)
 {
     int block = blockIdx.x;
     blocks[block] = (float*)malloc(nHard * nHard * sizeof(float));
     memset(blocks[block], 0, nHard * nHard * sizeof(float));
-    dctBlocks[block] = (cufftComplex*)malloc(nHard * (nHard/2.0) * sizeof(cufftComplex));
-    memset(dctBlocks[block], 0, nHard * (nHard/2.0) * sizeof(cufftComplex));
+    dctBlocks[block] = (float*)malloc(nHard * nHard * sizeof(float));
+    memset(dctBlocks[block], 0, nHard * nHard * sizeof(float));
+}
+
+void BM3D::BM3D_PrepareDCT(float* cosParam1, float* cosParam2)
+{
+    for(int v = 0; v < 8; ++v)
+    {
+        for(int u = 0; u < 8; ++u)
+        {
+            for(int y= 0; y < 8; ++y)
+            {
+                for(int x = 0; x < 8; ++x)
+                {
+                    cosParam1[x * u] = cos((((2.0 * x) + 1) * u * M_PI) / 16.0);
+                    cosParam2[y * v] = cos((((2.0 * y) + 1) * v * M_PI) / 16.0);
+                }
+            }
+        }
+    } 
+}
+
+
+void BM3D::BM3D_PrepareiDCT(float* cosParam1, float* cosParam2)
+{
+    for(int y = 0; y < 8; ++y)
+    {
+        for(int x = 0; x < 8; ++x)
+        {
+            for(int v= 0; v < 8; ++v)
+            {
+                for(int u = 0; u < 8; ++u)
+                {
+                    cosParam1[x * u] = cos((((2.0 * x) + 1) * u * M_PI) / 16.0);
+                    cosParam2[y * v] = cos((((2.0 * y) + 1) * v * M_PI) / 16.0);
+                }
+            }
+        }
+    } 
 }
 
 void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHard, int nHard)
@@ -52,16 +88,42 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.deviceImage, 0, BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.deviceImage, &img[0], width * height * sizeof(float), cudaMemcpyHostToDevice));
-   
+    cudaThreadSynchronize ();
+  
     //gpuErrchk(cudaMalloc(&BM3D::context.deviceBlocks, BM3D::context.nbBlocks * nHard * nHard * sizeof(float)));
     //gpuErrchk(cudaMemset(BM3D::context.deviceBlocks, 0, BM3D::context.nbBlocks * nHard * nHard * sizeof(float)));
 
     cudaMalloc((float**)&BM3D::context.deviceBlocks2, BM3D::context.nbBlocks * sizeof(float*));
-    cudaMalloc((cufftComplex**)&BM3D::context.deviceBlocksDCT, BM3D::context.nbBlocks * sizeof(cufftComplex*));
+    cudaMalloc((float**)&BM3D::context.deviceBlocksDCT, BM3D::context.nbBlocks * sizeof(float*));
     dim3 threadsPerBlock(1);
     dim3 numBlocks(BM3D::context.nbBlocks);
     BlocksInitialization<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks2, BM3D::context.deviceBlocksDCT, nHard);
     cudaThreadSynchronize ();
+
+    float* cosParam1 = (float*)malloc(64 * sizeof(float));
+    float* cosParam2 = (float*)malloc(64 * sizeof(float));
+    float* icosParam1 = (float*)malloc(64 * sizeof(float));
+    float* icosParam2 = (float*)malloc(64 * sizeof(float));
+    float* cArray  = (float*)malloc(8 * sizeof(float));
+    BM3D_PrepareDCT(cosParam1, cosParam2);
+    BM3D_PrepareiDCT(icosParam1, icosParam2);
+    BM3D_PrepareCArray(cArray);
+    gpuErrchk(cudaMalloc(&BM3D::context.dctCosParam1, 64 * sizeof(float)));
+    gpuErrchk(cudaMalloc(&BM3D::context.dctCosParam2, 64 * sizeof(float)));
+    gpuErrchk(cudaMemcpy(BM3D::context.dctCosParam1, cosParam1, 64 * sizeof(float), cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemcpy(BM3D::context.dctCosParam2, cosParam2, 64 * sizeof(float), cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMalloc(&BM3D::context.idctCosParam1, 64 * sizeof(float)));
+    gpuErrchk(cudaMalloc(&BM3D::context.idctCosParam2, 64 * sizeof(float)));
+    gpuErrchk(cudaMemcpy(BM3D::context.idctCosParam1, icosParam1, 64 * sizeof(float), cudaMemcpyHostToDevice));
+    gpuErrchk(cudaMemcpy(BM3D::context.idctCosParam2, icosParam2, 64 * sizeof(float), cudaMemcpyHostToDevice));
+
+    gpuErrchk(cudaMalloc(&BM3D::context.cArray, 8 * sizeof(float)));
+    gpuErrchk(cudaMemcpy(BM3D::context.cArray, cArray, 8 * sizeof(float), cudaMemcpyHostToDevice));
+    cudaThreadSynchronize ();
+
+    free(cArray);
+    free(cosParam1);
+    free(cosParam2);
 
     Timer::addCuda("Cuda initialization");
 
@@ -76,6 +138,15 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     printf("\n\tSize Image array= %d", BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder);    
 }
 
+void BM3D::BM3D_PrepareCArray(float* cArray)
+{
+    float VAL = 1.0 / sqrt(2.0);
+    for(int u = 0; u < 8; ++u) {
+        if(u == 0) cArray[u] = VAL;
+        else cArray[u] = 1.0;
+    } 
+}
+
 void BM3D::BM3D_Run()
 {
     printf("\n\nRun BM3D");    
@@ -88,30 +159,166 @@ void BM3D::BM3D_BasicEstimate()
 {
     printf("\n\tBasic estimates (1 step)");
     BM3D_CreateBlocks();
-    //BM3D_2DDCT();
+    BM3D_2DDCT();
+    BM3D_2DiDCT();
+}
+
+__global__ void iDCT2D8x8(float** blocks, float** dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)
+{
+    int block = blockIdx.x;
+    int x, y, u, v;
+    for(y = 0; y < 8; ++y)
+    {
+        for(x = 0; x < 8; ++x)
+        {
+            float sum = 0.0;
+            for(v = 0; v < 8; ++v)
+            {
+                for(u = 0; u < 8; ++u)
+                {
+                    sum += cArray[u] * cArray[v] * dctBlocks[block][v * u] * dctCosParam1[x * u] * dctCosParam2[y * v];
+                    //sum += cArray[u] * cArray[v] * dctBlocks[block][v * u] * cos(v * M_PI * (2.0 * y + 1) / 16.0) * cos(u * M_PI * (2.0 * x + 1) / 16.0);
+                }
+            }
+    
+            blocks[block][y * x] =  0.25 * sum;
+        }
+    } 
+
+
+    /*if(block == 100)
+    {
+       printf("\n inverse DCT block 100");       
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", dctCosParam1[i*j]);
+            }
+            printf("\n");
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", dctCosParam2[i*j]);
+            }
+            printf("\n");
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", blocks[block][i*j]);
+            }
+            printf("\n");
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", dctBlocks[block][i*j]);
+            }
+            printf("\n");
+       }
+    }*/
+}
+
+__global__ void DCT2D8x8(float** blocks, float** dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)
+{
+    int block = blockIdx.x;
+    int x, y, u, v;
+    for(v= 0; v < 8; ++v)
+    {
+        for(u = 0; u < 8; ++u)
+        {
+            float sum = 0.0;
+            for(y = 0; y < 8; ++y)
+            {
+                for(x = 0; x< 8; ++x)
+                {
+                    sum += blocks[block][y * x] * dctCosParam1[x * u] * dctCosParam2[y * v];
+                    //sum += blocks[block][y * x] * cos(v * M_PI * (2.0 * y + 1) / 16.0) * cos(u * M_PI * (2.0 * x + 1) / 16.0);
+                }
+            }
+    
+            dctBlocks[block][u * v] =  0.25 * cArray[u] * cArray[v] * sum;
+        }
+    } 
+
+    if(block == 100)
+    {
+       printf("\nDCT block 100");       
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", dctCosParam1[i*j]);
+            }
+            printf("\n");
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", dctCosParam2[i*j]);
+            }
+            printf("\n");
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            printf("%f, ", cArray[i]);
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", blocks[block][i*j]);
+            }
+            printf("\n");
+       }
+       printf("\n");
+       for(int i= 0; i < 8; ++i)
+       {
+            for(int j=0; j< 8; ++j)
+            {
+                printf("%f, ", dctBlocks[block][i*j]);
+            }
+            printf("\n");
+       }
+    }
+//       printf("\n%d block: dct[%d][0]= %f, block[%d][0] = %f", block, block, dctBlocks[block][0], block, blocks[block][0]);
+}
+
+void BM3D::BM3D_2DiDCT()
+{
+    Timer::startCuda();
+    dim3 threadsPerBlock(1);
+    dim3 numBlocks(BM3D::context.nbBlocks);
+    iDCT2D8x8<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks2, BM3D::context.deviceBlocksDCT, BM3D::context.idctCosParam1, BM3D::context.idctCosParam2, BM3D::context.cArray);
+    cudaThreadSynchronize ();
+    Timer::addCuda("Basic estimate - 2D iDCT (Blocks)");
 }
 
 void BM3D::BM3D_2DDCT()
 {
     Timer::startCuda();
-    for(int i=0; i< BM3D::context.nbBlocks; ++i)
-    {
-        cufftHandle handle;
-        cufftResult r = cufftPlan2d(&handle,BM3D::context.nHard,BM3D::context.nHard,CUFFT_R2C);
-        CheckCufftError(r, "cufftPlan2d");
-
-        r = cufftExecR2C(handle,BM3D::context.deviceBlocks2[i], BM3D::context.deviceBlocksDCT[i]);
-        CheckCufftError(r, "cufftExecR2C");
-        cudaThreadSynchronize ();
-
-        r = cufftDestroy(handle);
-        CheckCufftError(r, "cufftDestroy");  
-    }
+    dim3 threadsPerBlock(1);
+    dim3 numBlocks(BM3D::context.nbBlocks);
+    DCT2D8x8<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks2, BM3D::context.deviceBlocksDCT, BM3D::context.dctCosParam1, BM3D::context.dctCosParam2, BM3D::context.cArray);
+    cudaThreadSynchronize ();
     Timer::addCuda("Basic estimate - 2D DCT (Blocks)");
 }
 
-__global__
-void CreateBlocks_Intern(float* img, float** blocks, const int blocksPerLine, const int pHard, const int nHard, const int width, int sizeBlockArray, int sizeImgArray)
+__global__ void CreateBlocks_Intern(float* img, float** blocks, const int blocksPerLine, const int pHard, const int nHard, const int width, int sizeBlockArray, int sizeImgArray)
 {
     int block = blockIdx.x;
     int x = threadIdx.x;
@@ -129,9 +336,9 @@ void CreateBlocks_Intern(float* img, float** blocks, const int blocksPerLine, co
     //blocks[offsetBlock] = img[offsetImg];
     blocks[block][offsetBlock] = img[offsetImg];
 
-    bool checkBlockOffset = (offsetBlock >= sizeBlockArray);
-    bool checkImgOffset = (offsetImg >= sizeImgArray);
-    printf("\nblock %d, line = %d, phard = %d, nhard = %d, width = %d, offsetBlock = %d, offsetImg = %d, img_x = %d, img_y = %d, x = %d, y = %d, b= %s, i=%s", block, blocksPerLine, pHard, nHard, width, offsetBlock, offsetImg, img_x, img_y, x, y, (checkBlockOffset) ? "OUT" : "IN", (checkImgOffset) ? "OUT" : "IN" );
+    //bool checkBlockOffset = (offsetBlock >= sizeBlockArray);
+    //bool checkImgOffset = (offsetImg >= sizeImgArray);
+    //printf("\nblock %d, line = %d, phard = %d, nhard = %d, width = %d, offsetBlock = %d, offsetImg = %d, img_x = %d, img_y = %d, x = %d, y = %d, b= %s, i=%s, blocks[block][offsetBlock] = %f ", block, blocksPerLine, pHard, nHard, width, offsetBlock, offsetImg, img_x, img_y, x, y, (checkBlockOffset) ? "OUT" : "IN", (checkImgOffset) ? "OUT" : "IN", blocks[block][offsetBlock] );
 }
 
 void BM3D::BM3D_CreateBlocks()

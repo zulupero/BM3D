@@ -11,7 +11,6 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/CMakeCXXCompiler.cmake"
   "CMakeFiles/CMakeSystem.cmake"
   "CMakeFiles/bm3d_gpu.dir/bm3d_gpu_generated_bm3d.cu.o.depend"
-  "CMakeFiles/bm3d_gpu.dir/bm3d_gpu_generated_dct.cu.o.depend"
   "CMakeLists.txt"
   "/usr/share/cmake-2.8/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-2.8/Modules/CMakeCXXInformation.cmake"

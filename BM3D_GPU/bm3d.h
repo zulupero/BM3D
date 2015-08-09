@@ -21,12 +21,17 @@ public:
 	   	int pHard;
 		int nHard; 
 	   	SourceImage sourceImage;
-		float* deviceImage;
+		float* deviceImage; //device
 		//float* deviceBlocks;
-        float** deviceBlocks2;
+        float** deviceBlocks2;  //device
 		int nbBlocks;
         int nbBlocksPerLine;
-        cufftComplex** deviceBlocksDCT;
+        float** deviceBlocksDCT; //device
+        float* dctCosParam1; //device
+        float* dctCosParam2; //device
+        float* idctCosParam1; //device
+        float* idctCosParam2; //device
+        float* cArray;           //device
 	};
 
 private:	
@@ -42,7 +47,11 @@ private:
 	static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 	static void BM3D_CreateBlocks();
     static void BM3D_2DDCT();
+    static void BM3D_2DiDCT();
 	static void BM3D_BasicEstimate();
+    static void BM3D_PrepareDCT(float* cosParam1, float* cosParam2);
+    static void BM3D_PrepareiDCT(float* cosParam1, float* cosParam2);
+    static void BM3D_PrepareCArray(float* cArray);
 	
 
 	BM3D();
