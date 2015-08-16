@@ -21,17 +21,17 @@ public:
 	   	int pHard;
 		int nHard; 
 	   	SourceImage sourceImage;
-		float* deviceImage; //device
-		//float* deviceBlocks;
-        float** deviceBlocks2;  //device
+		float* deviceImage;     //device
+        float** deviceBlocks;   //device
 		int nbBlocks;
         int nbBlocksPerLine;
-        float** deviceBlocksDCT; //device
-        float* dctCosParam1; //device
-        float* dctCosParam2; //device
-        float* idctCosParam1; //device
-        float* idctCosParam2; //device
-        float* cArray;           //device
+        float** deviceBlocksDCT;//device
+        float* dctCosParam1;    //device
+        float* dctCosParam2;    //device
+        float* idctCosParam1;   //device
+        float* idctCosParam2;   //device
+        float* cArray;          //device
+        float* deviceBlocks3D;  //device
 	};
 
 private:	
@@ -52,6 +52,7 @@ private:
     static void BM3D_PrepareDCT(float* cosParam1, float* cosParam2);
     static void BM3D_PrepareiDCT(float* cosParam1, float* cosParam2);
     static void BM3D_PrepareCArray(float* cArray);
+    static void BM3D_BlockMatching();
 	
 
 	BM3D();
