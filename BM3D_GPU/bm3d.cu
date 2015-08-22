@@ -85,8 +85,12 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     BM3D::context.nHard = nHard;
     BM3D::context.sourceImage = img;
 
-    gpuErrchk(cudaMalloc(&BM3D::context.deviceBlocks3D, BM3D::context.nbBlocks * nHard * nHard * 2 * nHard * sizeof(float)));
-    gpuErrchk(cudaMemset(BM3D::context.deviceBlocks3D, 0, BM3D::context.nbBlocks * nHard * nHard * 2 * nHard * sizeof(float)));
+    gpuErrchk(cudaMalloc(&BM3D::context.distanceArray, BM3D::context.nbBlocks * 169 * sizeof(float)));
+    gpuErrchk(cudaMemset(BM3D::context.distanceArray, 0, BM3D::context.nbBlocks * 169 * sizeof(float)));
+    gpuErrchk(cudaMalloc(&BM3D::context.bmIndexArray, BM3D::context.nbBlocks * 169 * sizeof(int)));
+    gpuErrchk(cudaMemset(BM3D::context.bmIndexArray, 0, BM3D::context.nbBlocks * 169 * sizeof(int)));
+    gpuErrchk(cudaMalloc(&BM3D::context.deviceBlocks3D, BM3D::context.nbBlocks * nHard * nHard * 169 * sizeof(float)));
+    gpuErrchk(cudaMemset(BM3D::context.deviceBlocks3D, 0, BM3D::context.nbBlocks * nHard * nHard * 169 * sizeof(float)));
     gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.deviceImage, 0, BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.deviceImage, &img[0], width * height * sizeof(float), cudaMemcpyHostToDevice));
@@ -126,16 +130,18 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
 
     Timer::addCuda("Cuda initialization");
 
-    printf("\n\tBorder width (pixel) = %d", (-1 * widthOffset + nHard));
-    printf("\n\tBorder height (pixel) = %d", (-1 * heightOffset + nHard));
+    printf("\n\tBorder width (pixel) = %d", (-1 * widthOffset + nHard + 47));
+    printf("\n\tBorder height (pixel) = %d", (-1 * heightOffset + nHard + 47));
     printf("\n\tImg width (border) = %d", BM3D::context.img_widthWithBorder);
     printf("\n\tImg height (border) = %d", BM3D::context.img_heightWithBorder);
     printf("\n\tNumber of blocks = %d", BM3D::context.nbBlocks);
     printf("\n\tSize blocks array = %f Mb", ((BM3D::context.nbBlocks * nHard * nHard * sizeof(float))/1024.00/1024));
     printf("\n\tBlock per line= %d", BM3D::context.nbBlocksPerLine);
-    printf("\n\tSize block array= %d", BM3D::context.nbBlocks * nHard * nHard);
-    printf("\n\tSize Image array= %d", BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder);  
-    printf("\n\tSize 3D array = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * 2 * nHard * sizeof(float) /1024.00 / 1024.00));  
+    printf("\n\tSize block array= %f Mb", (BM3D::context.nbBlocks * nHard * nHard/1024.00 / 1024.00));
+    printf("\n\tSize Image array= %f Mb", (BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder/1024.00 / 1024.00));  
+    printf("\n\tSize 3D array = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * 169 * sizeof(float) /1024.00 / 1024.00));  
+    printf("\n\tSize Distance array = %f Mb", (BM3D::context.nbBlocks * 169 * sizeof(float) /1024.00 / 1024.00));  
+    printf("\n\tSize BM index array = %f Mb", (BM3D::context.nbBlocks * 169 * sizeof(int) /1024.00 / 1024.00));  
 }
 
 void BM3D::BM3D_PrepareCArray(float* cArray)
@@ -164,18 +170,108 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_2DiDCT();
 }
 
-__global__ void blockMatching(float** dctBlocks, float* blocks3D, int nHard, int blocksPerLine)
+__global__ void blockMatching(float** dctBlocks, float* blocks3D, int* bmIndexArray, float* distanceArray, int blocksPerLine, int sizeNhard)
 {
     int block = blockIdx.x;
     int compareBlock = block + (threadIdx.y * blocksPerLine) + threadIdx.x;
     
-    float diff = 0.0;    
-    for(int i=0; i< nHard * nHard; ++i)
+    float distance = 0.0;    
+    for(int i=0; i< sizeNhard; ++i)
     {
-        diff += fabs((dctBlocks[block][i] - dctBlocks[compareBlock][i]) * (dctBlocks[block][i] - dctBlocks[compareBlock][i]));
+        float diff = dctBlocks[block][i] - dctBlocks[compareBlock][i];
+        distance += fabs(diff * diff);
     }
-    diff /= (nHard * nHard);
-    printf("\n block =%d, block compare = %d, value= %f", block, compareBlock, diff);
+    distance /= sizeNhard;
+
+    //int index = (block * 169) + (threadIdx.y * 13) + threadIdx.x;
+    //bmIndexArray[index] = int(distance);
+    //distanceArray[index] = distance;
+       
+    //bmIndexArray[(block * 169) + ((threadIdx.y * 13) + threadIdx.x)] = compareBlock;
+    if(distance < 2500.0) 
+    {
+        int index3Dblock = (blockIdx.x * 64 * 169) + (((threadIdx.y * 13) + threadIdx.x) * 64);
+        //memcpy(&blocks3D[index3Dblock], &dctBlocks[compareBlock][0], 64 * sizeof(float));
+        //memcpy(&blocks3D[0], &dctBlocks[compareBlock][0], 64 * sizeof(float));
+        for(int i=0; i< 64; ++i)
+        {
+            blocks3D[index3Dblock + i] = dctBlocks[compareBlock][i];
+        }
+    }
+    /*
+        int index3Dblock = (blockIdx.x * 8 * 8 * 169) + (((threadIdx.y * 13) + threadIdx.x) * 8 * 8);
+        memcpy(&blocks3D[index3Dblock], &dctBlocks[compareBlock][0], 64 * sizeof(float));
+        if(blockIdx.x == 100)
+        {
+            for(int k=0;  k<169; ++k)
+            {    
+                printf("\nBlock %d\n", k);     
+                for(int i=0;i<8;++i)
+                {   
+                    for(int j=0; j< 8; ++j)
+                    {   
+                        int index = (blockIdx.x * 8 * 8 * 16) + (k * 8 * 8);
+                        printf("%f, ",  deviceBlocks3D[index + (i * 8) + j]);
+                    }
+                    printf("\n");
+                }
+            }
+        }
+    }*/
+    //else
+    //{
+        //nothing
+    //}
+    //distanceArray[(block * 169) + (threadIdx.y * 13) + threadIdx.x] = sum;
+    //bmIndexArray[(block * 169) + (threadIdx.y * 13) + threadIdx.x] = compareBlock;
+    //if(sum < 2500.0) blocksMatchingIndex[(block * 169) + (threadIdx.y * 13) + threadIdx.x] = compareBlock;
+    //printf("\n block =%d, block compare = %d, value= %f", block, compareBlock, sum);    
+}
+
+__global__ void create3DArray(int* bmIndexArray)
+{
+    if(blockIdx.x == 100)
+    {
+        printf("\n");
+        for(int i=0; i< 169; ++i)
+        {
+            printf("%d,", bmIndexArray[(blockIdx.x * 169) + i]);
+        }
+        printf("\n");
+    }
+
+    /*int indexBlock = blockIdx.x * 169;
+    int numSimilarBlocks = 0;
+    for(int i=0; i< 169; ++i)
+    {
+        if(distanceArray[indexBlock + i] < 2500)
+        {
+            int index3Dblock = (blockIdx.x * 8 * 8 * 16) + (numSimilarBlocks * 8 * 8);  
+            memcpy(&deviceBlocks3D[index3Dblock], &dctBlocks[bmIndexArray[indexBlock + i]][0], 64 * sizeof(float));
+            numSimilarBlocks = (numSimilarBlocks + 1) % 16;
+        }
+        else
+        {
+            //nothing   
+        }
+    }*/
+
+    /*if(blockIdx.x == 100)
+    {
+        for(int k=0;  k<169; ++k)
+        {    
+            printf("\nBlock %d\n", k);     
+            for(int i=0;i<8;++i)
+            {   
+                for(int j=0; j< 8; ++j)
+                {   
+                    int index = (blockIdx.x * 8 * 8 * 16) + (k * 8 * 8);
+                    printf("%f, ",  deviceBlocks3D[index + (i * 8) + j]);
+                }
+                printf("\n");
+            }
+        }
+    }*/
 }
 
 void BM3D::BM3D_BlockMatching()
@@ -183,9 +279,15 @@ void BM3D::BM3D_BlockMatching()
     Timer::startCuda();
     dim3 threadsPerBlock(13, 13);
     dim3 numBlocks(BM3D::context.nbBlocks);
-    blockMatching<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocksDCT, BM3D::context.deviceBlocks3D, BM3D::context.nHard, BM3D::context.nbBlocksPerLine);
-    cudaThreadSynchronize ();
+    int sizeNhard = BM3D::context.nHard * BM3D::context.nHard;
+    blockMatching<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocksDCT, BM3D::context.deviceBlocks3D, BM3D::context.bmIndexArray, BM3D::context.distanceArray, BM3D::context.nbBlocksPerLine, sizeNhard);
     Timer::addCuda("Basic estimate - Block matching (HT)");
+    cudaThreadSynchronize();
+    Timer::startCuda();
+    dim3 threadsPerBlock2(1);
+    dim3 numBlocks2(BM3D::context.nbBlocks);
+    create3DArray<<<numBlocks2,threadsPerBlock2>>>(BM3D::context.bmIndexArray);
+    Timer::addCuda("Basic estimate - Create 3D block (HT)");
 }
 
 __global__ void iDCT2D8x8(float** blocks, float** dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)

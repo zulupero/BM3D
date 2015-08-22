@@ -32,6 +32,7 @@ public:
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
+        float* distanceArray;     //device
 	};
 
 private:	
@@ -52,6 +53,7 @@ private:
     static void BM3D_PrepareDCT(float* cosParam1, float* cosParam2);
     static void BM3D_PrepareiDCT(float* cosParam1, float* cosParam2);
     static void BM3D_PrepareCArray(float* cArray);
+    static void BM3D_BlockMatching();
 	
 
 	BM3D();
