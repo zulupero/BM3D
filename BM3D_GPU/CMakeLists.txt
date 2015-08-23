@@ -19,10 +19,10 @@ FILE(GLOB SOURCES "*.cu" "*.cpp" "*.c" "*.h")
 CUDA_ADD_EXECUTABLE(bm3d_gpu ${SOURCES})
 #ADD_EXECUTABLE(bm3d_cpu ${SOURCES})
 
-LIST(APPEND CMAKE_CXX_FLAGS "-g -std=c++0x  -ffast-math -Wall") 
+LIST(APPEND CMAKE_CXX_FLAGS "-g -o0 -std=c++0x  -ffast-math -Wall") 
 #-O3
 
-LIST(APPEND CUDA_NVCC_FLAGS --compiler-options -fno-strict-aliasing -lineinfo -use_fast_math -Xptxas -dlcm=cg)
+LIST(APPEND CUDA_NVCC_FLAGS --compiler-options -g -G -fno-strict-aliasing -lineinfo -use_fast_math -Xptxas -dlcm=cg)
 LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_20,code=sm_20)
 LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_30,code=sm_30)
 LIST(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_35,code=sm_35)

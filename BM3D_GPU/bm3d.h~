@@ -32,7 +32,8 @@ public:
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
-        float* distanceArray;     //device
+        float* distanceArray;   //device
+        int* bmIndexArray;      //device
 	};
 
 private:	
