@@ -23,8 +23,10 @@ public:
 	   	SourceImage sourceImage;
 		float* deviceImage;     //device
         float** deviceBlocks;   //device
-		int nbBlocks;
+		int nbBlocks_total;
+        int nbBlocks;
         int nbBlocksPerLine;
+        int nbBlocksPerLine_total;
         float** deviceBlocksDCT;//device
         float* dctCosParam1;    //device
         float* dctCosParam2;    //device
@@ -32,15 +34,17 @@ public:
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
-        float* distanceArray;   //device
+        int* distanceArray;     //device
         int* bmIndexArray;      //device
+        int* blockIndexMapping; //device
+        bool debugMode; 
 	};
 
 private:	
 	static BM3D_Context context;	
 
 public:
-	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int nhard);	
+	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int nhard, bool debug = false);	
 	static void BM3D_Run();
 	~BM3D()
 	{}
@@ -48,6 +52,7 @@ public:
 private:
 	static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 	static void BM3D_CreateBlocks();
+    static void BM3D_CreateBlocks2();
     static void BM3D_2DDCT();
     static void BM3D_2DiDCT();
 	static void BM3D_BasicEstimate();

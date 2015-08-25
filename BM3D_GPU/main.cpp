@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     //if(load_image(argv[1], img, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
     if(load_image("../BM3D_images/ImNoisy.png", img, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
 
-    BM3D::BM3D_Initialize(img, width, height, 3, 8);  //phard = 3, nHard = 8
+    BM3D::BM3D_Initialize(img, width, height, 3, 8, false);  //phard = 3, nHard = 8
     BM3D::BM3D_Run();
 
     printf("\n");
