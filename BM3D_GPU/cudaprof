@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/local/cuda-7.0/bin/nvprof /home/cuenat/BM3D/BM3D/BM3D_GPU/bm3d_gpu f

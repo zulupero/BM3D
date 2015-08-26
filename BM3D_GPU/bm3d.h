@@ -53,7 +53,6 @@ public:
 private:
 	static void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true);
 	static void BM3D_CreateBlocks();
-    static void BM3D_CreateBlocks2();
     static void BM3D_CreateBlockMap();
     static void BM3D_2DDCT();
     static void BM3D_2DiDCT();

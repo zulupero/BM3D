@@ -415,180 +415,36 @@ __global__ void CreateBlocks_Intern(float* img, float** blocks, const int blocks
     //printf("\nblock %d, line = %d, phard = %d, nhard = %d, width = %d, offsetBlock = %d, offsetImg = %d, img_x = %d, img_y = %d, x = %d, y = %d, b= %s, i=%s, blocks[block][offsetBlock] = %f ", block, blocksPerLine, pHard, nHard, width, offsetBlock, offsetImg, img_x, img_y, x, y, (checkBlockOffset) ? "OUT" : "IN", (checkImgOffset) ? "OUT" : "IN", blocks[block][offsetBlock] );
 }
 
-__global__ void CreateBlocks_Intern2(float* img, float* blocks, int* blockIndexMapping, int nHard, int width)
-{
-    int block = blockIdx.x;
-    int x = threadIdx.x;
-    int y = threadIdx.y;
-    int indexBlock = (block * nHard * nHard) + (y * nHard) + x;
-    int mappingIndex = (block * 4); 
-    int imgIndex = (blockIndexMapping[mappingIndex+1] * width) + blockIndexMapping[mappingIndex];
-    blocks[indexBlock] = img[imgIndex];
-
-    printf("\nindex block = %d, mapping index = %d, img index = %d, blocks[indexBlock] = %d", indexBlock, mappingIndex, imgIndex, img[imgIndex]);
-}
-
-__global__ void CreateBlocks_Zone1(int* blockIndexMapping, float* img, float* blocks, int nHard, int width)
+__global__ void CreateBlocks_Zone(int* blockIndexMapping, float* img, int offsetIndex, int offsetIndexBlock, int offsetX, int offsetY, int dirX, int dirY, float* blocks, int nHard, int width)
 {
     int x = (blockIdx.x * blockDim.x) + threadIdx.x;
     int y = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int block = ((y * 64) + x);
-    int blockIndex = block * 4;    
-
-    int xImg = (x << 1);
-    int yImg = (y << 2);
+    int block = ((y * 64) + x) + offsetIndexBlock;    
+    int blockIndex = (block * 4) + offsetIndex;
+    
+    int xImg = offsetX + (dirX * (x << 1));
+    int yImg = offsetY + (dirY * (y << 1));
     blockIndexMapping[blockIndex] = xImg;
     blockIndexMapping[blockIndex+1] = yImg;
-    blockIndexMapping[blockIndex+2] = 1;
-    blockIndexMapping[blockIndex+3] = 1;
+    blockIndexMapping[blockIndex+2] = dirX;
+    blockIndexMapping[blockIndex+3] = dirY;
 
     for(int xOffset=0; xOffset< nHard; ++xOffset)
         for(int yOffset=0; yOffset< nHard; ++yOffset)
-            blocks[block + (yOffset * nHard) + xOffset] = img[((yImg + yOffset) * width) + (xImg + xOffset)];
-/*
-    int offset1 = block;
-    int offset2 = (yImg * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
-    
-    offset1 = block + nHard;
-    offset2 = ((yImg + 1) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
+            blocks[block + (yOffset * nHard) + xOffset] = img[((yImg + (dirY * yOffset)) * width) + (xImg + (dirY * xOffset))];
 
-    offset1 = block + (2 * nHard);
-    offset2 = ((yImg + 2) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
+    //if(blockIndex == 0)
+        //printf("\n block index %d, x = %d, y = %d, x= %d, y = %d, blockIdxX = %d, blockDimX = %d, thX= %d, blockIdxY = %d, blockDimY = %d, thY = %d", blockIndex, offsetX - (x << 1), (y << 1), x, y, blockIdx.x, blockDim.x, threadIdx.x, blockIdx.y, blockDim.y, threadIdx.y); 
+        //printf("\nx = %d, y = %d", x, y); 
 
-    offset1 = block + (3 * nHard);
-    offset2 = ((yImg + 3) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
-
-    offset1 = block + (4 * nHard);
-    offset2 = ((yImg + 4) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
-
-    offset1 = block + (5 * nHard);
-    offset2 = ((yImg + 5) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
-
-    offset1 = block + (6 * nHard);
-    offset2 = ((yImg + 6) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
-
-    offset1 = block + (7 * nHard);
-    offset2 = ((yImg + 7) * width) + xImg;
-    blocks[offset1 + 0] = img[offset2 + 0];
-    blocks[offset1 + 1] = img[offset2 + 1];   
-    blocks[offset1 + 2] = img[offset2 + 2];
-    blocks[offset1 + 3] = img[offset2 + 3];
-    blocks[offset1 + 4] = img[offset2 + 4];
-    blocks[offset1 + 5] = img[offset2 + 5];   
-    blocks[offset1 + 6] = img[offset2 + 6];
-    blocks[offset1 + 7] = img[offset2 + 7];
-
-*/
-    /*if(block == 100)
+    /*if(block == 0 || block == 16383)
     {
-        printf("\n");
+        printf("\nBlock = %d\n\n", block);
         for(int i= 0; i< 64; i++)
         {
             printf("%f, ", blocks[block + i]);   
         } 
-    }
-    */
-//    if(blockIndex == 16383)
-        //printf("\n block index %d, x = %d, y = %d, x= %d, y = %d, blockIdxX = %d, blockDimX = %d, thX= %d, blockIdxY = %d, blockDimY = %d, thY = %d", blockIndex, (x << 1), (y << 1), x, y, blockIdx.x, blockDim.x, threadIdx.x, blockIdx.y, blockDim.y, threadIdx.y); 
-        //printf("\nx = %d, y = %d", x, y); 
-}
-
-__global__ void CreateBlocks_Zone2(int* blockIndexMapping, int offsetIndex, int offsetX, int offsetY)
-{
-    int x = (blockIdx.x * blockDim.x) + threadIdx.x;
-    int y = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int blockIndex = (((y * 64) + x) * 4) + offsetIndex;
-    blockIndexMapping[blockIndex] = offsetX - (x << 1);
-    blockIndexMapping[blockIndex+1] = (y << 1);
-    blockIndexMapping[blockIndex+2] = -1;
-    blockIndexMapping[blockIndex+3] = 1;
-//    if(blockIndex == 16383)
-        //printf("\n block index %d, x = %d, y = %d, x= %d, y = %d, blockIdxX = %d, blockDimX = %d, thX= %d, blockIdxY = %d, blockDimY = %d, thY = %d", blockIndex, offsetX - (x << 1), (y << 1), x, y, blockIdx.x, blockDim.x, threadIdx.x, blockIdx.y, blockDim.y, threadIdx.y); 
-        //printf("\nx = %d, y = %d", x, y); 
-}
-
-__global__ void CreateBlocks_Zone3(int* blockIndexMapping, int offsetIndex, int offsetX, int offsetY)
-{
-    int x = (blockIdx.x * blockDim.x) + threadIdx.x;
-    int y = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int blockIndex = (((y * 64) + x) * 4) + offsetIndex;
-    blockIndexMapping[blockIndex] = (x << 1);
-    blockIndexMapping[blockIndex+1] = offsetY - (y << 1);
-    blockIndexMapping[blockIndex+2] = 1;
-    blockIndexMapping[blockIndex+3] = -1;
-//    if(blockIndex == 16383)
-        //printf("\n block index %d, x = %d, y = %d, x= %d, y = %d, blockIdxX = %d, blockDimX = %d, thX= %d, blockIdxY = %d, blockDimY = %d, thY = %d", blockIndex, (x << 1), offsetY - (y << 1), x, y, blockIdx.x, blockDim.x, threadIdx.x, blockIdx.y, blockDim.y, threadIdx.y); 
-        //printf("\nx = %d, y = %d", x, y); 
-}
-
-__global__ void CreateBlocks_Zone4(int* blockIndexMapping, int offsetIndex, int offsetX, int offsetY)
-{
-    int x = (blockIdx.x * blockDim.x) + threadIdx.x;
-    int y = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int blockIndex = (((y * 64) + x) * 4) + offsetIndex;
-    blockIndexMapping[blockIndex] = offsetX - (x << 1);
-    blockIndexMapping[blockIndex+1] = offsetY - (y << 1);
-    blockIndexMapping[blockIndex+2] = -1;
-    blockIndexMapping[blockIndex+3] = -1;    
-//    if(blockIndex == 16383)
-        //printf("\n block index %d, x = %d, y = %d, x= %d, y = %d, blockIdxX = %d, blockDimX = %d, thX= %d, blockIdxY = %d, blockDimY = %d, thY = %d", blockIndex, offsetX - (x << 1), offsetY - (y << 1), x, y, blockIdx.x, blockDim.x, threadIdx.x, blockIdx.y, blockDim.y, threadIdx.y); 
-        //printf("\nx = %d, y = %d", x, y); 
+    }*/
 }
 
 void BM3D::BM3D_CreateBlockMap()
@@ -601,25 +457,15 @@ void BM3D::BM3D_CreateBlockMap()
     dim3 numBlocks(numBlockX, numBlockY);
     
     int index = (width * height * 4);
-    CreateBlocks_Zone1<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, BM3D::context.deviceImage, BM3D::context.blocks, BM3D::context.nHard, BM3D::context.img_width);
-    //cudaThreadSynchronize ();  
-    CreateBlocks_Zone2<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, index, BM3D::context.img_width, 0);
-    CreateBlocks_Zone3<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, (index * 2), 0, BM3D::context.img_height );
-    CreateBlocks_Zone4<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, (index * 3), BM3D::context.img_width, BM3D::context.img_height);  
+    int indexBlock = (width * height);
+    
+    CreateBlocks_Zone<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, BM3D::context.deviceImage, 0, 0, 0, 0, 1, 1, BM3D::context.blocks, BM3D::context.nHard, BM3D::context.img_width);
+    CreateBlocks_Zone<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, BM3D::context.deviceImage, index, indexBlock, BM3D::context.img_width, 0, -1, 1, BM3D::context.blocks, BM3D::context.nHard, BM3D::context.img_width);
+    CreateBlocks_Zone<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, BM3D::context.deviceImage, (index * 2), (indexBlock * 2), 0, BM3D::context.img_height, 1, -1, BM3D::context.blocks, BM3D::context.nHard, BM3D::context.img_width);
+    CreateBlocks_Zone<<<numBlocks,threadsPerBlock>>>( BM3D::context.blockIndexMapping, BM3D::context.deviceImage, (index * 3), (indexBlock * 3), BM3D::context.img_width, BM3D::context.img_height, -1, -1, BM3D::context.blocks, BM3D::context.nHard, BM3D::context.img_width);
     cudaThreadSynchronize ();  
 }
 
-void BM3D::BM3D_CreateBlocks2()
-{
-    dim3 threadsPerBlock(BM3D::context.nHard, BM3D::context.nHard);
-    dim3 numBlocks(BM3D::context.nbBlocks);
-    CreateBlocks_Intern2<<<numBlocks,threadsPerBlock>>>( BM3D::context.deviceImage, 
-                                                        BM3D::context.blocks,                                                        
-                                                        BM3D::context.blockIndexMapping, 
-                                                        BM3D::context.nHard,
-                                                        BM3D::context.img_width);
-    cudaThreadSynchronize ();
-}
 
 void BM3D::BM3D_CreateBlocks()
 {
