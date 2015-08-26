@@ -38,6 +38,8 @@ public:
         int* bmIndexArray;      //device
         int* blockIndexMapping; //device
         float* blocks;          //device
+        float* dctBlocks;       //device
+        int* pixelMap;          //device
         bool debugMode; 
 	};
 
@@ -55,12 +57,15 @@ private:
 	static void BM3D_CreateBlocks();
     static void BM3D_CreateBlockMap();
     static void BM3D_2DDCT();
+    static void BM3D_2DDCT2();
     static void BM3D_2DiDCT();
+    static void BM3D_2DiDCT2();
 	static void BM3D_BasicEstimate();
     static void BM3D_PrepareDCT(float* cosParam1, float* cosParam2);
     static void BM3D_PrepareiDCT(float* cosParam1, float* cosParam2);
     static void BM3D_PrepareCArray(float* cArray);
     static void BM3D_BlockMatching();
+    static void BM3D_BlockMatching2();
 	
 
 	BM3D();
