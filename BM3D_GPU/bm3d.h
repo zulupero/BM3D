@@ -35,7 +35,7 @@ public:
         float* cArray;          //device
         float* deviceBlocks3D;  //device
         int* bmIndexArray;      //device
-        int* blockIndexMapping; //device
+        int* blockMap;          //device
         float* blocks;          //device
         float* dctBlocks;       //device
         int* pixelMap;          //device

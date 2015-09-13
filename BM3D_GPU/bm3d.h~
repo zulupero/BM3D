@@ -39,7 +39,7 @@ public:
         float* blocks;          //device
         float* dctBlocks;       //device
         int* pixelMap;          //device
-        float* distanceArray;   //device
+        int* distanceArray;   //device
         bool debugMode; 
 	};
 
