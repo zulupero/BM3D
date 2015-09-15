@@ -374,7 +374,7 @@ __global__ void CreateBlocks_Zone(int* blockMap, int blockIndexOffset, int offse
     blockMap[blockMapIndex+7] = ry;
 
     //if(blockMapIndex >= 65536)
-    printf("\nblock = %d, xImg = %d, yImg = %d, x = %d, y = %d, vx = %d, vy = %d, blockMapIndex = %d,rx =%d, ry=%d", block, blockMap[blockMapIndex], blockMap[blockMapIndex+1], x, y, blockMap[blockMapIndex+2], blockMap[blockMapIndex+3], blockMapIndex, rx, ry); 
+    //printf("\nblock = %d, xImg = %d, yImg = %d, x = %d, y = %d, vx = %d, vy = %d, blockMapIndex = %d,rx =%d, ry=%d", block, blockMap[blockMapIndex], blockMap[blockMapIndex+1], x, y, blockMap[blockMapIndex+2], blockMap[blockMapIndex+3], blockMapIndex, rx, ry); 
 }
 
 __global__ void CreateBlocks(float* img, float* blocks, int* blockMap, int width)
