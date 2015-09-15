@@ -97,7 +97,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.pixelMap, width * height * sizeof(int))); //Pixel Map
     gpuErrchk(cudaMalloc(&BM3D::context.blocks, BM3D::context.nbBlocks * nHard * nHard * sizeof(float))); //Blocks array
     gpuErrchk(cudaMalloc(&BM3D::context.dctBlocks, BM3D::context.nbBlocks * nHard * nHard * sizeof(float))); //DCT Blocks array
-    gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocks * 4 * sizeof(int))); //store x;y;vX;vY of each block (Block Map)
+    gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocks * 8 * sizeof(int))); //store x;y;vX;vY;zX;zY;rX;rY of each block (Block Map)
     gpuErrchk(cudaMalloc(&BM3D::context.distanceArray, BM3D::context.nbBlocks * 169 * sizeof(int))); //distance array (for each block)
     //gpuErrchk(cudaMemset(BM3D::context.blockIndexMapping, 0, BM3D::context.nbBlocks * 2 * sizeof(int)));
     gpuErrchk(cudaMalloc(&BM3D::context.bmIndexArray, BM3D::context.nbBlocks * 16 * sizeof(int))); //BM vectors
@@ -156,7 +156,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     printf("\n\tSize Image array= %f Mb", (BM3D::context.img_width * BM3D::context.img_height * sizeof(float)/1024.00 / 1024.00));  
     printf("\n\tSize 3D array = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float) /1024.00 / 1024.00));  
     printf("\n\tSize Block Matching vectors = %f Mb", (BM3D::context.nbBlocks * 16 * sizeof(int) /1024.00 / 1024.00));  
-    printf("\n\tSize Block Map array = %f Mb", (BM3D::context.nbBlocks * 4 * sizeof(int) /1024.00 / 1024.00));  
+    printf("\n\tSize Block Map array = %f Mb", (BM3D::context.nbBlocks * 8 * sizeof(int) /1024.00 / 1024.00));  
     printf("\n\tSize Blocks array = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * sizeof(float) /1024.00 / 1024.00));  
     printf("\n\tSize Distance array = %f Mb", (BM3D::context.nbBlocks * 169 * sizeof(int) /1024.00 / 1024.00));  
 }
@@ -187,7 +187,7 @@ void BM3D::BM3D_BasicEstimate()
     //TODO:
     //Call HT filter method
     //call inverse 3D transform
-    //BM3D_2DiDCT();
+    BM3D_2DiDCT();
     //call aggregation method
 }
 
@@ -354,23 +354,33 @@ __global__ void CreateBlocks_Zone(int* blockMap, int blockIndexOffset, int offse
     int x = (blockIdx.x * blockDim.x) + threadIdx.x;
     int y = (blockIdx.y * blockDim.y) + threadIdx.y;
     int block = ((y << 6) + x) + blockIndexOffset;   //mul by 64  
-    int blockMapIndex = (block << 2);
+    int blockMapIndex = (block << 3);
     
-    int xImg = offsetX + (vX * (x << 1));
-    int yImg = offsetY + (vY * (y << 1));
+    int posX = x << 1;
+    int posY = y << 1;    
+    int xImg = offsetX + (vX * posX);
+    int yImg = offsetY + (vY * posY);
     blockMap[blockMapIndex] = xImg;
     blockMap[blockMapIndex+1] = yImg;
     blockMap[blockMapIndex+2] = vX;
     blockMap[blockMapIndex+3] = vY;
+    blockMap[blockMapIndex+4] = x;
+    blockMap[blockMapIndex+5] = y;
+    int x2 = (x - 32) + 1;
+    int y2 = (y - 32) + 1; 
+    int rx = ((x2 >> 31) | -(-x2 >> 31));    
+    int ry = ((y2 >> 31) | -(-y2 >> 31));
+    blockMap[blockMapIndex+6] = rx;
+    blockMap[blockMapIndex+7] = ry;
 
     //if(blockMapIndex >= 65536)
-    //printf("\nblock = %d, xImg = %d, yImg = %d, x = %d, y = %d, vx = %d, vy = %d, blockMapIndex = %d", block, blockMap[blockMapIndex], blockMap[blockMapIndex+1], x, y, blockMap[blockMapIndex+2], blockMap[blockMapIndex+3], blockMapIndex); 
+    printf("\nblock = %d, xImg = %d, yImg = %d, x = %d, y = %d, vx = %d, vy = %d, blockMapIndex = %d,rx =%d, ry=%d", block, blockMap[blockMapIndex], blockMap[blockMapIndex+1], x, y, blockMap[blockMapIndex+2], blockMap[blockMapIndex+3], blockMapIndex, rx, ry); 
 }
 
 __global__ void CreateBlocks(float* img, float* blocks, int* blockMap, int width)
 {
     int block = (blockIdx.y << 7) + blockIdx.x;
-    int blockMapIndex = block << 2;
+    int blockMapIndex = block << 3;
     int blockIndex = block << 6;
    
     int xImg = blockMap[blockMapIndex];
