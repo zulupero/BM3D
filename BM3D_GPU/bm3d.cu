@@ -79,10 +79,6 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     int heightOffset = height % pHard;
     BM3D::context.img_widthWithBorder = width - widthOffset + 47; //+ search window
     BM3D::context.img_heightWithBorder = height - heightOffset + 47; //+ search window
-    /*BM3D::context.nbBlocks = ((width - widthOffset) / pHard) * ((height - heightOffset) / pHard);
-    BM3D::context.nbBlocks_total = ((BM3D::context.img_widthWithBorder - nHard)/ pHard) * ((BM3D::context.img_heightWithBorder - nHard) / pHard);
-    BM3D::context.nbBlocksPerLine = ((width - widthOffset) / pHard);
-    BM3D::context.nbBlocksPerLine_total = ((BM3D::context.img_widthWithBorder - nHard) / pHard);*/
     BM3D::context.nbBlocks = (width / 2) * (height /2);
     BM3D::context.nbBlocks_total = BM3D::context.nbBlocks;
     BM3D::context.nbBlocksPerLine = (width / 2);
@@ -99,22 +95,14 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.dctBlocks, BM3D::context.nbBlocks * nHard * nHard * sizeof(float))); //DCT Blocks array
     gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocks * 8 * sizeof(int))); //store x;y;vX;vY;zX;zY;rX;rY of each block (Block Map)
     gpuErrchk(cudaMalloc(&BM3D::context.distanceArray, BM3D::context.nbBlocks * 169 * sizeof(int))); //distance array (for each block)
-    //gpuErrchk(cudaMemset(BM3D::context.blockIndexMapping, 0, BM3D::context.nbBlocks * 2 * sizeof(int)));
     gpuErrchk(cudaMalloc(&BM3D::context.bmVectors, BM3D::context.nbBlocks * 16 * sizeof(int))); //BM vectors
+    gpuErrchk(cudaMemset(BM3D::context.bmVectors, 0, BM3D::context.nbBlocks * 16 * sizeof(int))); //BM vectors
     gpuErrchk(cudaMalloc(&BM3D::context.bmVectorsComplete, BM3D::context.nbBlocks * 169 * sizeof(int))); //BM vectors
-    //gpuErrchk(cudaMemset(BM3D::context.bmIndexArray, 0, BM3D::context.nbBlocks * 16 * sizeof(int)));
+    gpuErrchk(cudaMemset(BM3D::context.bmVectorsComplete, 0, BM3D::context.nbBlocks * 169 * sizeof(int))); //BM vectors
     gpuErrchk(cudaMalloc(&BM3D::context.deviceBlocks3D, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
-    //gpuErrchk(cudaMemset(BM3D::context.deviceBlocks3D, 0, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
-    //gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder * sizeof(float)));
+    gpuErrchk(cudaMemset(BM3D::context.deviceBlocks3D, 0, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
     gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, BM3D::context.img_width * BM3D::context.img_height * sizeof(float)));
-    //gpuErrchk(cudaMemset(BM3D::context.deviceImage, 0, BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.deviceImage, &img[0], width * height * sizeof(float), cudaMemcpyHostToDevice));
-
-    /*cudaMalloc((float**)&BM3D::context.deviceBlocks, BM3D::context.nbBlocks * sizeof(float*));
-    cudaMalloc((float**)&BM3D::context.deviceBlocksDCT, BM3D::context.nbBlocks * sizeof(float*));
-    dim3 threadsPerBlock(1);
-    dim3 numBlocks(BM3D::context.nbBlocks);
-    BlocksInitialization<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks, BM3D::context.deviceBlocksDCT, nHard);*/
 
     float* cosParam1 = (float*)malloc(64 * sizeof(float));
     float* cosParam2 = (float*)malloc(64 * sizeof(float));
@@ -135,25 +123,13 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
 
     gpuErrchk(cudaMalloc(&BM3D::context.cArray, 8 * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.cArray, cArray, 8 * sizeof(float), cudaMemcpyHostToDevice));
-    //cudaThreadSynchronize ();
 
     free(cArray);
     free(cosParam1);
     free(cosParam2);
 
-//    Timer::addCuda("Cuda initialization");
-
-    //printf("\n\tBorder width (pixel) = %d", (-1 * widthOffset + nHard + 47));
-    //printf("\n\tBorder height (pixel) = %d", (-1 * heightOffset + nHard + 47));
-    //printf("\n\tImg width (border) = %d", BM3D::context.img_widthWithBorder);
-    //printf("\n\tImg height (border) = %d", BM3D::context.img_heightWithBorder);
     printf("\n\tNumber of blocks = %d", BM3D::context.nbBlocks);
-    //printf("\n\tNumber of blocks (total) = %d", BM3D::context.nbBlocks_total);
-    //printf("\n\tSize blocks array = %f Mb", ((BM3D::context.nbBlocks * nHard * nHard * sizeof(float))/1024.00/1024));
     printf("\n\tBlock per line= %d", BM3D::context.nbBlocksPerLine);
-    //printf("\n\tBlock per line (Total)= %d", BM3D::context.nbBlocksPerLine_total);
-    //printf("\n\tSize block array= %f Mb", (BM3D::context.nbBlocks * nHard * nHard/1024.00 / 1024.00));
-    //printf("\n\tSize Image array= %f Mb", (BM3D::context.img_widthWithBorder * BM3D::context.img_heightWithBorder/1024.00 / 1024.00));  
     printf("\n\tSize Image array= %f Mb", (BM3D::context.img_width * BM3D::context.img_height * sizeof(float)/1024.00 / 1024.00));  
     printf("\n\tSize 3D array = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float) /1024.00 / 1024.00));  
     printf("\n\tSize Block Matching vectors = %f Mb", (BM3D::context.nbBlocks * 16 * sizeof(int) /1024.00 / 1024.00));  
@@ -193,14 +169,152 @@ void BM3D::BM3D_BasicEstimate()
     //call aggregation method
 }
 
-__global__ void create3DArray()
+__global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, float* dctBlocks)
 {
-    //TODO    
-}
+    int block = (blockIdx.y  * blockSize) + blockIdx.x;
+    int blockVectorIndex = (block << 4);
+    int block3DIndex = (block * 1024);
+    int blockOffset = (threadIdx.y * blockDim.x) + threadIdx.x;
+    
+    int index = (bmVectors[blockVectorIndex] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex]);
+    int a = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+1] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+1]);
+    int b = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+2] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+2]);
+    int c = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+3] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+3]);
+    int d = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+4] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+4]);
+    int e = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+5] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+5]);
+    int f = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+6] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+6]);
+    int g = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+7] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+7]);
+    int h = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+8] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+8]);
+    int i = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+9] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+9]);
+    int j = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+10] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+10]);
+    int k = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+11] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+11]);
+    int l = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+12] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+12]);
+    int m = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+13] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+13]);
+    int n = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+14] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+14]);
+    int o = dctBlocks[index];
+    index = (bmVectors[blockVectorIndex+15] << 6) + blockOffset;
+    //if(index >= 1048576) printf("\nblock = %d, index=%d, bmVector val=%d,", block, index, bmVectors[blockVectorIndex+15]);
+    int p = dctBlocks[index];
 
-__global__ void createBMVectors()
-{
-    //TODO
+    int x1_1 = a+b+c+d+e+f+g+h; 
+    int x1_2 = i+j+k+l+m+n+o+p;
+    int x1_3 = i-j-k-l-m-n-o-p;
+    int x1 = x1_1 + x1_2;
+    int x2_1 = a-b+c-d+e-f+g-h;
+    int x2_2 = i-j+k-l+m-n+o-p; 
+    int x2_3 = i+j-k+l-m+n-o+p;
+    int x2 = x2_1 + x2_2;
+    int x3_1 = a-b-c-d+e+f-g-h;  
+    int x3_2 = i+j-k-l+m+n-o-p;
+    int x3_3 = i-j+k+l-m-n+o+p;
+    int x3 = x3_1 + x3_2;
+    int x4_1 = a-b-c+d+e-f-g+h; 
+    int x4_2 = i-j+k+l+m-n-o+p;
+    int x4_3 = i+j-k-l-m+n+o-p;
+    int x4 = x4_1 + x4_2;
+    int x5_1 = a+b+c+d-e-f-g-h; 
+    int x5_2 = i+j+k+l-m-n-o-p;
+    int x5_3 = i-j-k-l+m+n+o+p;
+    int x5 = x5_1 + x5_2;
+    int x6_1 = a-b+c-d-e+f-g+h; 
+    int x6_2 = i-j+k-l-m+n-o+p;
+    int x6_3 = i+j-k+l+m-n+o-p;
+    int x6 = x6_1 + x6_2;
+    int x7_1 = a-b-c-d-e-f+g+h; 
+    int x7_2 = i+j-k-l-m-n+o+p;
+    int x7_3 = i-j+k+l+m+n-o-p;
+    int x7 = x7_1 + x7_2;
+    int x8_1 = a-b-c+d-e+f+g-h;
+    int x8_2 = i-j+k+l-m+n+o-p;
+    int x8_3 = i+j-k-l+m-n-o+p;
+    int x8 = x8_1 + x8_2;
+    
+    int x9 = x1_1 - x1_3;
+    int x10 = x2_1 - x2_3;
+    int x11 = x3_1 - x3_3;
+    int x12 = x4_1 - x4_3;
+    int x13 = x5_1 - x5_3;
+    int x14 = x6_1 - x6_3;
+    int x15 = x7_1 - x7_3;
+    int x16 = x8_1 - x8_3;
+
+    block3DIndex += blockOffset;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block); 
+    blocks3D[block3DIndex] = (x1 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x2 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x3 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x4 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x5 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x6 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x7 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x8 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x9 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x10 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x11 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x12 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x13 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x14 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x15 >> 6);
+    block3DIndex += 64;
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x16 >> 6);
 }
 
 __global__ void CalculateDistances(int* distanceArray, int* blockMap, float* dctBlocks, int blockSize, int* bmVectorsComplete)
@@ -288,8 +402,13 @@ void BM3D::BM3D_BlockMatching()
         cudaThreadSynchronize();    
     }
     
-    //TODO:
-    //call kernel creation array 3D 
+    {
+        dim3 threadsPerBlock(8,8); 
+        int blockXY = sqrt(BM3D::context.nbBlocks); 
+        dim3 numBlocks(blockXY, blockXY);
+        create3DArray<<<numBlocks,threadsPerBlock>>>(BM3D::context.bmVectors, BM3D::context.deviceBlocks3D, blockXY, BM3D::context.dctBlocks);
+        cudaThreadSynchronize();
+    }
 }
 
 __global__ void iDCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)
