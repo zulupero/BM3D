@@ -34,12 +34,13 @@ public:
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
-        int* bmIndexArray;      //device
+        int* bmVectorsComplete; //device
+        int* bmVectors;         //device
         int* blockMap;          //device
         float* blocks;          //device
         float* dctBlocks;       //device
         int* pixelMap;          //device
-        int* distanceArray;   //device
+        int* distanceArray;     //device
         bool debugMode; 
 	};
 
