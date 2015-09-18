@@ -162,11 +162,29 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_CreateBlockMap();
     BM3D_2DDCT();
     BM3D_BlockMatching();
-    //TODO:
-    //Call HT filter method
+    BM3D_HTFilter();
     //call inverse 3D transform
     BM3D_2DiDCT();
     //call aggregation method
+}
+
+__global__ void applyHTFilter(float* blocks3D, float limit, int blockSize)
+{
+    int block = (blockIdx.y * blockSize) + blockIdx.x;
+    int blockOffset = (threadIdx.y * blockDim.x) + threadIdx.x;
+    int block3DIndex = (block * 1024) + (blockOffset * 64) + threadIdx.z;
+    int val = int(blocks3D[block3DIndex]) - limit;
+    int mul = (((val >> 31) | -(-val >> 31)) + 1) >> 1; 
+    blocks3D[block3DIndex] *= mul;
+}
+
+void BM3D::BM3D_HTFilter()
+{ 
+    dim3 threadsPerBlock(8,8,16); 
+    int blockXY = sqrt(BM3D::context.nbBlocks); 
+    dim3 numBlocks(blockXY, blockXY);
+    applyHTFilter<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks3D, (2.7 * 30), blockXY);
+    cudaThreadSynchronize();
 }
 
 __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, float* dctBlocks)
@@ -268,53 +286,53 @@ __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, fl
     int x16 = x8_1 - x8_3;
 
     block3DIndex += blockOffset;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block); 
-    //blocks3D[block3DIndex] = (x1 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block); 
+    blocks3D[block3DIndex] = (x1 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x2 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x2 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x3 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x3 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x4 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x4 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x5 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x5 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x6 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x6 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x7 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x7 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x8 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x8 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x9 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x9 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x10 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x10 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x11 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x11 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x12 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x12 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x13 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x13 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x14 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x14 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x15 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x15 >> 6);
     block3DIndex += 64;
-    if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
-    //blocks3D[block3DIndex] = (x16 >> 6);
+    //if(block3DIndex >= 16777216) printf("\nblock3DIndex = %d, block = %d,", block3DIndex, block);
+    blocks3D[block3DIndex] = (x16 >> 6);
 }
 
 __global__ void CalculateDistances(int* distanceArray, int* blockMap, float* dctBlocks, int blockSize, int* bmVectorsComplete)

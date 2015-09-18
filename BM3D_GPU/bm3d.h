@@ -67,6 +67,7 @@ private:
     static void BM3D_PrepareCArray(float* cArray);
     static void BM3D_BlockMatching();
     static void BM3D_BlockMatching2();
+    static void BM3D_HTFilter();
 	
 
 	BM3D();

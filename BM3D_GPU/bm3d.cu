@@ -162,11 +162,29 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_CreateBlockMap();
     BM3D_2DDCT();
     BM3D_BlockMatching();
-    //TODO:
-    //Call HT filter method
+    BM3D_HTFilter();
     //call inverse 3D transform
     BM3D_2DiDCT();
     //call aggregation method
+}
+
+__global__ void applyHTFilter(float* blocks3D, float limit, int blockSize)
+{
+    int block = (blockIdx.y * blockSize) + blockIdx.x;
+    int blockOffset = (threadIdx.y * blockDim.x) + threadIdx.x;
+    int block3DIndex = (block * 1024) + (blockOffset * 64) + threadIdx.z;
+    int val = int(blocks3D[block3DIndex]) - limit;
+    int mul = (((val >> 31) | -(-val >> 31)) + 1) >> 1; 
+    blocks3D[block3DIndex] *= mul;
+}
+
+void BM3D::BM3D_HTFilter()
+{ 
+    dim3 threadsPerBlock(8,8,16); 
+    int blockXY = sqrt(BM3D::context.nbBlocks); 
+    dim3 numBlocks(blockXY, blockXY);
+    applyHTFilter<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks3D, (2.7 * 30), blockXY); // 30 = sigma
+    cudaThreadSynchronize();
 }
 
 __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, float* dctBlocks)

@@ -34,6 +34,7 @@ public:
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
+        int* bmVectorsComplete; //device
         int* bmVectors;         //device
         int* blockMap;          //device
         float* blocks;          //device
