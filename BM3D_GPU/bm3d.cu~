@@ -96,11 +96,13 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocks * 8 * sizeof(int))); //store x;y;vX;vY;zX;zY;rX;rY of each block (Block Map)
     gpuErrchk(cudaMalloc(&BM3D::context.distanceArray, BM3D::context.nbBlocks * 169 * sizeof(int))); //distance array (for each block)
     gpuErrchk(cudaMalloc(&BM3D::context.bmVectors, BM3D::context.nbBlocks * 16 * sizeof(int))); //BM vectors
-    gpuErrchk(cudaMemset(BM3D::context.bmVectors, 0, BM3D::context.nbBlocks * 16 * sizeof(int))); //BM vectors
+    gpuErrchk(cudaMemset(BM3D::context.bmVectors, -1, BM3D::context.nbBlocks * 16 * sizeof(int))); //BM vectors
     gpuErrchk(cudaMalloc(&BM3D::context.bmVectorsComplete, BM3D::context.nbBlocks * 169 * sizeof(int))); //BM vectors
     gpuErrchk(cudaMemset(BM3D::context.bmVectorsComplete, 0, BM3D::context.nbBlocks * 169 * sizeof(int))); //BM vectors
     gpuErrchk(cudaMalloc(&BM3D::context.deviceBlocks3D, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.deviceBlocks3D, 0, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
+    gpuErrchk(cudaMalloc(&BM3D::context.finalBlocks3D, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
+    gpuErrchk(cudaMemset(BM3D::context.finalBlocks3D, 0, BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float)));
     gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, BM3D::context.img_width * BM3D::context.img_height * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.deviceImage, &img[0], width * height * sizeof(float), cudaMemcpyHostToDevice));
 
@@ -132,6 +134,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     printf("\n\tBlock per line= %d", BM3D::context.nbBlocksPerLine);
     printf("\n\tSize Image array= %f Mb", (BM3D::context.img_width * BM3D::context.img_height * sizeof(float)/1024.00 / 1024.00));  
     printf("\n\tSize 3D array = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float) /1024.00 / 1024.00));  
+    printf("\n\tSize 3D array (final) = %f Mb", (BM3D::context.nbBlocks * nHard * nHard * 16 * sizeof(float) /1024.00 / 1024.00));      
     printf("\n\tSize Block Matching vectors = %f Mb", (BM3D::context.nbBlocks * 16 * sizeof(int) /1024.00 / 1024.00));  
     printf("\n\tSize Block Matching vectors (complete) = %f Mb", (BM3D::context.nbBlocks * 169 * sizeof(int) /1024.00 / 1024.00));      
     printf("\n\tSize Block Map array = %f Mb", (BM3D::context.nbBlocks * 8 * sizeof(int) /1024.00 / 1024.00));  
@@ -163,8 +166,8 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_2DDCT();
     BM3D_BlockMatching();
     BM3D_HTFilter();
-    //call inverse 3D transform
-    BM3D_2DiDCT();
+    BM3D_InverseTransform();
+    
     //call aggregation method
 }
 
@@ -187,6 +190,85 @@ void BM3D::BM3D_HTFilter()
     cudaThreadSynchronize();
 }
 
+__device__ void HadamarTransform16(float* inputs, float* outputs)
+{
+    float a = inputs[0];
+    float b = inputs[1];
+    float c = inputs[2];
+    float d = inputs[3];
+    float e = inputs[4];
+    float f = inputs[5];
+    float g = inputs[6];
+    float h = inputs[7];
+    float i = inputs[8];
+    float j = inputs[9];
+    float k = inputs[10];
+    float l = inputs[11];
+    float m = inputs[12];
+    float n = inputs[13];
+    float o = inputs[14];
+    float p = inputs[15];
+
+    float x1_1 = a+b+c+d+e+f+g+h; 
+    float x1_2 = i+j+k+l+m+n+o+p;
+    float x1_3 = i-j-k-l-m-n-o-p;
+    float x1 = x1_1 + x1_2;
+    float x2_1 = a-b+c-d+e-f+g-h;
+    float x2_2 = i-j+k-l+m-n+o-p; 
+    float x2_3 = i+j-k+l-m+n-o+p;
+    float x2 = x2_1 + x2_2;
+    float x3_1 = a-b-c-d+e+f-g-h;  
+    float x3_2 = i+j-k-l+m+n-o-p;
+    float x3_3 = i-j+k+l-m-n+o+p;
+    float x3 = x3_1 + x3_2;
+    float x4_1 = a-b-c+d+e-f-g+h; 
+    float x4_2 = i-j+k+l+m-n-o+p;
+    float x4_3 = i+j-k-l-m+n+o-p;
+    float x4 = x4_1 + x4_2;
+    float x5_1 = a+b+c+d-e-f-g-h; 
+    float x5_2 = i+j+k+l-m-n-o-p;
+    float x5_3 = i-j-k-l+m+n+o+p;
+    float x5 = x5_1 + x5_2;
+    float x6_1 = a-b+c-d-e+f-g+h; 
+    float x6_2 = i-j+k-l-m+n-o+p;
+    float x6_3 = i+j-k+l+m-n+o-p;
+    float x6 = x6_1 + x6_2;
+    float x7_1 = a-b-c-d-e-f+g+h; 
+    float x7_2 = i+j-k-l-m-n+o+p;
+    float x7_3 = i-j+k+l+m+n-o-p;
+    float x7 = x7_1 + x7_2;
+    float x8_1 = a-b-c+d-e+f+g-h;
+    float x8_2 = i-j+k+l-m+n+o-p;
+    float x8_3 = i+j-k-l+m-n-o+p;
+    float x8 = x8_1 + x8_2;
+    
+    float x9 = x1_1 - x1_3;
+    float x10 = x2_1 - x2_3;
+    float x11 = x3_1 - x3_3;
+    float x12 = x4_1 - x4_3;
+    float x13 = x5_1 - x5_3;
+    float x14 = x6_1 - x6_3;
+    float x15 = x7_1 - x7_3;
+    float x16 = x8_1 - x8_3;
+
+    outputs[0] = (x1 / 16);
+    outputs[1] = (x2 / 16);
+    outputs[2] = (x3 / 16);
+    outputs[3] = (x4 / 16);
+    outputs[4] = (x5 / 16);
+    outputs[5] = (x6 / 16);
+    outputs[6] = (x7 / 16);
+    outputs[7] = (x8 / 16);
+    outputs[8] = (x9 / 16);
+    outputs[9] = (x10 / 16);
+    outputs[10] = (x11 / 16);
+    outputs[11] = (x12 / 16);
+    outputs[12] = (x13 / 16);
+    outputs[13] = (x14 / 16);
+    outputs[14] = (x15 / 16);
+    outputs[15] = (x16 / 16);
+}
+
 __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, float* dctBlocks)
 {
     int block = (blockIdx.y  * blockSize) + blockIdx.x;
@@ -194,113 +276,165 @@ __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, fl
     int block3DIndex = (block * 1024);
     int blockOffset = (threadIdx.y * blockDim.x) + threadIdx.x;
     
+//TODO: if bmVectors[<index>] == 0 !!!
     int index = (bmVectors[blockVectorIndex] << 6) + blockOffset;
-    int a = dctBlocks[index];
+    float a = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+1] << 6) + blockOffset;
-    int b = dctBlocks[index];
+    float b = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+2] << 6) + blockOffset;
-    int c = dctBlocks[index];
+    float c = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+3] << 6) + blockOffset;
-    int d = dctBlocks[index];
+    float d = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+4] << 6) + blockOffset;
-    int e = dctBlocks[index];
+    float e = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+5] << 6) + blockOffset;
-    int f = dctBlocks[index];
+    float f = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+6] << 6) + blockOffset;
-    int g = dctBlocks[index];
+    float g = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+7] << 6) + blockOffset;
-    int h = dctBlocks[index];
+    float h = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+8] << 6) + blockOffset;
-    int i = dctBlocks[index];
+    float i = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+9] << 6) + blockOffset;
-    int j = dctBlocks[index];
+    float j = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+10] << 6) + blockOffset;
-    int k = dctBlocks[index];
+    float k = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+11] << 6) + blockOffset;
-    int l = dctBlocks[index];
+    float l = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+12] << 6) + blockOffset;
-    int m = dctBlocks[index];
+    float m = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+13] << 6) + blockOffset;
-    int n = dctBlocks[index];
+    float n = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+14] << 6) + blockOffset;
-    int o = dctBlocks[index];
+    float o = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+15] << 6) + blockOffset;
-    int p = dctBlocks[index];
+    float p = (index > -1) ? dctBlocks[index] :  0;
 
-    int x1_1 = a+b+c+d+e+f+g+h; 
-    int x1_2 = i+j+k+l+m+n+o+p;
-    int x1_3 = i-j-k-l-m-n-o-p;
-    int x1 = x1_1 + x1_2;
-    int x2_1 = a-b+c-d+e-f+g-h;
-    int x2_2 = i-j+k-l+m-n+o-p; 
-    int x2_3 = i+j-k+l-m+n-o+p;
-    int x2 = x2_1 + x2_2;
-    int x3_1 = a-b-c-d+e+f-g-h;  
-    int x3_2 = i+j-k-l+m+n-o-p;
-    int x3_3 = i-j+k+l-m-n+o+p;
-    int x3 = x3_1 + x3_2;
-    int x4_1 = a-b-c+d+e-f-g+h; 
-    int x4_2 = i-j+k+l+m-n-o+p;
-    int x4_3 = i+j-k-l-m+n+o-p;
-    int x4 = x4_1 + x4_2;
-    int x5_1 = a+b+c+d-e-f-g-h; 
-    int x5_2 = i+j+k+l-m-n-o-p;
-    int x5_3 = i-j-k-l+m+n+o+p;
-    int x5 = x5_1 + x5_2;
-    int x6_1 = a-b+c-d-e+f-g+h; 
-    int x6_2 = i-j+k-l-m+n-o+p;
-    int x6_3 = i+j-k+l+m-n+o-p;
-    int x6 = x6_1 + x6_2;
-    int x7_1 = a-b-c-d-e-f+g+h; 
-    int x7_2 = i+j-k-l-m-n+o+p;
-    int x7_3 = i-j+k+l+m+n-o-p;
-    int x7 = x7_1 + x7_2;
-    int x8_1 = a-b-c+d-e+f+g-h;
-    int x8_2 = i-j+k+l-m+n+o-p;
-    int x8_3 = i+j-k-l+m-n-o+p;
-    int x8 = x8_1 + x8_2;
-    
-    int x9 = x1_1 - x1_3;
-    int x10 = x2_1 - x2_3;
-    int x11 = x3_1 - x3_3;
-    int x12 = x4_1 - x4_3;
-    int x13 = x5_1 - x5_3;
-    int x14 = x6_1 - x6_3;
-    int x15 = x7_1 - x7_3;
-    int x16 = x8_1 - x8_3;
+    float inputs[16] = {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p};
+    float outputs[16];
+    HadamarTransform16(inputs, outputs);
 
     block3DIndex += blockOffset;
-    blocks3D[block3DIndex] = (x1 >> 6);
+    blocks3D[block3DIndex] = outputs[0];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x2 >> 6);
+    blocks3D[block3DIndex] = outputs[1];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x3 >> 6);
+    blocks3D[block3DIndex] = outputs[2];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x4 >> 6);
+    blocks3D[block3DIndex] = outputs[3];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x5 >> 6);
+    blocks3D[block3DIndex] = outputs[4];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x6 >> 6);
+    blocks3D[block3DIndex] = outputs[5];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x7 >> 6);
+    blocks3D[block3DIndex] = outputs[6];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x8 >> 6);
+    blocks3D[block3DIndex] = outputs[7];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x9 >> 6);
+    blocks3D[block3DIndex] = outputs[8];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x10 >> 6);
+    blocks3D[block3DIndex] = outputs[9];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x11 >> 6);
+    blocks3D[block3DIndex] = outputs[10];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x12 >> 6);
+    blocks3D[block3DIndex] = outputs[11];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x13 >> 6);
+    blocks3D[block3DIndex] = outputs[12];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x14 >> 6);
+    blocks3D[block3DIndex] = outputs[13];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x15 >> 6);
+    blocks3D[block3DIndex] = outputs[14];
     block3DIndex += 64;
-    blocks3D[block3DIndex] = (x16 >> 6);
+    blocks3D[block3DIndex] = outputs[15];
+}
+
+__global__ void InverseHadamarTransform16(float* blocks3D, int blockSize)
+{
+    int block = (blockIdx.y  * blockSize) + blockIdx.x;
+    int block3DIndex = (block * 1024);
+    int blockPixel = (threadIdx.y * blockDim.x) + threadIdx.x;
+    
+    int index = block3DIndex + blockPixel;
+    float a = blocks3D[index];
+    index += 64;
+    float b = blocks3D[index];
+    index += 64;
+    float c = blocks3D[index];
+    index += 64;
+    float d = blocks3D[index];
+    index += 64;
+    float e = blocks3D[index];
+    index += 64;
+    float f = blocks3D[index];
+    index += 64;
+    float g = blocks3D[index];
+    index += 64;
+    float h = blocks3D[index];
+    index += 64;
+    float i = blocks3D[index];
+    index += 64;
+    float j = blocks3D[index];
+    index += 64;
+    float k = blocks3D[index];
+    index += 64;
+    float l = blocks3D[index];
+    index += 64;
+    float m = blocks3D[index];
+    index += 64;
+    float n = blocks3D[index];
+    index += 64;
+    float o = blocks3D[index];
+    index += 64;
+    float p = blocks3D[index];
+
+    float inputs[16] = {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p};
+    float outputs[16];
+    HadamarTransform16(inputs, outputs);
+
+    block3DIndex = block3DIndex + blockPixel;
+    blocks3D[block3DIndex] = outputs[0];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[1];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[2];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[3];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[4];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[5];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[6];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[7];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[8];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[9];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[10];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[11];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[12];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[13];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[14];
+    block3DIndex += 64;
+    blocks3D[block3DIndex] = outputs[15];
+}
+
+void BM3D::BM3D_InverseTransform()
+{
+    //inverse Z transform 
+    dim3 threadsPerBlock(8,8); 
+    int blockXY = sqrt(BM3D::context.nbBlocks); 
+    dim3 numBlocks(blockXY, blockXY);
+    InverseHadamarTransform16<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks3D, blockXY);
+    cudaThreadSynchronize();    
+    
+    BM3D_2DiDCT();
 }
 
 __global__ void CalculateDistances(int* distanceArray, int* blockMap, float* dctBlocks, int blockSize, int* bmVectorsComplete)
@@ -397,7 +531,41 @@ void BM3D::BM3D_BlockMatching()
     }
 }
 
-__global__ void iDCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)
+__global__ void iDCT2D8x8(float* blocks3D, float* finalBlocks3D, int blockSize, float* dctCosParam1, float* dctCosParam2, float* cArray)
+{
+    int block = (blockIdx.y * blockSize) + blockIdx.x;
+    int blocks3DIndex = (block << 10) + (threadIdx.y << 2) + threadIdx.x;
+    
+        
+    int x, y, u, v;
+    for(y = 0; y < 8; ++y)
+    {
+        for(x = 0; x < 8; ++x)
+        {
+            float sum = 0.0;
+            for(v = 0; v < 8; ++v)
+            {
+                for(u = 0; u < 8; ++u)
+                {
+                    sum += cArray[u] * cArray[v] * blocks3D[blocks3DIndex + (v << 3) + u] * dctCosParam1[(x << 3) + u] * dctCosParam2[(y << 3) + v];
+                }
+            }
+    
+            finalBlocks3D[blocks3DIndex + (y << 3) +  x] =  fabs(round(0.25 * sum));
+        }
+    }
+
+    if(block == 9000 && threadIdx.y == 2 && threadIdx.x == 2)
+    {
+        printf("\nBlock = %d\n\n", block);
+        for(int i= 0; i< 64; i++)
+        {
+            printf("%f, ", finalBlocks3D[blocks3DIndex + i]);   
+        } 
+    }
+}
+
+/*__global__ void iDCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)
 {
     int size = blockDim.x * blockDim.y;
     int block = (((blockIdx.y << 4 ) + blockIdx.x)  * size) + (threadIdx.y * blockDim.x) + threadIdx.x;
@@ -430,9 +598,9 @@ __global__ void iDCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, 
         {
             printf("%f, ", blocks[blockIndex + i]);   
         } 
-    }*/
+    }
 }
-
+*/
 
 __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, float* dctCosParam2, float* cArray)
 {
@@ -478,12 +646,22 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
     }*/
 }
 
-void BM3D::BM3D_2DiDCT()
+/*void BM3D::BM3D_2DiDCT()
 {
     dim3 threadsPerBlock(8,8);
     int blockXY = sqrt(BM3D::context.nbBlocks >> 6); 
     dim3 numBlocks(blockXY, blockXY);
     iDCT2D8x8<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, BM3D::context.idctCosParam1, BM3D::context.idctCosParam2, BM3D::context.cArray);
+    cudaThreadSynchronize ();
+}
+*/
+
+void BM3D::BM3D_2DiDCT()
+{
+    dim3 threadsPerBlock(4,4);
+    int blockXY = sqrt(BM3D::context.nbBlocks); 
+    dim3 numBlocks(blockXY, blockXY);
+    iDCT2D8x8<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks3D, BM3D::context.finalBlocks3D, blockXY, BM3D::context.idctCosParam1, BM3D::context.idctCosParam2, BM3D::context.cArray);
     cudaThreadSynchronize ();
 }
 

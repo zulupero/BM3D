@@ -34,6 +34,7 @@ public:
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
+        float* finalBlocks3D;  //device    
         int* bmVectorsComplete; //device
         int* bmVectors;         //device
         int* blockMap;          //device
@@ -68,7 +69,7 @@ private:
     static void BM3D_BlockMatching();
     static void BM3D_BlockMatching2();
     static void BM3D_HTFilter();
-	
+	static void BM3D_InverseTransform();
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
