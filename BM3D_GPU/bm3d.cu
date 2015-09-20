@@ -75,10 +75,10 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     }
 
     printf("\nBM3D context initialization");
-    int widthOffset = width % pHard;
-    int heightOffset = height % pHard;
-    BM3D::context.img_widthWithBorder = width - widthOffset + 47; //+ search window
-    BM3D::context.img_heightWithBorder = height - heightOffset + 47; //+ search window
+    //int widthOffset = width % pHard;
+    //int heightOffset = height % pHard;
+    //BM3D::context.img_widthWithBorder = width - widthOffset + 47; //+ search window
+    //BM3D::context.img_heightWithBorder = height - heightOffset + 47; //+ search window
     BM3D::context.nbBlocks = (width / 2) * (height /2);
     BM3D::context.nbBlocks_total = BM3D::context.nbBlocks;
     BM3D::context.nbBlocksPerLine = (width / 2);
@@ -106,6 +106,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, BM3D::context.img_width * BM3D::context.img_height * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.deviceImage, &img[0], width * height * sizeof(float), cudaMemcpyHostToDevice));
 
+    //TODO: replace by Hadamard8 function
     float* cosParam1 = (float*)malloc(64 * sizeof(float));
     float* cosParam2 = (float*)malloc(64 * sizeof(float));
     float* icosParam1 = (float*)malloc(64 * sizeof(float));
@@ -476,6 +477,7 @@ __global__ void ShrinkBmVectors(int* bmVectorsComplete, int* bmVectors)
     int bmVectorCIndex = block * 169;
     int bmVectorIndex = block * 16;
     int i = 0;
+
     for(int index = 0; index < 169; ++index)
     {
         int val = bmVectorsComplete[bmVectorCIndex + index];
@@ -655,6 +657,28 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
     cudaThreadSynchronize ();
 }
 */
+
+__device__ void Hadamar8(double* inputs, double* outputs)
+{
+    double DIVISOR = sqrt(8);
+    double a = inputs[0];
+    double b = inputs[1];
+    double c = inputs[2];
+    double d = inputs[3];
+    double e = inputs[4];  
+    double f = inputs[5];
+    double g = inputs[6];
+    double h = inputs[7];
+    
+    outputs[0] = (a+b+c+d+e+f+g+h)/DIVISOR;
+    outputs[1] = (a-b+c-d+e-f+g-h)/DIVISOR;
+    outputs[2] = (a+b-c-d+e+f-g-h)/DIVISOR;
+    outputs[3] = (a-b-c+d+e-f-g+h)/DIVISOR;
+    outputs[4] = (a+b+c+d-e-f-g-h)/DIVISOR;
+    outputs[5] = (a-b+c-d-e+f-g+h)/DIVISOR;
+    outputs[6] = (a+b-c-d-e-f+g+h)/DIVISOR;
+    outputs[7] = (a-b-c+d-e+f+g-h)/DIVISOR;
+}
 
 void BM3D::BM3D_2DiDCT()
 {

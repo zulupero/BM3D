@@ -16,24 +16,24 @@ public:
 	   public: 
 		int img_width;
 	  	int img_height;
-		int img_widthWithBorder;
-		int img_heightWithBorder;
+		//int img_widthWithBorder;
+		//int img_heightWithBorder;
 	   	int pHard;
 		int nHard; 
 	   	SourceImage sourceImage;
 		float* deviceImage;     //device
-        float** deviceBlocks;   //device
 		int nbBlocks_total;
         int nbBlocks;
         int nbBlocksPerLine;
         int nbBlocksPerLine_total;
-        float** deviceBlocksDCT;//device
+        //float** deviceBlocksDCT;//device
         float* dctCosParam1;    //device
         float* dctCosParam2;    //device
         float* idctCosParam1;   //device
         float* idctCosParam2;   //device
         float* cArray;          //device
         float* deviceBlocks3D;  //device
+        float* finalBlocks3D;  //device    
         int* bmVectorsComplete; //device
         int* bmVectors;         //device
         int* blockMap;          //device

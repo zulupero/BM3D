@@ -13,21 +13,21 @@ public:
 
 	class BM3D_Context 
 	{
+       //TODO: replace "float" by "double"
 	   public: 
 		int img_width;
 	  	int img_height;
-		int img_widthWithBorder;
-		int img_heightWithBorder;
+		//int img_widthWithBorder;
+		//int img_heightWithBorder;
 	   	int pHard;
 		int nHard; 
 	   	SourceImage sourceImage;
 		float* deviceImage;     //device
-        float** deviceBlocks;   //device
 		int nbBlocks_total;
         int nbBlocks;
         int nbBlocksPerLine;
         int nbBlocksPerLine_total;
-        float** deviceBlocksDCT;//device
+        //float** deviceBlocksDCT;//device
         float* dctCosParam1;    //device
         float* dctCosParam2;    //device
         float* idctCosParam1;   //device
