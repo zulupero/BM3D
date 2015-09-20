@@ -217,13 +217,13 @@ __device__ void HadamarTransform16(float* inputs, float* outputs)
     float x2_2 = i-j+k-l+m-n+o-p; 
     float x2_3 = i+j-k+l-m+n-o+p;
     float x2 = x2_1 + x2_2;
-    float x3_1 = a-b-c-d+e+f-g-h;  
+    float x3_1 = a+b-c-d+e+f-g-h;  
     float x3_2 = i+j-k-l+m+n-o-p;
     float x3_3 = i-j+k+l-m-n+o+p;
     float x3 = x3_1 + x3_2;
     float x4_1 = a-b-c+d+e-f-g+h; 
-    float x4_2 = i-j+k+l+m-n-o+p;
-    float x4_3 = i+j-k-l-m+n+o-p;
+    float x4_2 = i-j-k+l+m-n-o+p;
+    float x4_3 = i+j+k-l-m+n+o-p;
     float x4 = x4_1 + x4_2;
     float x5_1 = a+b+c+d-e-f-g-h; 
     float x5_2 = i+j+k+l-m-n-o-p;
@@ -233,13 +233,13 @@ __device__ void HadamarTransform16(float* inputs, float* outputs)
     float x6_2 = i-j+k-l-m+n-o+p;
     float x6_3 = i+j-k+l+m-n+o-p;
     float x6 = x6_1 + x6_2;
-    float x7_1 = a-b-c-d-e-f+g+h; 
+    float x7_1 = a+b-c-d-e-f+g+h; 
     float x7_2 = i+j-k-l-m-n+o+p;
     float x7_3 = i-j+k+l+m+n-o-p;
     float x7 = x7_1 + x7_2;
     float x8_1 = a-b-c+d-e+f+g-h;
-    float x8_2 = i-j+k+l-m+n+o-p;
-    float x8_3 = i+j-k-l+m-n-o+p;
+    float x8_2 = i-j-k+l-m+n+o-p;
+    float x8_3 = i+j+k-l+m-n-o+p;
     float x8 = x8_1 + x8_2;
     
     float x9 = x1_1 - x1_3;
@@ -251,22 +251,22 @@ __device__ void HadamarTransform16(float* inputs, float* outputs)
     float x15 = x7_1 - x7_3;
     float x16 = x8_1 - x8_3;
 
-    outputs[0] = (x1 / 16);
-    outputs[1] = (x2 / 16);
-    outputs[2] = (x3 / 16);
-    outputs[3] = (x4 / 16);
-    outputs[4] = (x5 / 16);
-    outputs[5] = (x6 / 16);
-    outputs[6] = (x7 / 16);
-    outputs[7] = (x8 / 16);
-    outputs[8] = (x9 / 16);
-    outputs[9] = (x10 / 16);
-    outputs[10] = (x11 / 16);
-    outputs[11] = (x12 / 16);
-    outputs[12] = (x13 / 16);
-    outputs[13] = (x14 / 16);
-    outputs[14] = (x15 / 16);
-    outputs[15] = (x16 / 16);
+    outputs[0] = (x1 / 4);
+    outputs[1] = (x2 / 4);
+    outputs[2] = (x3 / 4);
+    outputs[3] = (x4 / 4;
+    outputs[4] = (x5 / 4);
+    outputs[5] = (x6 / 4);
+    outputs[6] = (x7 / 4);
+    outputs[7] = (x8 / 4);
+    outputs[8] = (x9 / 4);
+    outputs[9] = (x10 / 4);
+    outputs[10] = (x11 / 4);
+    outputs[11] = (x12 / 4);
+    outputs[12] = (x13 / 4);
+    outputs[13] = (x14 / 4);
+    outputs[14] = (x15 / 4);
+    outputs[15] = (x16 / 4);
 }
 
 __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, float* dctBlocks)
