@@ -255,7 +255,7 @@ __device__ void HadamarTransform16(float* inputs, float* outputs)
     outputs[0] = (x1 / 4);
     outputs[1] = (x2 / 4);
     outputs[2] = (x3 / 4);
-    outputs[3] = (x4 / 4;
+    outputs[3] = (x4 / 4);
     outputs[4] = (x5 / 4);
     outputs[5] = (x6 / 4);
     outputs[6] = (x7 / 4);
@@ -557,7 +557,7 @@ __global__ void iDCT2D8x8(float* blocks3D, float* finalBlocks3D, int blockSize, 
         }
     }
 
-    if(block == 9000 && threadIdx.y == 2 && threadIdx.x == 2)
+    if(block == 16383 && threadIdx.y == 0 && threadIdx.x == 0)
     {
         printf("\nBlock = %d\n\n", block);
         for(int i= 0; i< 64; i++)
@@ -611,14 +611,14 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
     //printf("\nb= %d, bY = %d, bX = %d, tY = %d, tX = %d", block, blockIdx.y, blockIdx.x, threadIdx.y, threadIdx.x);    
     int blockIndex = block * size;
 
-    /*if(block == 16383)
+    if(block == 16383)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< size; i++)
         {
             printf("%f, ", blocks[blockIndex + i]);   
         } 
-    }*/
+    }
 
     int x, y, u, v;
     for(v= 0; v < 8; ++v)
@@ -658,9 +658,8 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
 }
 */
 
-__device__ void Hadamar8(double* inputs, double* outputs)
+__device__ void Hadamar8(double* inputs, double* outputs, double DIVISOR)
 {
-    double DIVISOR = sqrt(8);
     double a = inputs[0];
     double b = inputs[1];
     double c = inputs[2];
