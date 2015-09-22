@@ -13,6 +13,7 @@ public:
 
 	class BM3D_Context 
 	{
+       //TODO: replace "float" by "double"
 	   public: 
 		int img_width;
 	  	int img_height;
@@ -40,6 +41,10 @@ public:
         float* blocks;          //device
         float* dctBlocks;       //device
         int* pixelMap;          //device
+        int* pixelMapIndex;     //device
+        int* blockGroupMap;          //device
+        int* blockGroupMapIndex;    //device
+        float* wpArray;         //device
         int* distanceArray;     //device
         bool debugMode; 
 	};
