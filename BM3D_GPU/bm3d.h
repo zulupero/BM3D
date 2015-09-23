@@ -17,36 +17,36 @@ public:
 	   public: 
 		int img_width;
 	  	int img_height;
-		//int img_widthWithBorder;
-		//int img_heightWithBorder;
 	   	int pHard;
 		int nHard; 
-	   	SourceImage sourceImage;
-		float* deviceImage;     //device
+	   	SourceImage sourceImage;		
 		int nbBlocks_total;
         int nbBlocks;
         int nbBlocksPerLine;
-        int nbBlocksPerLine_total;
-        //float** deviceBlocksDCT;//device
-        float* dctCosParam1;    //device
-        float* dctCosParam2;    //device
-        float* idctCosParam1;   //device
-        float* idctCosParam2;   //device
-        float* cArray;          //device
-        float* deviceBlocks3D;  //device
-        float* finalBlocks3D;  //device    
-        int* bmVectorsComplete; //device
-        int* bmVectors;         //device
-        int* blockMap;          //device
-        float* blocks;          //device
-        float* dctBlocks;       //device
-        int* pixelMap;          //device
-        int* pixelMapIndex;     //device
-        int* blockGroupMap;          //device
-        int* blockGroupIndex;   //device
-        float* wpArray;         //device
-        int* distanceArray;     //device
+        int nbBlocksPerLine_total;        
         bool debugMode; 
+        
+        //Device (member-variables):
+        float* deviceImage;     
+        float* dctCosParam1;    
+        float* dctCosParam2;    
+        float* idctCosParam1;   
+        float* idctCosParam2;   
+        float* cArray;          
+        float* deviceBlocks3D;  
+        float* finalBlocks3D;   
+        int* bmVectorsComplete; 
+        int* bmVectors;         
+        int* blockMap;          
+        float* blocks;          
+        float* dctBlocks;       
+        int* pixelMap;          
+        int* pixelMapIndex;     
+        int* blockGroupMap;     
+        int* blockGroupIndex;   
+        float* wpArray;         
+        int* distanceArray;  
+        int* npArray;   
 	};
 
 private:	
@@ -74,6 +74,8 @@ private:
     static void BM3D_BlockMatching2();
     static void BM3D_HTFilter();
 	static void BM3D_InverseTransform();
+    static void BM3D_CalculateWPArray();
+    static void BM3D_Aggregation();
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
