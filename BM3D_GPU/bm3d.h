@@ -41,7 +41,9 @@ public:
         float* blocks;          //device
         float* dctBlocks;       //device
         int* pixelMap;          //device
+        int* pixelMapIndex;     //device
         int* blockGroupMap;          //device
+        int* blockGroupIndex;   //device
         float* wpArray;         //device
         int* distanceArray;     //device
         bool debugMode; 
