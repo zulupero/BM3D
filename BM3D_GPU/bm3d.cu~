@@ -154,6 +154,21 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     printf("\n\tSize NP array = %f Mb", (BM3D::context.nbBlocks * sizeof(int) /1024.00 / 1024.00));
 }
 
+__global__ void ShowBlock(int StartIndex, float* array, int* vectorArray, int index)
+{
+    printf("\nTEST---");
+    for(int i= 0; i< 64; i++)
+    {
+        printf("%f, ", array[StartIndex + i]);   
+    } 
+
+    printf("\nTEST---");
+    for(int i= 0; i< 16; i++)
+    {
+        printf("%d, ", vectorArray[index + i]);   
+    } 
+}
+
 void BM3D::BM3D_PrepareCArray(float* cArray)
 {
     float VAL = 1.0 / sqrt(2.0);
@@ -213,7 +228,7 @@ void BM3D::BM3D_CalculateWPArray()
     {
         dim3 threadsPerBlock(4,4); 
         dim3 numBlocks(32, 32);
-        calculateWPArray<<<numBlocks,threadsPerBlock>>>(BM3D::context.npArray, blockXY, BM3D::context.wpArray); 
+        calculateWPArray<<<numBlocks,threadsPerBlock>>>(BM3D::context.npArray, BM3D::context.wpArray); 
         cudaThreadSynchronize();    
     }
 }
@@ -223,9 +238,10 @@ __global__ void applyHTFilter(float* blocks3D, int limit, int blockSize)
     int block = (blockIdx.y << 7) + blockIdx.x;
     int blockPixel = (threadIdx.y << 3) + threadIdx.x;
     int block3DIndex = (block << 10) + (threadIdx.z << 6) + blockPixel;
-    int val = int(blocks3D[block3DIndex]);
-    int mul = ((((val -limit) >> 31) | -(-(val-limit) >> 31)) + 1) >> 1; 
-    blocks3D[block3DIndex] = val * mul;
+    //int val = int(blocks3D[block3DIndex]);
+    //int mul = ((((val -limit) >> 31) | -(-(val-limit) >> 31)) + 1) >> 1; 
+    if(fabs(blocks3D[block3DIndex]) < limit) blocks3D[block3DIndex] = 0;
+    //blocks3D[block3DIndex] = blocks3D[block3DIndex] * mul;
 }
 
 void BM3D::BM3D_HTFilter()
@@ -233,8 +249,12 @@ void BM3D::BM3D_HTFilter()
     dim3 threadsPerBlock(8,8,16); 
     int blockXY = sqrt(BM3D::context.nbBlocks); 
     dim3 numBlocks(blockXY, blockXY);
-    applyHTFilter<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks3D, 90, blockXY); // limmit = 3 * 30 (sigma) , BM3D IPOL = 2.7 * sigma
+    applyHTFilter<<<numBlocks,threadsPerBlock>>>(BM3D::context.deviceBlocks3D, 81, blockXY); // limmit = 2.7 * 30 (sigma) , BM3D IPOL = 2.7 * sigma
     cudaThreadSynchronize();
+
+    /*dim3 testThreads(1);
+    dim3 testBlocks(1);
+    ShowBlock<<<testBlocks, testThreads>>>(16383 << 10, BM3D::context.deviceBlocks3D, BM3D::context.bmVectors, 16383 << 4);*/
 }
 
 __device__ void HadamarTransform16(float* inputs, float* outputs)
@@ -354,15 +374,22 @@ __global__ void create3DArray(int* bmVectors, float* blocks3D, int blockSize, fl
     float n = (index > -1) ? dctBlocks[index] : 0;
     index = (bmVectors[blockVectorIndex+14] << 6) + blockOffset;
     float o = (index > -1) ? dctBlocks[index] : 0;
-    index = (bmVectors[blockVectorIndex+15] << 6) + blockOffset;
+    index = (bmVectors[blockVectorIndex+15] << 6) + blockOffset;        
     float p = (index > -1) ? dctBlocks[index] : 0;
 
     float inputs[16] = {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p};
     float outputs[16];
     HadamarTransform16(inputs, outputs);
 
-    block3DIndex += blockOffset;
+    block3DIndex += blockOffset;    
     blocks3D[block3DIndex] = outputs[0];
+    /*if(block == 16383 && threadIdx.x == 0 && threadIdx.y == 0) 
+    {
+        printf("\na = %f,b = %f,c = %f,d = %f,e = %f,f = %f,g = %f,h = %f,i = %f,j = %f,k = %f,l = %f,m = %f,n = %f,o = %f,p = %f,",
+                a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p);
+        printf("\nTEST: val = %f", blocks3D[block3DIndex]);    
+    
+    }*/
     block3DIndex += 64;
     blocks3D[block3DIndex] = outputs[1];
     block3DIndex += 64;
@@ -569,6 +596,11 @@ void BM3D::BM3D_BlockMatching()
         dim3 numBlocks(blockXY, blockXY);
         create3DArray<<<numBlocks,threadsPerBlock>>>(BM3D::context.bmVectors, BM3D::context.deviceBlocks3D, blockXY, BM3D::context.dctBlocks);
         cudaThreadSynchronize();
+
+        /*dim3 testThreads(1);
+        dim3 testBlocks(1);
+        ShowBlock<<<testBlocks, testThreads>>>(16383 << 10, BM3D::context.deviceBlocks3D, BM3D::context.bmVectors, 16383 << 4);        */
+        
     }
 }
 
@@ -577,6 +609,14 @@ __global__ void iDCT2D8x8(float* blocks3D, float* finalBlocks3D, int blockSize, 
     int block = (blockIdx.y * blockSize) + blockIdx.x;
     int blocks3DIndex = (block << 10) + (threadIdx.y << 2) + threadIdx.x;
     
+    /*if(block == 16383 && threadIdx.y == 0 && threadIdx.x == 0)
+    {
+        printf("\nBlock = %d\n\n", block);
+        for(int i= 0; i< 64; i++)
+        {
+            printf("%f, ", blocks3D[blocks3DIndex + i]);   
+        } 
+    }*/
         
     int x, y, u, v;
     for(y = 0; y < 8; ++y)
@@ -674,14 +714,14 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
     }
     */
 
-    /*if(block == 16383)
+    if(block == 16383)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< size; i++)
         {
             printf("%f, ", blocks[blockIndex + i]);   
         } 
-    }*/
+    }
 
     int x, y, u, v;
     for(v= 0; v < 8; ++v)
@@ -701,14 +741,14 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
         }
     } 
 
-    /*if(block == 16383)
+    if(block == 16383)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< size; i++)
         {
             printf("%f, ", dctBlocks[blockIndex + i]);   
         } 
-    }*/
+    }
 }
 
 /*void BM3D::BM3D_2DiDCT()
