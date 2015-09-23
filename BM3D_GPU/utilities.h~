@@ -25,7 +25,7 @@ int save_image(
 ,   const unsigned chnls
 );
 
-void saveDeveiceArray(float* array, int size, int w, const char* filename);
+void saveDeviceArray(float* array, int size, int w, const char* filename);
 
 //! Add noise
 void add_noise(

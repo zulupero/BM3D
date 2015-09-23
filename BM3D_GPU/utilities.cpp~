@@ -694,7 +694,7 @@ unsigned ind_size(
     return k;
 }
 
-void saveDeveiceArray(float* array, int size, int w, const char* filename)
+void saveDeviceArray(float* array, int size, int w, const char* filename)
 {
     ofstream fout(filename);
     float* hArray = (float*)malloc(size * sizeof(float));

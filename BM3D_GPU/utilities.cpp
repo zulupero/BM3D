@@ -131,7 +131,7 @@ int load_image(
  **/
 int save_image(
     char* name
-,   std::vector<float> &img
+,   float* img
 ,   const unsigned width
 ,   const unsigned height
 ,   const unsigned chnls

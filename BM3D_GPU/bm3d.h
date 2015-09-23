@@ -47,6 +47,8 @@ public:
         float* wpArray;         
         int* distanceArray;  
         int* npArray;   
+        float* basicImage;
+        float* basicNumDen;
 	};
 
 private:	
@@ -76,6 +78,8 @@ private:
 	static void BM3D_InverseTransform();
     static void BM3D_CalculateWPArray();
     static void BM3D_Aggregation();
+    static void BM3D_dispose();
+    static void BM3D_SaveBasicImage();
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
