@@ -48,7 +48,7 @@ public:
         int* distanceArray;  
         int* npArray;   
         float* basicImage;
-        float* basicNumDen;
+        float* basicValues;
 	};
 
 private:	

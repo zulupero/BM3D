@@ -16,8 +16,6 @@ cuda_runtime_api.h
 cufft.h
 -
 
-/home/cuenat/BM3D/BM3D/BM3D_GPU/io_png.h
-
 /home/cuenat/BM3D/BM3D/BM3D_GPU/main.cpp
 stdio.h
 -
@@ -35,30 +33,6 @@ utilities.h
 /home/cuenat/BM3D/BM3D/BM3D_GPU/utilities.h
 bm3d.h
 /home/cuenat/BM3D/BM3D/BM3D_GPU/bm3d.h
-
-/home/cuenat/BM3D/BM3D/BM3D_GPU/mt19937ar.h
-
-/home/cuenat/BM3D/BM3D/BM3D_GPU/utilities.cpp
-iostream
--
-fstream
--
-stdlib.h
--
-time.h
--
-unistd.h
--
-math.h
--
-mt19937ar.h
-/home/cuenat/BM3D/BM3D/BM3D_GPU/mt19937ar.h
-io_png.h
-/home/cuenat/BM3D/BM3D/BM3D_GPU/io_png.h
-utilities.h
-/home/cuenat/BM3D/BM3D/BM3D_GPU/utilities.h
-cuda_runtime_api.h
--
 
 /home/cuenat/BM3D/BM3D/BM3D_GPU/utilities.h
 vector
