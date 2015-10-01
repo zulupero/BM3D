@@ -194,13 +194,13 @@ __global__ void ShowImage(float* image, float* basicImage, int* pixelMap, int* b
     printf("\nTest PixelMap \n");
     for(int i= 0; i<64; ++i)
     {
-        printf("%d, ", pixelMap[i]);      
+        printf("%d, ", pixelMap[(488 * 192) + i]);      
     }    
     
     printf("\nTest BlockGroup \n");
     for(int i= 0; i<64; ++i)
     {
-        printf("%d, ", blockGroupMap[i<<1]);      
+        printf("%d, ", blockGroupMap[(4106 << 7) + (i<<1)]);      
     }
        
     
@@ -305,14 +305,15 @@ __global__ void calculateNumeratorDenominator_basic(float* wpArray, float* basic
             if(group == -1) break;
 
             int block3DPos = blockGroupMap[index2+1];
-            float val = blocks3D[(group << 10) + (block3DPos << 6) + (y << 8) + x];
+            int block3DIndex = (group << 10) + (block3DPos << 6) + (y << 3) + x;
+            float val = blocks3D[block3DIndex];
             int indexValue = group * 2;
-            if(val > 0)
+            //if(val > 0)
             {
                 basicValues[basicValuesIndex] += (wpArray[group] * val);
                 basicValues[basicValuesIndex+1] += wpArray[group];    
             }
-            if(pixelIndex == 488) printf("\nval = %f, block = %d, group = %d, gIndex = %d, x = %d, y= %d", val, block, group, block3DPos, x, y);         
+            if(pixelIndex == 488) printf("\nval = %f, block = %d, group = %d, gIndex = %d, x = %d, y= %d, index = %d", val, block, group, block3DPos, x, y, block3DIndex);         
                         
             //basicValues[basicValuesIndex] += val;
             //basicValues[basicValuesIndex+1] += //wpArray[group];
@@ -429,7 +430,7 @@ void BM3D::BM3D_HTFilter()
 
     dim3 testThreads(1);
     dim3 testBlocks(1);
-    ShowBlock<<<testBlocks, testThreads>>>(4106 << 10, BM3D::context.deviceBlocks3D, BM3D::context.bmVectors, 4106 << 4);
+    ShowBlock<<<testBlocks, testThreads>>>((4104 << 10) + (2 << 6), BM3D::context.deviceBlocks3D, BM3D::context.bmVectors, 4104 << 4);
 
 }
 
@@ -775,7 +776,7 @@ void BM3D::BM3D_BlockMatching()
 
         dim3 testThreads(1);
         dim3 testBlocks(1);
-        ShowBlock<<<testBlocks, testThreads>>>(4106 << 10, BM3D::context.deviceBlocks3D, BM3D::context.bmVectors, 4106 << 4);        
+        ShowBlock<<<testBlocks, testThreads>>>((4104 << 10) + (2 << 6), BM3D::context.deviceBlocks3D, BM3D::context.bmVectors, 4104 << 4);        
         
     }
 }
@@ -783,9 +784,9 @@ void BM3D::BM3D_BlockMatching()
 __global__ void iDCT2D8x8(float* blocks3D, float* finalBlocks3D, int blockSize, float* dctCosParam1, float* dctCosParam2, float* cArray)
 {
     int block = (blockIdx.y * blockSize) + blockIdx.x;
-    int blocks3DIndex = (block << 10) + (threadIdx.y << 2) + threadIdx.x;
+    int blocks3DIndex = (block << 10) + (((threadIdx.y << 2) + threadIdx.x) << 6);
     
-    if(block == 4106 && threadIdx.y == 0 && threadIdx.x == 0)
+    if(block == 4104 && threadIdx.y == 0 && threadIdx.x == 2)
     {
         printf("\nBlock = %d\n\n", block);
         for(int i= 0; i< 64; i++)
@@ -821,7 +822,7 @@ __global__ void iDCT2D8x8(float* blocks3D, float* finalBlocks3D, int blockSize, 
         }
     }*/
 
-    if(block == 4106 && threadIdx.y == 0 && threadIdx.x == 0)
+    if(block == 4104 && threadIdx.y == 0 && threadIdx.x == 2)
     {
         printf("\nBlock = %d\n\n", block);
         for(int i= 0; i< 64; i++)
@@ -890,7 +891,7 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
     }
     */
 
-    if(block == 4106)
+    if(block == 4104)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< size; i++)
@@ -917,7 +918,7 @@ __global__ void DCT2D8x8(float* blocks, float* dctBlocks, float* dctCosParam1, f
         }
     } 
 
-    if(block == 4106)
+    if(block == 4104)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< size; i++)
@@ -963,8 +964,8 @@ __global__ void Hadamar2D_Row(float* blocks, float* dctBlocks, int blockSize, fl
     int block = (blockIdx.y * blockSize) + blockIdx.x;
     int blockIndex = (block << 6);
     
-    printf("\nblock = %d", block);
-    if(block == 16383)
+ 
+    if(block == 4104)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< 64; i++)
@@ -1101,7 +1102,7 @@ __global__ void Hadamar2D_Col(float* blocks, float* dctBlocks, int blockSize, fl
 
     //}
 
-    if(block == 16383)
+    if(block == 4104)
     {
         printf("\nDBlock = %d\n", block);
         for(int i= 0; i< 64; i++)
@@ -1123,19 +1124,19 @@ void BM3D::BM3D_2DiDCT()
 
 void BM3D::BM3D_2DDCT()
 {
-    dim3 threadsPerBlock(8,8);
+    /*dim3 threadsPerBlock(8,8);
     int blockXY = sqrt(BM3D::context.nbBlocks >> 6); 
     dim3 numBlocks(blockXY, blockXY);
     DCT2D8x8<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, BM3D::context.dctCosParam1, BM3D::context.dctCosParam2, BM3D::context.cArray);
-    cudaThreadSynchronize ();
-    /*dim3 threadsPerBlock(8);
+    cudaThreadSynchronize ();*/
+    dim3 threadsPerBlock(8);
     int blockXY = sqrt(BM3D::context.nbBlocks); 
     dim3 numBlocks(blockXY, blockXY);
     float DIVISOR = sqrt(8);
     Hadamar2D_Row<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, blockXY, DIVISOR);
     cudaThreadSynchronize();
-    Hadamar2D_Col<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, blockXY, DIVISOR);
-    cudaThreadSynchronize();*/
+    //Hadamar2D_Col<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, blockXY, DIVISOR);
+    //cudaThreadSynchronize();
 }
 
 __global__ void CreateBlocks_Zone(int* blockMap, int blockIndexOffset, int offsetX, int offsetY, int vX, int vY)
