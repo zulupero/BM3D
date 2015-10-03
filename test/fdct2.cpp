@@ -76,6 +76,7 @@ void Transform(double array[16][8][8])
             array[k][7][i] = outputs[7];
         }
 
+        //if(k!=15) continue;
         printf("\nBlock = %d", k);        
         for(int i =0; i < 8; ++i)
         {
@@ -87,8 +88,71 @@ void Transform(double array[16][8][8])
         }
         printf("\n");
     }
+}
 
-    
+void TransformI(double array[16][8][8])
+{
+    double inputs[8];
+    double outputs[8];
+    for(int k=0; k<16; ++k)
+    {
+        for(int i=0; i<8; ++i)
+        {
+            inputs[0] = array[k][0][i]; 
+            inputs[1] = array[k][1][i];
+            inputs[2] = array[k][2][i];
+            inputs[3] = array[k][3][i];
+            inputs[4] = array[k][4][i]; 
+            inputs[5] = array[k][5][i];
+            inputs[6] = array[k][6][i];
+            inputs[7] = array[k][7][i];
+
+            Hadamar8(inputs, outputs);
+
+            array[k][0][i] = outputs[0];
+            array[k][1][i] = outputs[1];
+            array[k][2][i] = outputs[2];
+            array[k][3][i] = outputs[3];
+            array[k][4][i] = outputs[4]; 
+            array[k][5][i] = outputs[5];
+            array[k][6][i] = outputs[6];
+            array[k][7][i] = outputs[7];
+        }
+
+        for(int i=0; i<8; ++i)
+        {
+            inputs[0] = array[k][i][0]; 
+            inputs[1] = array[k][i][1];
+            inputs[2] = array[k][i][2];
+            inputs[3] = array[k][i][3];
+            inputs[4] = array[k][i][4]; 
+            inputs[5] = array[k][i][5];
+            inputs[6] = array[k][i][6];
+            inputs[7] = array[k][i][7];
+
+            Hadamar8(inputs, outputs);
+
+            array[k][i][0] = outputs[0]; 
+            array[k][i][1] = outputs[1];
+            array[k][i][2] = outputs[2];
+            array[k][i][3] = outputs[3];
+            array[k][i][4] = outputs[4]; 
+            array[k][i][5] = outputs[5];
+            array[k][i][6] = outputs[6];
+            array[k][i][7] = outputs[7];
+        }
+
+        printf("\nBlock = %d", k);        
+        for(int i =0; i < 8; ++i)
+        {
+            printf("\n");
+            for(int j =0; j< 8;++j)
+            {
+                printf("%f, ", array[k][i][j]);
+            }
+        }
+        printf("\n");
+    }
 }
 
 void HadamarTransform16(double* inputs, double* outputs)
@@ -110,64 +174,22 @@ void HadamarTransform16(double* inputs, double* outputs)
     double o = inputs[14];
     double p = inputs[15];
 
-    double x1_1 = a+b+c+d+e+f+g+h; 
-    double x1_2 = i+j+k+l+m+n+o+p;
-    double x1_3 = i-j-k-l-m-n-o-p;
-    double x1 = x1_1 + x1_2;
-    double x2_1 = a-b+c-d+e-f+g-h;
-    double x2_2 = i-j+k-l+m-n+o-p; 
-    double x2_3 = i+j-k+l-m+n-o+p;
-    double x2 = x2_1 + x2_2;
-    double x3_1 = a+b-c-d+e+f-g-h;  
-    double x3_2 = i+j-k-l+m+n-o-p;
-    double x3_3 = i-j+k+l-m-n+o+p;
-    double x3 = x3_1 + x3_2;
-    double x4_1 = a-b-c+d+e-f-g+h; 
-    double x4_2 = i-j-k+l+m-n-o+p;
-    double x4_3 = i+j+k-l-m+n+o-p;
-    double x4 = x4_1 + x4_2;
-    double x5_1 = a+b+c+d-e-f-g-h; 
-    double x5_2 = i+j+k+l-m-n-o-p;
-    double x5_3 = i-j-k-l+m+n+o+p;
-    double x5 = x5_1 + x5_2;
-    double x6_1 = a-b+c-d-e+f-g+h; 
-    double x6_2 = i-j+k-l-m+n-o+p;
-    double x6_3 = i+j-k+l+m-n+o-p;
-    double x6 = x6_1 + x6_2;
-    double x7_1 = a+b-c-d-e-f+g+h; 
-    double x7_2 = i+j-k-l-m-n+o+p;
-    double x7_3 = i-j+k+l+m+n-o-p;
-    double x7 = x7_1 + x7_2;
-    double x8_1 = a-b-c+d-e+f+g-h;
-    double x8_2 = i-j-k+l-m+n+o-p;
-    double x8_3 = i+j+k-l+m-n-o+p;
-    double x8 = x8_1 + x8_2;
-    
-    double x9 = x1_1 - x1_3;
-    double x10 = x2_1 - x2_3;
-    double x11 = x3_1 - x3_3;
-    double x12 = x4_1 - x4_3;
-    double x13 = x5_1 - x5_3;
-    double x14 = x6_1 - x6_3;
-    double x15 = x7_1 - x7_3;
-    double x16 = x8_1 - x8_3;
-
-    outputs[0] = (x1 / 4);
-    outputs[1] = (x2 / 4);
-    outputs[2] = (x3 / 4);
-    outputs[3] = (x4 / 4);
-    outputs[4] = (x5 / 4);
-    outputs[5] = (x6 / 4);
-    outputs[6] = (x7 / 4);
-    outputs[7] = (x8 / 4);
-    outputs[8] = (x9 / 4);
-    outputs[9] = (x10 / 4);
-    outputs[10] = (x11 / 4);
-    outputs[11] = (x12 / 4);
-    outputs[12] = (x13 / 4);
-    outputs[13] = (x14 / 4);
-    outputs[14] = (x15 / 4);
-    outputs[15] = (x16 / 4);
+    outputs[0] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) / 4.0;
+    outputs[1] = (a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p) / 4.0;
+    outputs[2] = (a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p) / 4.0;
+    outputs[3] = (a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p) / 4.0;
+    outputs[4] = (a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p) / 4.0;
+    outputs[5] = (a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p) / 4.0;
+    outputs[6] = (a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p) / 4.0;
+    outputs[7] = (a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p) / 4.0;
+    outputs[8] = (a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p) / 4.0;
+    outputs[9] = (a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p) / 4.0;
+    outputs[10] = (a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p) / 4.0;
+    outputs[11] = (a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p) / 4.0;
+    outputs[12] = (a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p) / 4.0;
+    outputs[13] = (a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p) / 4.0;
+    outputs[14] = (a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p) / 4.0;
+    outputs[15] = (a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p) / 4.0;
 }
 
 void Transform16(double array[16][8][8])
@@ -177,10 +199,13 @@ void Transform16(double array[16][8][8])
         for(int j=0; j<8; ++j)
         {
             double inputs[16];
+            //printf("\nz array %d,%d:\n", i,j);
             for(int k=0; k<16; ++k)
             {
                 inputs[k] = array[k][i][j];
+                if(i == 0 && j == 0) printf("%f, ", array[k][i][j]);
             }       
+
             double outputs[16];
             HadamarTransform16(&inputs[0], &outputs[0]);
             for(int k=0; k<16; ++k)
@@ -190,7 +215,8 @@ void Transform16(double array[16][8][8])
         }
     }
 
-    for(int k=0; k<16; ++k)
+    //for(int k=0; k<16; ++k)
+    int k= 15;
     {
         printf("\nBlock = %d" ,k);
         for(int i =0; i < 8; ++i)
@@ -202,6 +228,14 @@ void Transform16(double array[16][8][8])
             }
         }
     }
+}
+
+void HT(double array[16][8][8])
+{
+    for(int i=0; i<16; i++)
+        for(int j=0; j<8; ++j)
+            for(int n = 0; n<8; n++)
+                array[i][j][n] = (fabs(array[i][j][n]) < 81) ? 0.0 : array[i][j][n];
 }
 
 int main()
@@ -352,7 +386,9 @@ int main()
                      {255.000000, 138.000000, 205.000000, 178.000000, 168.000000, 208.000000, 180.000000, 206.000000}}
     };
 
-    for(int k=0; k<16; ++k)
+    //for(int k=0; k<16; ++k)
+
+    int k= 15;
     {
         printf("\nBlock = %d" ,k);
         for(int i =0; i < 8; ++i)
@@ -368,6 +404,7 @@ int main()
     Transform(array);
     printf("\nTransform 3D\n");
     Transform16(array);
+    HT(array);
     printf("\nTransform 3D inverse\n");        
     Transform16(array);
     printf("\niDCT\n");
