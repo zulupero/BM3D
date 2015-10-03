@@ -49,6 +49,7 @@ public:
         int* npArray;   
         float* basicImage;
         float* basicValues;
+        float* kaiserWindowCoef;
 	};
 
 private:	

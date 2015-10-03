@@ -144,6 +144,19 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.basicValues, BM3D::context.img_width * BM3D::context.img_height * 2 * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.basicValues, 0, BM3D::context.img_width * BM3D::context.img_height * 2 * sizeof(float)));
 
+    //Kaiser-window coef
+    float kaiserWindow[64] = {0.1924, 0.2989, 0.3846, 0.4325, 0.4325, 0.3846, 0.2989, 0.1924,
+                          0.2989, 0.4642, 0.5974, 0.6717, 0.6717, 0.5974, 0.4642, 0.2989,
+                          0.3846, 0.5974, 0.7688, 0.8644, 0.8644, 0.7688, 0.5974, 0.3846,
+                          0.4325, 0.6717, 0.8644, 0.9718, 0.9718, 0.8644, 0.6717, 0.4325,
+                          0.4325, 0.6717, 0.8644, 0.9718, 0.9718, 0.8644, 0.6717, 0.4325,
+                          0.3846, 0.5974, 0.7688, 0.8644, 0.8644, 0.7688, 0.5974, 0.3846,
+                          0.2989, 0.4642, 0.5974, 0.6717, 0.6717, 0.5974, 0.4642, 0.2989,
+                          0.1924, 0.2989, 0.3846, 0.4325, 0.4325, 0.3846, 0.2989, 0.1924};
+
+    gpuErrchk(cudaMalloc(&BM3D::context.kaiserWindowCoef, 64 * sizeof(float)));
+    gpuErrchk(cudaMemcpy(BM3D::context.kaiserWindowCoef, kaiserWindow, 64 * sizeof(float), cudaMemcpyHostToDevice));
+
     //TODO: replace by Hadamard8 function
     float* cosParam1 = (float*)malloc(64 * sizeof(float));
     float* cosParam2 = (float*)malloc(64 * sizeof(float));
@@ -280,7 +293,7 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_dispose();
 }
 
-__global__ void calculateNumeratorDenominator_basic(float* wpArray, float* basicValues, int* pixelMap, int* blockGroupMap, float* blocks3D)
+__global__ void calculateNumeratorDenominator_basic(float* wpArray, float* basicValues, int* pixelMap, int* blockGroupMap, float* blocks3D, float* kWindowCoef)
 {
     int pixelIndex = (((blockIdx.y << 5) + blockIdx.x) << 6) + (threadIdx.y << 3) + threadIdx.x;
     int pixelMapIndex = pixelIndex * 192;
@@ -308,10 +321,11 @@ __global__ void calculateNumeratorDenominator_basic(float* wpArray, float* basic
             int block3DIndex = (group << 10) + (block3DPos << 6) + (y << 3) + x;
             float val = blocks3D[block3DIndex];
             int indexValue = group * 2;
+            int kWindowIndex = (y << 3) + x;
             //if(val > 0)
             {
-                basicValues[basicValuesIndex] += (wpArray[group] * val);
-                basicValues[basicValuesIndex+1] += wpArray[group];    
+                basicValues[basicValuesIndex] += (kWindowCoef[kWindowIndex] * wpArray[group] * val);
+                basicValues[basicValuesIndex+1] += (/*kWindowCoef[kWindowIndex]*/  wpArray[group]);    
             }
             if(pixelIndex == 488) printf("\nval = %f, block = %d, group = %d, gIndex = %d, x = %d, y= %d, index = %d", val, block, group, block3DPos, x, y, block3DIndex);         
                         
@@ -348,7 +362,7 @@ void BM3D::BM3D_Aggregation()
         //dim3 numBlocks(BM3D::context.img_width, BM3D::context.img_height,8);
         dim3 threadsPerBlock(8,8); 
         dim3 numBlocks(32, 32);
-        calculateNumeratorDenominator_basic<<<numBlocks,threadsPerBlock>>>(BM3D::context.wpArray, BM3D::context.basicValues, BM3D::context.pixelMap, BM3D::context.blockGroupMap, BM3D::context.finalBlocks3D); 
+        calculateNumeratorDenominator_basic<<<numBlocks,threadsPerBlock>>>(BM3D::context.wpArray, BM3D::context.basicValues, BM3D::context.pixelMap, BM3D::context.blockGroupMap, BM3D::context.finalBlocks3D, BM3D::context.kaiserWindowCoef); 
         cudaThreadSynchronize();    
     }
 
@@ -1082,19 +1096,19 @@ void BM3D::BM3D_2DiDCT()
 
 void BM3D::BM3D_2DDCT()
 {
-    /*dim3 threadsPerBlock(8,8);
+    dim3 threadsPerBlock(8,8);
     int blockXY = sqrt(BM3D::context.nbBlocks >> 6); 
     dim3 numBlocks(blockXY, blockXY);
     DCT2D8x8<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, BM3D::context.dctCosParam1, BM3D::context.dctCosParam2, BM3D::context.cArray);
-    cudaThreadSynchronize ();*/
-    dim3 threadsPerBlock(8);
+    cudaThreadSynchronize ();
+    /*dim3 threadsPerBlock(8);
     int blockXY = sqrt(BM3D::context.nbBlocks); 
     dim3 numBlocks(blockXY, blockXY);
     float DIVISOR = sqrt(8);
     Hadamar2D_Row<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, blockXY, DIVISOR);
     cudaThreadSynchronize();
-    //Hadamar2D_Col<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, blockXY, DIVISOR);
-    //cudaThreadSynchronize();
+    Hadamar2D_Col<<<numBlocks,threadsPerBlock>>>(BM3D::context.blocks, BM3D::context.dctBlocks, blockXY, DIVISOR);
+    cudaThreadSynchronize();*/
 }
 
 __global__ void CreateBlocks_Zone(int* blockMap, int blockIndexOffset, int offsetX, int offsetY, int vX, int vY)
