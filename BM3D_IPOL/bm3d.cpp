@@ -942,6 +942,7 @@ void ht_filtering_hadamard(
         const float T = lambdaHard3D * sigma_table[c] * coef_norm;
         for (unsigned k = 0; k < kHard_2 * nSx_r; k++)
         {
+            float val = group_3D[k + dc];
             if (fabs(group_3D[k + dc]) > T)
                 weight_table[c]++;
             else

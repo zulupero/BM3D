@@ -45,7 +45,7 @@ public:
         int* blockGroupMap;     
         int* blockGroupIndex;   
         float* wpArray;         
-        int* distanceArray;  
+        float* distanceArray;  
         int* npArray;   
         float* basicImage;
         float* basicValues;

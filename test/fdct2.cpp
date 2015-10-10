@@ -404,7 +404,7 @@ int main()
     Transform(array);
     printf("\nTransform 3D\n");
     Transform16(array);
-    HT(array);
+    //HT(array);
     printf("\nTransform 3D inverse\n");        
     Transform16(array);
     printf("\niDCT\n");
