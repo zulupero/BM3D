@@ -15,6 +15,8 @@ public:
 	{
        //TODO: replace "float" by "double"
 	   public: 
+        int debugPixel;
+        int debugBlock;
 		int img_width;
 	  	int img_height;
 	   	int pHard;
@@ -50,6 +52,7 @@ public:
         float* basicImage;
         float* basicValues;
         float* kaiserWindowCoef;
+        int* numberOfSimilarPatches; //per 3D block
 	};
 
 private:	
