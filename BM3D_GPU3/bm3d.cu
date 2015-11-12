@@ -71,8 +71,8 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
 
     gpuErrchk(cudaMalloc(&BM3D::context.kaiserWindowCoef, 64 * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.kaiserWindowCoef, kaiserWindow, 64 * sizeof(float), cudaMemcpyHostToDevice));
-    gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocksIntern * 100 * 12 * sizeof(float)));
-    gpuErrchk(cudaMemset(BM3D::context.blockMap, -1, BM3D::context.nbBlocksIntern * 100 * 12 * sizeof(float)));
+    gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocksIntern * 100 * 4 * sizeof(double)));
+    gpuErrchk(cudaMemset(BM3D::context.blockMap, -1, BM3D::context.nbBlocksIntern * 100 * 4 * sizeof(double)));
     gpuErrchk(cudaMalloc(&BM3D::context.blocks, BM3D::context.nbBlocks * 64 * sizeof(double)));
 
     printf("\n\tNumber of blocks          = %d", BM3D::context.nbBlocks);
@@ -84,7 +84,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     printf("\n\tSize Image array          = %f Mb", (BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float)/1024.00 / 1024.00));  
     printf("\n\tBasic Image array         = %f Mb", (BM3D::context.img_width * BM3D::context.img_height * sizeof(float)/1024.00 / 1024.00));
     printf("\n\tBlocks array              = %f Mb", (BM3D::context.nbBlocks * 64 * sizeof(double)/1024.00 / 1024.00));  
-    printf("\n\tBlocks Map                = %f Mb", (BM3D::context.nbBlocks * 100 * 12 * sizeof(float)/1024.00 / 1024.00));  
+    printf("\n\tBlocks Map                = %f Mb", (BM3D::context.nbBlocks * 100 * 4 * sizeof(double)/1024.00 / 1024.00));  
 }
 
 void BM3D::BM3D_Run()
@@ -106,16 +106,122 @@ void BM3D::BM3D_BasicEstimate()
 {
     printf("\n\tBasic estimates (1 step)");
     BM3D_CreateBlock();
+    //BM3D_ShowBlock(30, 30);
     BM3D_2DTransform();
-    BM3D_CalculateDistance();
+    //BM3D_ShowBlock(30, 30);
+    //BM3D_2DTransform();
+    //BM3D_ShowBlock(30, 30);
+    BM3D_BlockMatching();
+    BM3D_ShowDistance(30,30);
     
 }
 
-
-
-void BM3D::BM3D_CalculateDistance()
+__global__
+void showDistance(int x, int y, int size, double* blockMap)
 {
-    
+    int index = ((y * size) + x) * 400;
+    printf("\n");
+    for(int i= 0; i < 100; i++)
+    {
+        printf("\ncmp block %d", i);
+        printf("\n\tdistance %f", blockMap[index + 3]);
+    }
+}
+
+void BM3D::BM3D_ShowDistance(int x, int y)
+{
+   {
+        dim3 numBlocks(1);
+        dim3 numThreads(1);
+        showDistance<<<numBlocks,numThreads>>>(x, y, BM3D::context.widthBlocksIntern, BM3D::context.blockMap); 
+        cudaThreadSynchronize();   
+   }     
+}
+
+__device__
+void addRow(double* blockRowValues, double* cmpRowValues)
+{
+    blockRowValues[0] = ((cmpRowValues[0] - blockRowValues[0]) * (cmpRowValues[0] - blockRowValues[0])) +
+                        ((cmpRowValues[1] - blockRowValues[1]) * (cmpRowValues[1] - blockRowValues[1])) +
+                        ((cmpRowValues[2] - blockRowValues[2]) * (cmpRowValues[2] - blockRowValues[2])) +
+                        ((cmpRowValues[3] - blockRowValues[3]) * (cmpRowValues[3] - blockRowValues[3])) +
+                        ((cmpRowValues[4] - blockRowValues[4]) * (cmpRowValues[4] - blockRowValues[4])) +
+                        ((cmpRowValues[5] - blockRowValues[5]) * (cmpRowValues[5] - blockRowValues[5])) +
+                        ((cmpRowValues[6] - blockRowValues[6]) * (cmpRowValues[6] - blockRowValues[6])) +
+                        ((cmpRowValues[7] - blockRowValues[7]) * (cmpRowValues[7] - blockRowValues[7]));
+}
+
+__global__
+void CalculateDistance(double* blockMap, double* blocks, int size)
+{
+    int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 400) + (threadIdx.y * 10 + threadIdx.x) * 4;
+    int cmpBlockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 400) + 220;
+    int blockIndex = (int)blockMap[blockMapIndex];// + (threadIdx.z << 3);
+    int cmpBlockIndex = (int)blockMap[cmpBlockMapIndex];// + (threadIdx.z << 3);
+
+    double blockValues[8];
+    double cmpValues[8];    
+    double sum = 0;
+    for(int i = 0; i < 8; ++i)
+    {   
+        blockIndex += (i << 3); 
+        blockValues[0] = blocks[blockIndex];
+        blockValues[1] = blocks[blockIndex+1];
+        blockValues[2] = blocks[blockIndex+2]; 
+        blockValues[3] = blocks[blockIndex+3];
+        blockValues[4] = blocks[blockIndex+4];
+        blockValues[5] = blocks[blockIndex+5];
+        blockValues[6] = blocks[blockIndex+6];
+        blockValues[7] = blocks[blockIndex+7];
+
+        cmpBlockIndex += (i << 3);
+        cmpValues[0] = blocks[cmpBlockIndex];
+        cmpValues[1] = blocks[cmpBlockIndex+1];
+        cmpValues[2] = blocks[cmpBlockIndex+2]; 
+        cmpValues[3] = blocks[cmpBlockIndex+3];
+        cmpValues[4] = blocks[cmpBlockIndex+4];
+        cmpValues[5] = blocks[cmpBlockIndex+5];
+        cmpValues[6] = blocks[cmpBlockIndex+6];
+        cmpValues[7] = blocks[cmpBlockIndex+7];
+        
+        addRow(blockValues, cmpValues);
+        sum += blockValues[0];
+    }
+
+    blockMap[blockMapIndex +3] = sum;
+
+    /*blockMap[blockMapIndex+3 + threadIdx.z] = ((blocks[cmpBlockIndex] - blocks[blockIndex]) * (blocks[cmpBlockIndex] - blocks[blockIndex])) +
+                                ((blocks[cmpBlockIndex+1] - blocks[blockIndex]+1) * (blocks[cmpBlockIndex+1] - blocks[blockIndex+1])) +
+                                ((blocks[cmpBlockIndex+2] - blocks[blockIndex]+2) * (blocks[cmpBlockIndex+2] - blocks[blockIndex+2])) +
+                                ((blocks[cmpBlockIndex+3] - blocks[blockIndex]+3) * (blocks[cmpBlockIndex+3] - blocks[blockIndex+3])) +
+                                ((blocks[cmpBlockIndex+4] - blocks[blockIndex]+4) * (blocks[cmpBlockIndex+4] - blocks[blockIndex+4])) +
+                                ((blocks[cmpBlockIndex+5] - blocks[blockIndex]+5) * (blocks[cmpBlockIndex+5] - blocks[blockIndex+5])) +
+                                ((blocks[cmpBlockIndex+6] - blocks[blockIndex]+6) * (blocks[cmpBlockIndex+6] - blocks[blockIndex+6])) +
+                                ((blocks[cmpBlockIndex+7] - blocks[blockIndex]+7) * (blocks[cmpBlockIndex+7] - blocks[blockIndex+7]));*/
+}
+
+
+__global__
+void SelectBlock(double* blockMap, int size)
+{
+    //int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1200) + (threadIdx.y * 10 + threadIdx.x) * 12;
+}
+
+
+void BM3D::BM3D_BlockMatching()
+{
+    {
+        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+        dim3 numThreads(10,10);
+        CalculateDistance<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.blocks, BM3D::context.widthBlocksIntern); 
+        cudaThreadSynchronize ();   
+    }
+    {
+        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+        dim3 numThreads(10,10);
+        SelectBlock<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.widthBlocksIntern); 
+        cudaThreadSynchronize ();   
+    }  
 }
 
 __device__ void Hadamar8(double* inputs, double DIVISOR)
@@ -186,23 +292,39 @@ void Transform2D_col(double* blocks, int size, double DIVISOR)
 {
     int blockIndex = (((blockIdx.y * size) + blockIdx.x) << 6) + threadIdx.x;
     double inputs[8];
-    inputs[0] = blocks[blockIndex];
-    inputs[1] = blocks[blockIndex+8];
-    inputs[2] = blocks[blockIndex+8];
-    inputs[3] = blocks[blockIndex+8];
-    inputs[4] = blocks[blockIndex+8];
-    inputs[5] = blocks[blockIndex+8];
-    inputs[6] = blocks[blockIndex+8];
-    inputs[7] = blocks[blockIndex+8];
+    int index = blockIndex;
+    inputs[0] = blocks[index];
+    index += 8;
+    inputs[1] = blocks[index];
+    index += 8;
+    inputs[2] = blocks[index];
+    index += 8;
+    inputs[3] = blocks[index];
+    index += 8;
+    inputs[4] = blocks[index];
+    index += 8;
+    inputs[5] = blocks[index];
+    index += 8;
+    inputs[6] = blocks[index];
+    index += 8;
+    inputs[7] = blocks[index];
     Hadamar8(inputs, DIVISOR);
-    blocks[blockIndex] = inputs[0];
-    blocks[blockIndex+8] = inputs[1];
-    blocks[blockIndex+8] = inputs[2];
-    blocks[blockIndex+8] = inputs[3];
-    blocks[blockIndex+8] = inputs[4];
-    blocks[blockIndex+8] = inputs[5];
-    blocks[blockIndex+8] = inputs[6];
-    blocks[blockIndex+8] = inputs[7];
+    index = blockIndex;
+    blocks[index] = inputs[0];
+    index += 8;
+    blocks[index] = inputs[1];
+    index += 8;
+    blocks[index] = inputs[2];
+    index += 8;
+    blocks[index] = inputs[3];
+    index += 8;
+    blocks[index] = inputs[4];
+    index += 8;
+    blocks[index] = inputs[5];
+    index += 8;
+    blocks[index] = inputs[6];
+    index += 8;
+    blocks[index] = inputs[7];
 }
 
 void BM3D::BM3D_2DTransform()
@@ -245,13 +367,13 @@ void CreateBlocks(float* basicImage, double* blocks, int size, int width, int pH
 }
 
 __global__
-void CreateBlocksMap(float* blockMap, int size, int pHard)
+void CreateBlocksMap(double* blockMap, int size, int pHard)
 {
     int blockX = (blockIdx.x + threadIdx.x) * pHard;
     int blockY = (blockIdx.y + threadIdx.y) * pHard;
     
-    int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1200) + ((threadIdx.y * 10) + threadIdx.x) * 12;
-    blockMap[blockMapIndex] = ((blockIdx.y + threadIdx.y) * size) + (blockIdx.x + threadIdx.x); //block index
+    int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 400) + ((threadIdx.y * 10) + threadIdx.x) * 4;
+    blockMap[blockMapIndex] = (((blockIdx.y + threadIdx.y) * size) + (blockIdx.x + threadIdx.x)) << 6; //block index
     blockMap[blockMapIndex+1] = blockX;
     blockMap[blockMapIndex+2] = blockY;
 }

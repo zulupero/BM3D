@@ -32,7 +32,7 @@ public:
         float*      deviceImage;
         float*      basicImage;     
         float*      kaiserWindowCoef;
-        float*      blockMap;
+        double*     blockMap;
         double*     blocks;
 	};
 
@@ -52,9 +52,10 @@ private:
     static void BM3D_BasicEstimate();
     static void BM3D_CreateBlock();
     static void BM3D_2DTransform();
-    static void BM3D_CalculateDistance();
+    static void BM3D_BlockMatching();
 
     static void BM3D_ShowBlock(int x, int y);
+    static void BM3D_ShowDistance(int x, int y);
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
