@@ -1,0 +1,978 @@
+Image: ../BM3D_images/ImNoisy.png
+
+Read input image...done.
+image size :
+ - width          = 256
+ - height         = 256
+ - nb of channels = 1
+
+--> Execution on Tesla K40c
+BM3D context initialization
+	Border width (pixel) = 54
+	Border height (pixel) = 54
+	Img width (border) = 310
+	Img height (border) = 310
+	Number of blocks = 7225
+	Size blocks array = 1.763916 Mb
+	Block per line= 85
+	Size block array= 0.440979 Mb
+	Size Image array= 0.091648 Mb
+	Size 3D array = 28.222656 Mb
+	Size Distance array = 4.657841 Mb
+	Size BM index array = 4.657841 Mb
+
+Run BM3D
+	Basic estimates (1 step)
+
+Statistics:
+[GPU/CUDA] Cuda initialization: 174.725952 ms
+[GPU/CUDA] Basic estimate - create blocks: 0.978624 ms
+[GPU/CUDA] Basic estimate - 2D DCT (Blocks): 931.311035 ms
+[GPU/CUDA] Basic estimate - Block matching (HT): 0.000000 ms
+[GPU/CUDA] Basic estimate - Create 3D block (HT): 0.000000 ms
+[GPU/CUDA] Basic estimate - 2D iDCT (Blocks): 0.000000 ms
+========= CUDA-MEMCHECK
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6198,0,0)
+=========     Address 0x60707c3f0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6198,0,0)
+=========     Address 0x60707c3e8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (10,12,0) in block (6198,0,0)
+=========     Address 0x60707c3e0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (9,12,0) in block (6198,0,0)
+=========     Address 0x60707c3d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (8,12,0) in block (6198,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (7,12,0) in block (6198,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6199,0,0)
+=========     Address 0x60707c3f8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6199,0,0)
+=========     Address 0x60707c3f0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (10,12,0) in block (6199,0,0)
+=========     Address 0x60707c3e8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (9,12,0) in block (6199,0,0)
+=========     Address 0x60707c3e0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (8,12,0) in block (6199,0,0)
+=========     Address 0x60707c3d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (7,12,0) in block (6199,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (6,12,0) in block (6199,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6200,0,0)
+=========     Address 0x60707c400 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6200,0,0)
+=========     Address 0x60707c3f8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (10,12,0) in block (6200,0,0)
+=========     Address 0x60707c3f0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (9,12,0) in block (6200,0,0)
+=========     Address 0x60707c3e8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (8,12,0) in block (6200,0,0)
+=========     Address 0x60707c3e0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (7,12,0) in block (6200,0,0)
+=========     Address 0x60707c3d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (6,12,0) in block (6200,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (5,12,0) in block (6200,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6194,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6194,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6195,0,0)
+=========     Address 0x60707c3d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6195,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (10,12,0) in block (6195,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6196,0,0)
+=========     Address 0x60707c3e0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6196,0,0)
+=========     Address 0x60707c3d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (10,12,0) in block (6196,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (9,12,0) in block (6196,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6193,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (12,12,0) in block (6201,0,0)
+=========     Address 0x60707c408 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (11,12,0) in block (6201,0,0)
+=========     Address 0x60707c400 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (10,12,0) in block (6201,0,0)
+=========     Address 0x60707c3f8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (9,12,0) in block (6201,0,0)
+=========     Address 0x60707c3f0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (8,12,0) in block (6201,0,0)
+=========     Address 0x60707c3e8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (7,12,0) in block (6201,0,0)
+=========     Address 0x60707c3e0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (6,12,0) in block (6201,0,0)
+=========     Address 0x60707c3d8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (5,12,0) in block (6201,0,0)
+=========     Address 0x60707c3d0 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Invalid __global__ read of size 8
+=========     at 0x000000b0 in blockMatching(float**, float*, int*, float*, int, int)
+=========     by thread (4,12,0) in block (6201,0,0)
+=========     Address 0x60707c3c8 is out of bounds
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 (cuLaunchKernel + 0x2cd) [0x150cad]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 [0x131b0]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x143) [0x2d653]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z42__device_stub__Z13blockMatchingPPfS_PiS_iiPPfS_PiS_ii + 0xf7) [0x11683]
+=========     Host Frame:bm3d_gpu (_Z13blockMatchingPPfS_PiS_ii + 0x45) [0x116dc]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xb4) [0x11182]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventSynchronize. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventSynchronize + 0x18e) [0x3ce6e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer8stopCudaEv + 0x27) [0x991b]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x12) [0x9a60]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xbe) [0x1118c]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventElapsedTime. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventElapsedTime + 0x1cc) [0x3cb2c]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x4c) [0x9a9a]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xbe) [0x1118c]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaThreadSynchronize. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaThreadSynchronize + 0x166) [0x2f8a6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xc3) [0x11191]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventCreate. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventCreate + 0x18e) [0x3d36e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer9startCudaEv + 0xe) [0x98b0]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xc8) [0x11196]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventCreate. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventCreate + 0x18e) [0x3d36e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer9startCudaEv + 0x18) [0x98ba]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xc8) [0x11196]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventRecord. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventRecord + 0x172) [0x3e542]
+=========     Host Frame:bm3d_gpu (_ZN5Timer9startCudaEv + 0x2c) [0x98ce]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0xc8) [0x11196]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x17e) [0x2d68e]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z33__device_stub__Z13create3DArrayPfPf + 0x40) [0x1171e]
+=========     Host Frame:bm3d_gpu (_Z13create3DArrayPf + 0x18) [0x1173b]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0x138) [0x11206]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventRecord. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventRecord + 0x172) [0x3e542]
+=========     Host Frame:bm3d_gpu (_ZN5Timer8stopCudaEv + 0x18) [0x990c]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x12) [0x9a60]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0x142) [0x11210]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventSynchronize. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventSynchronize + 0x18e) [0x3ce6e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer8stopCudaEv + 0x27) [0x991b]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x12) [0x9a60]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0x142) [0x11210]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventElapsedTime. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventElapsedTime + 0x1cc) [0x3cb2c]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x4c) [0x9a9a]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BlockMatchingEv + 0x142) [0x11210]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x22) [0x110c6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventCreate. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventCreate + 0x18e) [0x3d36e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer9startCudaEv + 0xe) [0x98b0]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xd) [0x11229]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventCreate. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventCreate + 0x18e) [0x3d36e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer9startCudaEv + 0x18) [0x98ba]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xd) [0x11229]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventRecord. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventRecord + 0x172) [0x3e542]
+=========     Host Frame:bm3d_gpu (_ZN5Timer9startCudaEv + 0x2c) [0x98ce]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xd) [0x11229]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaLaunch. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaLaunch + 0x17e) [0x2d68e]
+=========     Host Frame:bm3d_gpu [0x11d96]
+=========     Host Frame:bm3d_gpu (_Z38__device_stub__Z9iDCT2D8x8PPfS0_S_S_S_PPfS0_S_S_S_ + 0xd0) [0x1180d]
+=========     Host Frame:bm3d_gpu (_Z9iDCT2D8x8PPfS0_S_S_S_ + 0x3b) [0x11859]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0x9c) [0x112b8]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaThreadSynchronize. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaThreadSynchronize + 0x166) [0x2f8a6]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xa1) [0x112bd]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventRecord. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventRecord + 0x172) [0x3e542]
+=========     Host Frame:bm3d_gpu (_ZN5Timer8stopCudaEv + 0x18) [0x990c]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x12) [0x9a60]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xab) [0x112c7]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventSynchronize. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventSynchronize + 0x18e) [0x3ce6e]
+=========     Host Frame:bm3d_gpu (_ZN5Timer8stopCudaEv + 0x27) [0x991b]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x12) [0x9a60]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xab) [0x112c7]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= Program hit cudaErrorLaunchFailure (error 4) due to "unspecified launch failure" on CUDA API call to cudaEventElapsedTime. 
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame:/usr/lib/x86_64-linux-gnu/libcuda.so.1 [0x2e40d3]
+=========     Host Frame:/usr/local/cuda-7.0/lib64/libcudart.so.7.0 (cudaEventElapsedTime + 0x1cc) [0x3cb2c]
+=========     Host Frame:bm3d_gpu (_ZN5Timer7addCudaEPKc + 0x4c) [0x9a9a]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D11BM3D_2DiDCTEv + 0xab) [0x112c7]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D18BM3D_BasicEstimateEv + 0x27) [0x110cb]
+=========     Host Frame:bm3d_gpu (_ZN4BM3D8BM3D_RunEv + 0x18) [0x1109c]
+=========     Host Frame:bm3d_gpu (main + 0xd6) [0xa6fa]
+=========     Host Frame:/lib/x86_64-linux-gnu/libc.so.6 (__libc_start_main + 0xfd) [0x1eead]
+=========     Host Frame:bm3d_gpu [0x974d]
+=========
+========= ERROR SUMMARY: 58 errors

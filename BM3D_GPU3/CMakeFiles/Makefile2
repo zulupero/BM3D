@@ -47,10 +47,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cuenat/BM3D/BM3D/BM3D_GPU
+CMAKE_SOURCE_DIR = /home/cuenat/BM3D/BM3D/BM3D_GPU3
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cuenat/BM3D/BM3D/BM3D_GPU
+CMAKE_BINARY_DIR = /home/cuenat/BM3D/BM3D/BM3D_GPU3
 
 #=============================================================================
 # Target rules for target CMakeFiles/bm3d_gpu.dir
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/cuenat/BM3D/BM3D/BM3D_GPU
 CMakeFiles/bm3d_gpu.dir/all:
 	$(MAKE) -f CMakeFiles/bm3d_gpu.dir/build.make CMakeFiles/bm3d_gpu.dir/depend
 	$(MAKE) -f CMakeFiles/bm3d_gpu.dir/build.make CMakeFiles/bm3d_gpu.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/cuenat/BM3D/BM3D/BM3D_GPU/CMakeFiles  1 2 3 4 5 6 7
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles  1 2 3 4 5 6
 	@echo "Built target bm3d_gpu"
 .PHONY : CMakeFiles/bm3d_gpu.dir/all
 
@@ -69,9 +69,9 @@ all: CMakeFiles/bm3d_gpu.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/bm3d_gpu.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cuenat/BM3D/BM3D/BM3D_GPU/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/bm3d_gpu.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cuenat/BM3D/BM3D/BM3D_GPU/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles 0
 .PHONY : CMakeFiles/bm3d_gpu.dir/rule
 
 # Convenience name for target.

@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/local/cuda-7.0/bin/cuda-gdb /home/cuenat/BM3D/BM3D/BM3D_GPU2/bm3d_gpu 

@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/local/cuda-6.5/bin/nvprof  /home/cuenat/BM3D/BM3D/BM3D_GPU2/bm3d_gpu f 
+#--devices 0 --analysis-metrics --replay-mode disabled --output-profile prof.nvprof
