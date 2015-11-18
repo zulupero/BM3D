@@ -1,4 +1,4 @@
-FILE(REMOVE_RECURSE
+file(REMOVE_RECURSE
   "CMakeFiles/bm3d_gpu.dir/./bm3d_gpu_generated_bm3d.cu.o"
   "CMakeFiles/bm3d_gpu.dir/timeutil.cpp.o"
   "CMakeFiles/bm3d_gpu.dir/main.cpp.o"
@@ -10,6 +10,6 @@ FILE(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-FOREACH(lang C CXX)
-  INCLUDE(CMakeFiles/bm3d_gpu.dir/cmake_clean_${lang}.cmake OPTIONAL)
-ENDFOREACH(lang)
+foreach(lang C CXX)
+  include(CMakeFiles/bm3d_gpu.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

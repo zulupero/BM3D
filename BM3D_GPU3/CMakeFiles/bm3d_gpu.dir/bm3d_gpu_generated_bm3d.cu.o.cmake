@@ -59,9 +59,10 @@ set(CMAKE_COMMAND "/usr/bin/cmake") # path
 set(source_file "/home/cuenat/BM3D/BM3D/BM3D_GPU3/bm3d.cu") # path
 set(NVCC_generated_dependency_file "/home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles/bm3d_gpu.dir//bm3d_gpu_generated_bm3d.cu.o.NVCC-depend") # path
 set(cmake_dependency_file "/home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles/bm3d_gpu.dir//bm3d_gpu_generated_bm3d.cu.o.depend") # path
-set(CUDA_make2cmake "/usr/share/cmake-2.8/Modules/FindCUDA/make2cmake.cmake") # path
-set(CUDA_parse_cubin "/usr/share/cmake-2.8/Modules/FindCUDA/parse_cubin.cmake") # path
+set(CUDA_make2cmake "/usr/share/cmake-3.0/Modules/FindCUDA/make2cmake.cmake") # path
+set(CUDA_parse_cubin "/usr/share/cmake-3.0/Modules/FindCUDA/parse_cubin.cmake") # path
 set(build_cubin OFF) # bool
+set(CUDA_HOST_COMPILER "/usr/bin/gcc") # bool
 # We won't actually use these variables for now, but we need to set this, in
 # order to force this file to be run again if it changes.
 set(generated_file_path "/home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles/bm3d_gpu.dir//.") # path
@@ -71,10 +72,10 @@ set(generated_cubin_file_internal "/home/cuenat/BM3D/BM3D/BM3D_GPU3/CMakeFiles/b
 set(CUDA_NVCC_EXECUTABLE "/usr/local/cuda-7.0/bin/nvcc") # path
 set(CUDA_NVCC_FLAGS  ;; ) # list
 # Build specific configuration flags
-set(CUDA_NVCC_FLAGS_DEBUG  ;; )
-set(CUDA_NVCC_FLAGS_MINSIZEREL  ;; )
-set(CUDA_NVCC_FLAGS_RELEASE  ;; )
-set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ;; )
+set(CUDA_NVCC_FLAGS_DEBUG  ; )
+set(CUDA_NVCC_FLAGS_MINSIZEREL  ; )
+set(CUDA_NVCC_FLAGS_RELEASE  ; )
+set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )
 set(nvcc_flags -m64) # list
 set(CUDA_NVCC_INCLUDE_ARGS "-I/usr/local/cuda-7.0/include;-I/usr/local/cuda/include;-I/usr/local/cuda-7.0/include") # list (needs to be in quotes to handle spaces properly).
 set(format_flag "-c") # string
@@ -110,8 +111,15 @@ endif()
 # Add the build specific configuration flags
 list(APPEND CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS_${build_configuration}})
 
-if(DEFINED CCBIN)
-  set(CCBIN -ccbin "${CCBIN}")
+# Any -ccbin existing in CUDA_NVCC_FLAGS gets highest priority
+list( FIND CUDA_NVCC_FLAGS "-ccbin" ccbin_found0 )
+list( FIND CUDA_NVCC_FLAGS "--compiler-bindir" ccbin_found1 )
+if( ccbin_found0 LESS 0 AND ccbin_found1 LESS 0 )
+  if (CUDA_HOST_COMPILER STREQUAL "$(VCInstallDir)bin" AND DEFINED CCBIN)
+    set(CCBIN -ccbin "${CCBIN}")
+  else()
+    set(CCBIN -ccbin "${CUDA_HOST_COMPILER}")
+  endif()
 endif()
 
 # cuda_execute_process - Executes a command with optional command echo and status message.
@@ -147,7 +155,7 @@ macro(cuda_execute_process status command)
     endforeach()
     # Echo the command
     execute_process(COMMAND ${CMAKE_COMMAND} -E echo ${cuda_execute_process_string})
-  endif(verbose)
+  endif()
   # Run the command
   execute_process(COMMAND ${ARGN} RESULT_VARIABLE CUDA_result )
 endmacro()
@@ -285,4 +293,4 @@ if( build_cubin )
     -P "${CUDA_parse_cubin}"
     )
 
-endif( build_cubin )
+endif()

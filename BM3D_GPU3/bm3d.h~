@@ -27,20 +27,22 @@ public:
         int             widthBlocksIntern;
         int             widthBlocks;
         bool            debugMode; 
+        int             hardLimit;
         
         //Device (member-variables):
         float*      deviceImage;
         float*      basicImage;     
         float*      kaiserWindowCoef;
-        double*      blockMap;
+        int*        blockMap;
         double*     blocks;
+        int*        bmVectors;
 	};
 
 private:	
 	static BM3D_Context context;	
 
 public:
-	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, bool debug = false);	
+	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int hardLimit, bool debug = false);	
 	static void BM3D_Run();
 	~BM3D()
 	{}

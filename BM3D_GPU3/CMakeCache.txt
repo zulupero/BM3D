@@ -7,7 +7,7 @@
 # The syntax for the file is as follows:
 # KEY:TYPE=VALUE
 # KEY is the name of a variable in the cache.
-# TYPE is a hint to GUI's for the type of VALUE, DO NOT EDIT TYPE!.
+# TYPE is a hint to GUIs for the type of VALUE, DO NOT EDIT TYPE!.
 # VALUE is the current value for the KEY.
 
 ########################
@@ -143,6 +143,21 @@ CMAKE_SKIP_INSTALL_RPATH:BOOL=NO
 //If set, runtime paths are not added when using shared libraries.
 CMAKE_SKIP_RPATH:BOOL=NO
 
+//Flags used by the linker during the creation of static libraries.
+CMAKE_STATIC_LINKER_FLAGS:STRING=
+
+//Flags used by the linker during debug builds.
+CMAKE_STATIC_LINKER_FLAGS_DEBUG:STRING=
+
+//Flags used by the linker during release minsize builds.
+CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL:STRING=
+
+//Flags used by the linker during release builds.
+CMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING=
+
+//Flags used by the linker during Release with Debug Info builds.
+CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
+
 //Path to a program.
 CMAKE_STRIP:FILEPATH=/usr/bin/strip
 
@@ -181,6 +196,9 @@ CUDA_GENERATED_OUTPUT_DIR:PATH=
 //Generated file extension
 CUDA_HOST_COMPILATION_CPP:BOOL=ON
 
+//Host side compiler used by NVCC
+CUDA_HOST_COMPILER:FILEPATH=/usr/bin/gcc
+
 //Path to a program.
 CUDA_NVCC_EXECUTABLE:FILEPATH=/usr/local/cuda-7.0/bin/nvcc
 
@@ -205,8 +223,19 @@ CUDA_PROPAGATE_HOST_FLAGS:BOOL=ON
 //Path to a file.
 CUDA_SDK_ROOT_DIR:PATH=CUDA_SDK_ROOT_DIR-NOTFOUND
 
+//Compile CUDA objects with separable compilation enabled.  Requires
+// CUDA 5.0+
+CUDA_SEPARABLE_COMPILATION:BOOL=OFF
+
+//Specify the name of the class of CPU architecture for which the
+// input files must be compiled.
+CUDA_TARGET_CPU_ARCH:STRING=
+
 //Path to a file.
 CUDA_TOOLKIT_INCLUDE:PATH=/usr/local/cuda-7.0/include
+
+//Toolkit target location.
+CUDA_TOOLKIT_TARGET_DIR:PATH=/usr/local/cuda-7.0
 
 //Print out the commands run while compiling the CUDA source file.
 //  With the Makefile generator this defaults to VERBOSE variable
@@ -223,6 +252,9 @@ CUDA_cublas_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcublas.so
 //"cufft" library
 CUDA_cufft_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcufft.so
 
+//"cupti" library
+CUDA_cupti_LIBRARY:FILEPATH=/usr/local/cuda-7.0/extras/CUPTI/lib64/libcupti.so
+
 //"curand" library
 CUDA_curand_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcurand.so
 
@@ -231,6 +263,15 @@ CUDA_cusparse_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libcusparse.so
 
 //"npp" library
 CUDA_npp_LIBRARY:FILEPATH=CUDA_npp_LIBRARY-NOTFOUND
+
+//"nppc" library
+CUDA_nppc_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libnppc.so
+
+//"nppi" library
+CUDA_nppi_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libnppi.so
+
+//"npps" library
+CUDA_npps_LIBRARY:FILEPATH=/usr/local/cuda-7.0/lib64/libnpps.so
 
 //Value Computed by CMake
 bm3d_gpu_BINARY_DIR:STATIC=/home/cuenat/BM3D/BM3D/BM3D_GPU3
@@ -245,18 +286,16 @@ bm3d_gpu_SOURCE_DIR:STATIC=/home/cuenat/BM3D/BM3D/BM3D_GPU3
 
 //ADVANCED property for variable: CMAKE_AR
 CMAKE_AR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_BUILD_TOOL
-CMAKE_BUILD_TOOL-ADVANCED:INTERNAL=1
 //What is the target build tool cmake is generating for.
 CMAKE_BUILD_TOOL:INTERNAL=/usr/bin/make
 //This is the directory where this CMakeCache.txt was created
 CMAKE_CACHEFILE_DIR:INTERNAL=/home/cuenat/BM3D/BM3D/BM3D_GPU3
 //Major version of cmake used to create the current loaded cache
-CMAKE_CACHE_MAJOR_VERSION:INTERNAL=2
+CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=8
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=0
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=9
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=2
 //ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
 CMAKE_COLOR_MAKEFILE-ADVANCED:INTERNAL=1
 //Path to CMake executable.
@@ -267,7 +306,6 @@ CMAKE_CPACK_COMMAND:INTERNAL=/usr/bin/cpack
 CMAKE_CTEST_COMMAND:INTERNAL=/usr/bin/ctest
 //ADVANCED property for variable: CMAKE_CXX_COMPILER
 CMAKE_CXX_COMPILER-ADVANCED:INTERNAL=1
-CMAKE_CXX_COMPILER_WORKS:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS
 CMAKE_CXX_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_DEBUG
@@ -280,7 +318,6 @@ CMAKE_CXX_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_COMPILER
 CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
-CMAKE_C_COMPILER_WORKS:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS
 CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
@@ -311,6 +348,8 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1
 //Name of generator.
 CMAKE_GENERATOR:INTERNAL=Unix Makefiles
+//Name of generator toolset.
+CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Start directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/cuenat/BM3D/BM3D/BM3D_GPU3
@@ -341,7 +380,7 @@ CMAKE_OBJDUMP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_RANLIB
 CMAKE_RANLIB-ADVANCED:INTERNAL=1
 //Path to CMake installation.
-CMAKE_ROOT:INTERNAL=/usr/share/cmake-2.8
+CMAKE_ROOT:INTERNAL=/usr/share/cmake-3.0
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG
@@ -356,6 +395,16 @@ CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_SKIP_INSTALL_RPATH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SKIP_RPATH
 CMAKE_SKIP_RPATH-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS
+CMAKE_STATIC_LINKER_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_DEBUG
+CMAKE_STATIC_LINKER_FLAGS_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL
+CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_RELEASE
+CMAKE_STATIC_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO
+CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_STRIP
 CMAKE_STRIP-ADVANCED:INTERNAL=1
 //uname command
@@ -396,29 +445,44 @@ CUDA_PROPAGATE_HOST_FLAGS-ADVANCED:INTERNAL=1
 //This is the value of the last time CUDA_SDK_ROOT_DIR was set
 // successfully.
 CUDA_SDK_ROOT_DIR_INTERNAL:INTERNAL=CUDA_SDK_ROOT_DIR-NOTFOUND
+//ADVANCED property for variable: CUDA_TARGET_CPU_ARCH
+CUDA_TARGET_CPU_ARCH-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_TOOLKIT_INCLUDE
 CUDA_TOOLKIT_INCLUDE-ADVANCED:INTERNAL=1
 //This is the value of the last time CUDA_TOOLKIT_ROOT_DIR was
 // set successfully.
 CUDA_TOOLKIT_ROOT_DIR_INTERNAL:INTERNAL=/usr/local/cuda-7.0/
+//ADVANCED property for variable: CUDA_TOOLKIT_TARGET_DIR
+CUDA_TOOLKIT_TARGET_DIR-ADVANCED:INTERNAL=1
+//This is the value of the last time CUDA_TOOLKIT_TARGET_DIR was
+// set successfully.
+CUDA_TOOLKIT_TARGET_DIR_INTERNAL:INTERNAL=/usr/local/cuda-7.0
 //ADVANCED property for variable: CUDA_VERSION
 CUDA_VERSION-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_cublas_LIBRARY
 CUDA_cublas_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_cufft_LIBRARY
 CUDA_cufft_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CUDA_cupti_LIBRARY
+CUDA_cupti_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_curand_LIBRARY
 CUDA_curand_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_cusparse_LIBRARY
 CUDA_cusparse_LIBRARY-ADVANCED:INTERNAL=1
 //Location of make2cmake.cmake
-CUDA_make2cmake:INTERNAL=/usr/share/cmake-2.8/Modules/FindCUDA/make2cmake.cmake
+CUDA_make2cmake:INTERNAL=/usr/share/cmake-3.0/Modules/FindCUDA/make2cmake.cmake
 //ADVANCED property for variable: CUDA_npp_LIBRARY
 CUDA_npp_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CUDA_nppc_LIBRARY
+CUDA_nppc_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CUDA_nppi_LIBRARY
+CUDA_nppi_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CUDA_npps_LIBRARY
+CUDA_npps_LIBRARY-ADVANCED:INTERNAL=1
 //Location of parse_cubin.cmake
-CUDA_parse_cubin:INTERNAL=/usr/share/cmake-2.8/Modules/FindCUDA/parse_cubin.cmake
+CUDA_parse_cubin:INTERNAL=/usr/share/cmake-3.0/Modules/FindCUDA/parse_cubin.cmake
 //Location of run_nvcc.cmake
-CUDA_run_nvcc:INTERNAL=/usr/share/cmake-2.8/Modules/FindCUDA/run_nvcc.cmake
+CUDA_run_nvcc:INTERNAL=/usr/share/cmake-3.0/Modules/FindCUDA/run_nvcc.cmake
 //Details about finding CUDA
 FIND_PACKAGE_MESSAGE_DETAILS_CUDA:INTERNAL=[/usr/local/cuda-7.0/][/usr/local/cuda-7.0/bin/nvcc][/usr/local/cuda-7.0/include][/usr/local/cuda-7.0/lib64/libcudart.so][v7.0()]
 
