@@ -21,9 +21,8 @@ void BM3D::BM3D_dispose()
 {
 }
 
-void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHard, int hardLimit, bool debug)
+void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHard, int hardLimit, double hardThreshold, bool debug)
 {
-//    Timer::startCuda();
     printf("\n--> Execution on Tesla K40c");
     if(cudaSuccess != cudaSetDevice(0)) printf("\n\tNo device 0 available");
 
@@ -38,6 +37,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     BM3D::context.debugBlock = 15508;
 
     BM3D::context.hardLimit = hardLimit;
+    BM3D::context.hardThreshold = hardThreshold;
 
     int w2 = width - (width % pHard) + (10 * pHard);
     int h2 = height - (height % pHard) + (10 * pHard);
@@ -76,9 +76,9 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocksIntern * 100 * 10 * sizeof(int)));
     gpuErrchk(cudaMalloc(&BM3D::context.blocks, BM3D::context.nbBlocks * 66 * sizeof(double)));
     gpuErrchk(cudaMalloc(&BM3D::context.bmVectors, BM3D::context.nbBlocksIntern * 16 * sizeof(int)));
-    gpuErrchk(cudaMemset(BM3D::context.bmVectors, -1, BM3D::context.nbBlocksIntern * 16 * sizeof(int)));
+    gpuErrchk(cudaMemset(BM3D::context.bmVectors, 0, BM3D::context.nbBlocksIntern * 16 * sizeof(int)));
     gpuErrchk(cudaMalloc(&BM3D::context.blocks3D, BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)));
-    gpuErrchk(cudaMemset(BM3D::context.blocks3D, 0, BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)));
+    //gpuErrchk(cudaMemset(BM3D::context.blocks3D, 0, BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)));
 
     printf("\n\tNumber of blocks          = %d", BM3D::context.nbBlocks);
     printf("\n\tNumber of blocks (intern) = %d", BM3D::context.nbBlocksIntern);
@@ -118,7 +118,36 @@ void BM3D::BM3D_BasicEstimate()
     //BM3D_ShowBlock(84,0);
     BM3D_BlockMatching();
     //BM3D_ShowDistance(84,0);
+    BM3D_HardThresholdFilter();
     
+}
+
+__global__
+void HardThresholdFilter(double* blocks3D, double threshold, int size)
+{
+    int blockPixelIndex = (((blockIdx.y * size) + blockIdx.x) << 6) + (threadIdx.y << 3) + threadIdx.x;
+    if(blocks3D[blockPixelIndex] < threshold) blocks3D[blockPixelIndex] = 0;  
+}
+
+__global__
+void 
+
+void BM3D::BM3D_HardThresholdFilter()
+{
+    {
+        dim3 numBlocks(BM3D::context.widthBlocksIntern << 2, BM3D::context.widthBlocksIntern << 2);
+        dim3 numThreads(8, 8);
+        HardThresholdFilter<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.hardThreshold, BM3D::context.widthBlocksIntern << 2); 
+        cudaDeviceSynchronize();   
+    }
+    {
+        //calculate WP array
+        /*dim3 numBlocks(BM3D::context.widthBlocksIntern << 2, BM3D::context.widthBlocksIntern << 2);
+        dim3 numThreads(8, 8);
+        HardThresholdFilter<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.hardThreshold, BM3D::context.widthBlocksIntern << 2); 
+        cudaDeviceSynchronize();
+        */   
+    }
 }
 
 __global__
@@ -210,6 +239,56 @@ void BM_CreateBmVector(int* blockMap, int* bmVectors, int size)
     }
 }
 
+__global__
+void Create3DBlocks(double* blocks, double* blocks3D, int* bmVectors, int size)
+{
+    int index = (blockIdx.y * size) + blockIdx.x;
+    int bmVectorIndex = index << 4;
+    {
+        
+        int pixelIndex = (threadIdx.y << 3) + threadIdx.x;
+        int block3DIndex = (index << 10) + pixelIndex;
+        //we can assume that the top-left corner of the basic image always has a pixel egal to 0 due to the shift 
+        //of the image. 
+
+        double a = blocks[bmVectors[bmVectorIndex] + pixelIndex];
+        double b = blocks[bmVectors[bmVectorIndex+1] + pixelIndex];
+        double c = blocks[bmVectors[bmVectorIndex+2] + pixelIndex];
+        double d = blocks[bmVectors[bmVectorIndex+3] + pixelIndex];
+        double e = blocks[bmVectors[bmVectorIndex+4] + pixelIndex];
+        double f = blocks[bmVectors[bmVectorIndex+5] + pixelIndex];
+        double g = blocks[bmVectors[bmVectorIndex+6] + pixelIndex];
+        double h = blocks[bmVectors[bmVectorIndex+7] + pixelIndex];
+        double i = blocks[bmVectors[bmVectorIndex+8] + pixelIndex];
+        double j = blocks[bmVectors[bmVectorIndex+9] + pixelIndex];
+        double k = blocks[bmVectors[bmVectorIndex+10] + pixelIndex];
+        double l = blocks[bmVectors[bmVectorIndex+11] + pixelIndex];
+        double m = blocks[bmVectors[bmVectorIndex+12] + pixelIndex];
+        double n = blocks[bmVectors[bmVectorIndex+13] + pixelIndex];
+        double o = blocks[bmVectors[bmVectorIndex+14] + pixelIndex];
+        double p = blocks[bmVectors[bmVectorIndex+15] + pixelIndex];
+
+        
+        blocks3D[block3DIndex] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) / 4.0;
+        blocks3D[block3DIndex+64] = (a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p) / 4.0;
+        blocks3D[block3DIndex+128] = (a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p) / 4.0;
+        blocks3D[block3DIndex+192] = (a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p) / 4.0;
+        blocks3D[block3DIndex+256] = (a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p) / 4.0;
+        blocks3D[block3DIndex+320] = (a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p) / 4.0;
+        blocks3D[block3DIndex+384] = (a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p) / 4.0;
+        blocks3D[block3DIndex+448] = (a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p) / 4.0;
+        blocks3D[block3DIndex+512] = (a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p) / 4.0;
+        blocks3D[block3DIndex+576] = (a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p) / 4.0;
+        blocks3D[block3DIndex+640] = (a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p) / 4.0;
+        blocks3D[block3DIndex+704] = (a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p) / 4.0;
+        blocks3D[block3DIndex+768] = (a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p) / 4.0;
+        blocks3D[block3DIndex+832] = (a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p) / 4.0;
+        blocks3D[block3DIndex+896] = (a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p) / 4.0;
+        blocks3D[block3DIndex+960] = (a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p) / 4.0;
+
+    }
+}
+
 void BM3D::BM3D_BlockMatching()
 {
     {
@@ -231,6 +310,12 @@ void BM3D::BM3D_BlockMatching()
         cudaDeviceSynchronize();    
         BM_CreateBmVector<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.bmVectors, BM3D::context.widthBlocksIntern); 
         cudaDeviceSynchronize();
+    }
+    {
+        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+        dim3 numThreads(8, 8);
+        Create3DBlocks<<<numBlocks,numThreads>>>(BM3D::context.blocks, BM3D::context.blocks3D, BM3D::context.bmVectors, BM3D::context.widthBlocksIntern); 
+        cudaDeviceSynchronize();    
     }
 }
 
@@ -417,42 +502,7 @@ void BM3D::BM3D_CreateBlock()
     }  
 }
 
-__device__ void HadamarTransform16(float* inputs, float* outputs)
-{
-    double a = inputs[0];
-    double b = inputs[1];
-    double c = inputs[2];
-    double d = inputs[3];
-    double e = inputs[4];
-    double f = inputs[5];
-    double g = inputs[6];
-    double h = inputs[7];
-    double i = inputs[8];
-    double j = inputs[9];
-    double k = inputs[10];
-    double l = inputs[11];
-    double m = inputs[12];
-    double n = inputs[13];
-    double o = inputs[14];
-    double p = inputs[15];
 
-    outputs[0] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) / 4.0;
-    outputs[1] = (a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p) / 4.0;
-    outputs[2] = (a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p) / 4.0;
-    outputs[3] = (a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p) / 4.0;
-    outputs[4] = (a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p) / 4.0;
-    outputs[5] = (a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p) / 4.0;
-    outputs[6] = (a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p) / 4.0;
-    outputs[7] = (a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p) / 4.0;
-    outputs[8] = (a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p) / 4.0;
-    outputs[9] = (a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p) / 4.0;
-    outputs[10] = (a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p) / 4.0;
-    outputs[11] = (a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p) / 4.0;
-    outputs[12] = (a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p) / 4.0;
-    outputs[13] = (a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p) / 4.0;
-    outputs[14] = (a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p) / 4.0;
-    outputs[15] = (a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p) / 4.0;
-}
 
 
 
