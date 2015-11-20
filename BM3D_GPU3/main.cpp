@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     if(load_image("../BM3D_images/ImNoisy.png", img, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
     
     Timer::start();
-    BM3D::BM3D_Initialize(img, width, height, 3, (2500 * 64), (30 * 2.7), false);  //phard = 3, hard limit = 2500 * 64, hard threshol = sigma * 2.7
+    BM3D::BM3D_Initialize(img, width, height, 3, (2500 * 64), (30 * 2.7), 30, true);  //phard = 3, hard limit = 2500 * 64, hard threshol = sigma * 2.7, sigma = 30
     Timer::add("BM3D-Initialization");
     Timer::start();
     BM3D::BM3D_Run();

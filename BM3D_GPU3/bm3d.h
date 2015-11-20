@@ -29,6 +29,7 @@ public:
         bool            debugMode; 
         int             hardLimit;
         double          hardThreshold;
+        int             sigma;
         
         //Device (member-variables):
         float*      deviceImage;
@@ -38,13 +39,16 @@ public:
         double*     blocks;
         int*        bmVectors;
         double*     blocks3D;
+        int*        npArray;
+        double*     wpArray;
+        float*      estimates;
 	};
 
 private:	
 	static BM3D_Context context;	
 
 public:
-	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int hardLimit, double hardThreshold, bool debug = false);	
+	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int hardLimit, double hardThreshold, int sigma, bool debug = false);	
 	static void BM3D_Run();
 	~BM3D()
 	{}
@@ -58,6 +62,8 @@ private:
     static void BM3D_2DTransform();
     static void BM3D_BlockMatching();
     static void BM3D_HardThresholdFilter();
+    static void BM3D_Inverse3D();
+    static void BM3D_Aggregation();
 
     static void BM3D_ShowBlock(int x, int y);
     static void BM3D_ShowDistance(int x, int y);
