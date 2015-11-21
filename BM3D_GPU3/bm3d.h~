@@ -63,10 +63,11 @@ private:
     static void BM3D_BlockMatching();
     static void BM3D_HardThresholdFilter();
     static void BM3D_Inverse3D();
-    static void BM3D::BM3D_Aggregation();
+    static void BM3D_Aggregation();
 
-    static void BM3D_ShowBlock(int x, int y);
+    static void BM3D_ShowBlock(int block);
     static void BM3D_ShowDistance(int x, int y);
+    static void BM3D_ShowPixel(int x, int y);
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
