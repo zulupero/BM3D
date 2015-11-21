@@ -37,11 +37,14 @@ public:
         float*      kaiserWindowCoef;
         int*        blockMap;
         double*     blocks;
+        double*     blocksOrig;
         int*        bmVectors;
         double*     blocks3D;
+        double*     blocks3DOrig;
         int*        npArray;
         double*     wpArray;
         float*      estimates;
+        float*      nbSimilarBlocks;
 	};
 
 private:	
@@ -58,10 +61,12 @@ private:
     static void BM3D_dispose();
     static void BM3D_SaveBasicImage();
     static void BM3D_BasicEstimate();
+    static void BM3D_FinalEstimate();
     static void BM3D_CreateBlock();
-    static void BM3D_2DTransform();
-    static void BM3D_BlockMatching();
+    static void BM3D_2DTransform(bool final = false);
+    static void BM3D_BlockMatching(bool final = false);
     static void BM3D_HardThresholdFilter();
+    static void BM3D_WienFilter();
     static void BM3D_Inverse3D();
     static void BM3D_Aggregation();
     static void BM3D_InverseShift();

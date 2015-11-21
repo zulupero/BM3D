@@ -130,8 +130,8 @@ int load_image(
  * @return EXIT_SUCCESS if the image has been saved, EXIT_FAILURE otherwise
  **/
 int save_image(
-    char* name
-,   std::vector<float> &img
+    const char* name
+,   float* img
 ,   const unsigned width
 ,   const unsigned height
 ,   const unsigned chnls

@@ -76,7 +76,7 @@ void CheckCufftError(cufftResult result, const char* method)
   * @return EXIT_SUCCESS if the image has been loaded, EXIT_FAILURE otherwise
   **/
 int load_image(
-    char* name
+    const char* name
 ,   vector<float> &img
 ,   unsigned * width
 ,   unsigned * height
@@ -130,7 +130,7 @@ int load_image(
  * @return EXIT_SUCCESS if the image has been saved, EXIT_FAILURE otherwise
  **/
 int save_image(
-    char* name
+    const char* name
 ,   float* img
 ,   const unsigned width
 ,   const unsigned height

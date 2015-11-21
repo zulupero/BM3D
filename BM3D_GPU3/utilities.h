@@ -9,7 +9,7 @@ void CheckCufftError(cufftResult result, const char* method);
 
 //! Read image and check number of channels
 int load_image(
-    char* name
+    const char* name
 ,   std::vector<float> &img
 ,   unsigned * width
 ,   unsigned * height
@@ -18,7 +18,7 @@ int load_image(
 
 //! Write image
 int save_image(
-    char* name
+    const char* name
 ,   float* img
 ,   const unsigned width
 ,   const unsigned height

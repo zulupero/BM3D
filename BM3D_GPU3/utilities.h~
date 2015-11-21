@@ -18,8 +18,8 @@ int load_image(
 
 //! Write image
 int save_image(
-    char* name
-,   std::vector<float> &img
+    const char* name
+,   float* img
 ,   const unsigned width
 ,   const unsigned height
 ,   const unsigned chnls
