@@ -28,6 +28,7 @@ public:
         int             widthBlocks;
         bool            debugMode; 
         int             hardLimit;
+        int             wienLimit;
         double          hardThreshold;
         int             sigma;
         
@@ -42,7 +43,7 @@ public:
         double*     blocks3D;
         double*     blocks3DOrig;
         int*        npArray;
-        double*     wpArray;
+        float*      wpArray;
         float*      estimates;
         float*      nbSimilarBlocks;
 	};
@@ -51,7 +52,7 @@ private:
 	static BM3D_Context context;	
 
 public:
-	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int hardLimit, double hardThreshold, int sigma, bool debug = false);	
+	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug = false);	
 	static void BM3D_Run();
 	~BM3D()
 	{}
@@ -66,6 +67,7 @@ private:
     static void BM3D_2DTransform(bool final = false);
     static void BM3D_BlockMatching(bool final = false);
     static void BM3D_HardThresholdFilter();
+    static void BM3D_WienFilter();
     static void BM3D_Inverse3D();
     static void BM3D_Aggregation();
     static void BM3D_InverseShift();

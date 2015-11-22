@@ -23,7 +23,7 @@ void BM3D::BM3D_dispose()
 {
 }
 
-void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHard, int hardLimit, double hardThreshold, int sigma, bool debug)
+void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug)
 {
     printf("\n--> Execution on Tesla K40c");
     if(cudaSuccess != cudaSetDevice(0)) printf("\n\tNo device 0 available");
@@ -39,6 +39,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     BM3D::context.debugBlock = 15508;
 
     BM3D::context.hardLimit = hardLimit;
+    BM3D::context.wienLimit = wienLimit;
     BM3D::context.hardThreshold = hardThreshold;
     BM3D::context.sigma = sigma;
 
@@ -87,7 +88,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.blocks3DOrig, BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)));
     gpuErrchk(cudaMalloc(&BM3D::context.npArray, BM3D::context.nbBlocksIntern  * sizeof(int)));
     gpuErrchk(cudaMemset(BM3D::context.npArray, 0, BM3D::context.nbBlocksIntern  * sizeof(int)));
-    gpuErrchk(cudaMalloc(&BM3D::context.wpArray, BM3D::context.nbBlocksIntern  * sizeof(double)));
+    gpuErrchk(cudaMalloc(&BM3D::context.wpArray, BM3D::context.nbBlocksIntern  * sizeof(float)));
     gpuErrchk(cudaMalloc(&BM3D::context.nbSimilarBlocks, BM3D::context.nbBlocksIntern  * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.nbSimilarBlocks, 0, BM3D::context.nbBlocksIntern  * sizeof(float)));
 
@@ -119,23 +120,28 @@ void BM3D::BM3D_Run()
     BM3D_FinalEstimate();   
 }
 
-void BM3D::BM3D_SaveBasicImage()
+void BM3D::BM3D_SaveImage(bool final)
 {
     float* basicImage = (float*)malloc(BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float));
     gpuErrchk(cudaMemcpy(&basicImage[0], BM3D::context.deviceImage, BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float), cudaMemcpyDeviceToHost));
-    std::string filename("test.png");
+    std::string filename((final) ? "final.png" : "basic.png");
     save_image(filename.c_str(), basicImage, BM3D::context.img_widthOrig, BM3D::context.img_heightOrig, 1);
 }
 
 void BM3D::BM3D_FinalEstimate()
 {
+    gpuErrchk(cudaMemset(BM3D::context.wpArray, 0, BM3D::context.nbBlocksIntern  * sizeof(float)));
     printf("\n\tFinal estimates (2 step)");
     Timer::start(); 
     BM3D_CreateBlock();
     BM3D_2DTransform(true);
     BM3D_BlockMatching(true);
     BM3D_WienFilter();
+    BM3D_Inverse3D();
+    BM3D_Aggregation();
+    BM3D_InverseShift();
     Timer::add("BM3D-Final estimates");
+    BM3D_SaveImage();
 }
 
 void BM3D::BM3D_BasicEstimate()
@@ -150,25 +156,32 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_Aggregation();
     BM3D_InverseShift();
     Timer::add("BM3D-Basic estimates");
-    BM3D_SaveBasicImage();
+    BM3D_SaveImage();
 }
 
-void WienFilter()
+
+__global__
+void WienFilter(double* blocks3D, double* blocks3DOrig, int size, float* similarBlocks, int sigma, float* wpArray)
 {
+    int block = (blockIdx.y * size) + blockIdx.x;
+    int blockPixelIndex = (block << 10) + (blockIdx.z << 6) + (threadIdx.y << 3) + threadIdx.x;
+    int estimateValue = blocks3D[blockPixelIndex];
+    float value = estimateValue * estimateValue;// * similarBlocks[block];
+    value /= (value + (sigma * sigma));
+    blocks3D[blockPixelIndex] = blocks3DOrig[blockPixelIndex] * value;// * similarBlocks[block];
+    atomicAdd(&wpArray[block], value);
 }
 
 void BM3D::BM3D_WienFilter()
 {
-    {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, 16);
-        dim3 numThreads(8, 8);
-        WienFilter<<<numBlocks,numThreads>>>(); 
-        cudaDeviceSynchronize();   
-    }
+    dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, 16);
+    dim3 numThreads(8, 8);
+    WienFilter<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.blocks3DOrig, BM3D::context.widthBlocksIntern, BM3D::context.nbSimilarBlocks, BM3D::context.sigma, BM3D::context.wpArray); 
+    cudaDeviceSynchronize();   
 }
 
 __global__
-void pre_aggregation(double* blocks3D, double* wpArray, double* blocks, int* bmVectors, int size, float* kaiserCoef, float* estimates, int width)
+void pre_aggregation(double* blocks3D, float* wpArray, double* blocks, int* bmVectors, int size, float* kaiserCoef, float* estimates, int width)
 {
     int block = (blockIdx.y * size) + blockIdx.x;
     int bmVectorIndex = (block << 4) + blockIdx.z;
@@ -366,7 +379,7 @@ void HardThresholdFilter(double* blocks3D, double threshold, int size, float* nb
 {
     int block = (blockIdx.y * size) + blockIdx.x;
     int blockPixelIndex = (block << 10) + (blockIdx.z << 6) + (threadIdx.y << 3) + threadIdx.x;
-    if(blocks3D[blockPixelIndex] < (threshold /** nbSimilarBlocks[block]*/)) blocks3D[blockPixelIndex] = 0;  
+    if(blocks3D[blockPixelIndex] <= (threshold * nbSimilarBlocks[block])) blocks3D[blockPixelIndex] = 0;  
 }
 
 __global__
@@ -379,7 +392,7 @@ void CalculateNP(double* blocks3D, int* npArray, int size)
 
 
 __global__
-void CalculateWP(double* wpArray, int* npArray, int size, int sigma)
+void CalculateWP(float* wpArray, int* npArray, int size, int sigma)
 {
     int block = ((blockIdx.y * size) + blockIdx.x);
     wpArray[block] = (npArray[block] > 1) ? (1.0 / (sigma * sigma * npArray[block])) : 1.0;
@@ -577,14 +590,15 @@ void Create3DBlocks(double* blocks, double* blocks3D, int* bmVectors, int size)
 }
 
 __global__
-void Create3DBlocksOrig(double* blocks, double* blocks3DOrig, float* noisyImage, int* bmVectors, int size)
+void CalculateCoefSimilarBlocks(float* similarBlocks, int size)
 {
+    similarBlocks[(blockIdx.y * size) + blockIdx.x] = 1.0f/similarBlocks[(blockIdx.y * size) + blockIdx.x];
 }
 
 __global__
-void CalculateCoefSimilarBlocks(float* similarBlocks, int size)
+void CalculateCoefSimilarBlocksBasicEstimate(float* similarBlocks, int size)
 {
-    similarBlocks[(blockIdx.y * size) + blockIdx.x] = sqrtf(similarBlocks[(blockIdx.y * size) + blockIdx.x]);
+    similarBlocks[(blockIdx.y * size) + blockIdx.x] =  sqrtf(similarBlocks[(blockIdx.y * size) + blockIdx.x]);
 }
 
 void BM3D::BM3D_BlockMatching(bool final)
@@ -598,7 +612,7 @@ void BM3D::BM3D_BlockMatching(bool final)
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(10, 10);
-        BM_AddAndLimit<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.widthBlocksIntern, BM3D::context.hardLimit); 
+        BM_AddAndLimit<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.widthBlocksIntern, (final) ? BM3D::context.wienLimit : BM3D::context.hardLimit); 
         cudaDeviceSynchronize();   
     }
     {
@@ -610,10 +624,20 @@ void BM3D::BM3D_BlockMatching(bool final)
         cudaDeviceSynchronize();
     }
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
-        dim3 numThreads(1);
-        CalculateCoefSimilarBlocks<<<numBlocks,numThreads>>>(BM3D::context.nbSimilarBlocks, BM3D::context.widthBlocksIntern); 
-        cudaDeviceSynchronize();
+        if(final)
+        {        
+            dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+            dim3 numThreads(1);
+            CalculateCoefSimilarBlocks<<<numBlocks,numThreads>>>(BM3D::context.nbSimilarBlocks, BM3D::context.widthBlocksIntern); 
+            cudaDeviceSynchronize();
+        }
+        else
+        {
+            dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+            dim3 numThreads(1);
+            CalculateCoefSimilarBlocksBasicEstimate<<<numBlocks,numThreads>>>(BM3D::context.nbSimilarBlocks, BM3D::context.widthBlocksIntern); 
+            cudaDeviceSynchronize();
+        }
     }
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);

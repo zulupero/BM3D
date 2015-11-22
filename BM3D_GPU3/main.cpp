@@ -32,7 +32,9 @@ int main(int argc, char **argv)
     if(load_image(imagePath.c_str(), img, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
     
     Timer::start();
-    BM3D::BM3D_Initialize(img, width, height, 3, (2500 * 64), (30 * 2.7), 30, false);  //phard = 3, hard limit = 2500 * 64, hard threshol = sigma * 2.7, sigma = 30
+    BM3D::BM3D_Initialize(img, width, height, 3, (2500 * 64), (400 * 64), (30 * 2.7), 30, false);  
+    //phard = 3, hard limit = 2500 * 64, Wien limit = 400 * 64,  hard threshol = sigma * 2.7, sigma = 30
+
     Timer::add("BM3D-Initialization");
     BM3D::BM3D_Run();
     Timer::showResults();
