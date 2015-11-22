@@ -23,7 +23,7 @@ void BM3D::BM3D_dispose()
 {
 }
 
-void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug)
+void BM3D::BM3D_Initialize(BM3D::SourceImage img, BM3D::SourceImage imgOrig, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug)
 {
     printf("\n--> Execution on Tesla K40c");
     if(cudaSuccess != cudaSetDevice(0)) printf("\n\tNo device 0 available");
@@ -60,6 +60,26 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     BM3D::context.img_height= h2;
     BM3D::context.pHard = pHard;
     BM3D::context.sourceImage = img;
+    BM3D::context.origImage = imgOrig;
+
+    printf("\n\tNumber of blocks          = %d", BM3D::context.nbBlocks);
+    printf("\n\tNumber of blocks (intern) = %d", BM3D::context.nbBlocksIntern);
+    printf("\n\tWidth blocks (intern)     = %d", BM3D::context.widthBlocksIntern);
+    printf("\n\tWidth blocks              = %d", BM3D::context.widthBlocks);
+    printf("\n\tWidth                     = %d", BM3D::context.img_width);
+    printf("\n\tHeight                    = %d", BM3D::context.img_height);
+    printf("\n\tDevice image              = %f Mb", (width * height * sizeof(float)/1024.00 / 1024.00));  
+    printf("\n\tBasic image               = %f Mb", (w2 * h2 * sizeof(float)/1024.00 / 1024.00));
+    printf("\n\tBlocks array              = %f Mb", (BM3D::context.nbBlocks * 66 * sizeof(double)/1024.00 / 1024.00));  
+    printf("\n\tBlocks array (orig)       = %f Mb", (BM3D::context.nbBlocks * 66 * sizeof(double)/1024.00 / 1024.00));  
+    printf("\n\tBlocks map                = %f Mb", (BM3D::context.nbBlocks * 100 * 10 * sizeof(int)/1024.00 / 1024.00));  
+    printf("\n\tBM vectors                = %f Mb", (BM3D::context.nbBlocksIntern * 16 * sizeof(int)/1024.00 / 1024.00)); 
+    printf("\n\tBlocks 3D                 = %f Mb", (BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)/1024.00 / 1024.00));  
+    printf("\n\tBlocks 3D (orig)          = %f Mb", (BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)/1024.00 / 1024.00));
+    printf("\n\tNP array                  = %f Mb", (BM3D::context.nbBlocksIntern  * sizeof(int)/1024.00 / 1024.00));
+    printf("\n\tWP array                  = %f Mb", (BM3D::context.nbBlocksIntern  * sizeof(double)/1024.00 / 1024.00));
+    printf("\n\tEstimates array           = %f Mb", (w2 * h2 * 2 * sizeof(float)/1024.00 / 1024.00));
+    printf("\n\tSimilar blocks array      = %f Mb", (BM3D::context.nbBlocksIntern  * sizeof(float)/1024.00 / 1024.00));
 
     gpuErrchk(cudaMalloc(&BM3D::context.deviceImage, width * height * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.deviceImage, &img[0], width * height * sizeof(float), cudaMemcpyHostToDevice));
@@ -92,24 +112,7 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, int width, int height, int pHa
     gpuErrchk(cudaMalloc(&BM3D::context.nbSimilarBlocks, BM3D::context.nbBlocksIntern  * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.nbSimilarBlocks, 0, BM3D::context.nbBlocksIntern  * sizeof(float)));
 
-    printf("\n\tNumber of blocks          = %d", BM3D::context.nbBlocks);
-    printf("\n\tNumber of blocks (intern) = %d", BM3D::context.nbBlocksIntern);
-    printf("\n\tWidth blocks (intern)     = %d", BM3D::context.widthBlocksIntern);
-    printf("\n\tWidth blocks              = %d", BM3D::context.widthBlocks);
-    printf("\n\tWidth                     = %d", BM3D::context.img_width);
-    printf("\n\tHeight                    = %d", BM3D::context.img_height);
-    printf("\n\tDevice image              = %f Mb", (width * height * sizeof(float)/1024.00 / 1024.00));  
-    printf("\n\tBasic image               = %f Mb", (w2 * h2 * sizeof(float)/1024.00 / 1024.00));
-    printf("\n\tBlocks array              = %f Mb", (BM3D::context.nbBlocks * 66 * sizeof(double)/1024.00 / 1024.00));  
-    printf("\n\tBlocks array (orig)       = %f Mb", (BM3D::context.nbBlocks * 66 * sizeof(double)/1024.00 / 1024.00));  
-    printf("\n\tBlocks map                = %f Mb", (BM3D::context.nbBlocks * 100 * 10 * sizeof(int)/1024.00 / 1024.00));  
-    printf("\n\tBM vectors                = %f Mb", (BM3D::context.nbBlocksIntern * 16 * sizeof(int)/1024.00 / 1024.00)); 
-    printf("\n\tBlocks 3D                 = %f Mb", (BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)/1024.00 / 1024.00));  
-    printf("\n\tBlocks 3D (orig)          = %f Mb", (BM3D::context.nbBlocksIntern * 16 * 64 * sizeof(double)/1024.00 / 1024.00));
-    printf("\n\tNP array                  = %f Mb", (BM3D::context.nbBlocksIntern  * sizeof(int)/1024.00 / 1024.00));
-    printf("\n\tWP array                  = %f Mb", (BM3D::context.nbBlocksIntern  * sizeof(double)/1024.00 / 1024.00));
-    printf("\n\tEstimates array           = %f Mb", (w2 * h2 * 2 * sizeof(float)/1024.00 / 1024.00));
-    printf("\n\tSimilar blocks array      = %f Mb", (BM3D::context.nbBlocksIntern  * sizeof(float)/1024.00 / 1024.00));
+    
 
 }
 
@@ -117,15 +120,22 @@ void BM3D::BM3D_Run()
 {
     printf("\n\nRun BM3D"); 
     BM3D_BasicEstimate();
-    BM3D_FinalEstimate();   
+    BM3D_FinalEstimate();
 }
 
 void BM3D::BM3D_SaveImage(bool final)
 {
-    float* basicImage = (float*)malloc(BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float));
-    gpuErrchk(cudaMemcpy(&basicImage[0], BM3D::context.deviceImage, BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float), cudaMemcpyDeviceToHost));
+    float* denoisedImage = (float*)malloc(BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float));
+    gpuErrchk(cudaMemcpy(&denoisedImage[0], BM3D::context.deviceImage, BM3D::context.img_widthOrig * BM3D::context.img_heightOrig * sizeof(float), cudaMemcpyDeviceToHost));
     std::string filename((final) ? "final.png" : "basic.png");
-    save_image(filename.c_str(), basicImage, BM3D::context.img_widthOrig, BM3D::context.img_heightOrig, 1);
+    if(final)
+    {
+        double psrn = 0, rmse =0;
+        compute_psnr(BM3D::context.origImage, denoisedImage, &psrn, &rmse);  
+        printf("\n psrn = %f, rmse = %f", psrn, rmse);
+    }
+
+    save_image(filename.c_str(), denoisedImage, BM3D::context.img_widthOrig, BM3D::context.img_heightOrig, 1);
 }
 
 void BM3D::BM3D_FinalEstimate()

@@ -377,25 +377,19 @@ void sub_divide(
  * @return EXIT_FAILURE if both images haven't the same size.
  **/
 int compute_psnr(
-    const vector<float> &img_1
-,   const vector<float> &img_2
-,   float *psnr
-,   float *rmse
+    const std::vector<float> &img_1
+,   float* img_2
+,   double *psnr
+,   double *rmse
 )
 {
-    if (img_1.size() != img_2.size())
+    double tmp = 0.0f;
+    for (unsigned k = 0; k < img_1.size(); k++)
     {
-        cout << "Can't compute PSNR & RMSE: images have different sizes: " << endl;
-        cout << "img_1 : " << img_1.size() << endl;
-        cout << "img_2 : " << img_2.size() << endl;
-        return EXIT_FAILURE;
+        tmp += ((img_1[k] - img_2[k]) * (img_1[k] - img_2[k]));
     }
 
-    float tmp = 0.0f;
-    for (unsigned k = 0; k < img_1.size(); k++)
-        tmp += (img_1[k] - img_2[k]) * (img_1[k] - img_2[k]);
-
-    (*rmse) = sqrtf(tmp / (float) img_1.size());
+    (*rmse) = sqrtf(tmp / (double) img_1.size());
     (*psnr) = 20.0f * log10f(255.0f / (*rmse));
 
     return EXIT_SUCCESS;

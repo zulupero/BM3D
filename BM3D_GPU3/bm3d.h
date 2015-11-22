@@ -21,7 +21,8 @@ public:
         int             img_width;
 	  	int             img_height;
 	   	int             pHard;
-	   	SourceImage     sourceImage;		
+	   	SourceImage     sourceImage;
+        SourceImage     origImage;		
         int             nbBlocksIntern;        
         int             nbBlocks;
         int             widthBlocksIntern;
@@ -52,7 +53,7 @@ private:
 	static BM3D_Context context;	
 
 public:
-	static void BM3D_Initialize(SourceImage img, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug = false);	
+	static void BM3D_Initialize(SourceImage img, SourceImage imgOrig, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug = false);	
 	static void BM3D_Run();
 	~BM3D()
 	{}

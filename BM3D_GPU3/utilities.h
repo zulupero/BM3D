@@ -65,9 +65,9 @@ void sub_divide(
 //! Compute the PSNR and RMSE between img_1 and img_2
 int compute_psnr(
     const std::vector<float> &img_1
-,   const std::vector<float> &img_2
-,   float *psnr
-,   float *rmse
+,   float* img_2
+,   double *psnr
+,   double *rmse
 );
 
 //! Compute the difference images between img_1 and img_2

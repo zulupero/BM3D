@@ -9,7 +9,7 @@ void CheckCufftError(cufftResult result, const char* method);
 
 //! Read image and check number of channels
 int load_image(
-    char* name
+    const char* name
 ,   std::vector<float> &img
 ,   unsigned * width
 ,   unsigned * height
@@ -65,7 +65,7 @@ void sub_divide(
 //! Compute the PSNR and RMSE between img_1 and img_2
 int compute_psnr(
     const std::vector<float> &img_1
-,   const std::vector<float> &img_2
+,   float* img_2
 ,   float *psnr
 ,   float *rmse
 );
