@@ -47,6 +47,7 @@ public:
         float*      wpArray;
         float*      estimates;
         float*      nbSimilarBlocks;
+        float*      integralImageMap;
 	};
 
 private:	
