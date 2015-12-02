@@ -22,7 +22,7 @@ public:
 	  	int             img_height;
 	   	int             pHard;
 	   	SourceImage     sourceImage;
-        float*          origImage;		
+        SourceImage     origImage;		
         int             nbBlocksIntern;        
         int             nbBlocks;
         int             widthBlocksIntern;
@@ -69,8 +69,8 @@ private:
     static void BM3D_BlockMatching(bool final = false);
     static void BM3D_HardThresholdFilter();
     static void BM3D_WienFilter();
-    static void BM3D_Inverse3D();
-    static void BM3D_Aggregation();
+    static void BM3D_Inverse3D(bool final=false);
+    static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
 
     static void BM3D_ShowBlock(int block);

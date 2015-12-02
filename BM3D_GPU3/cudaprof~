@@ -1,3 +1,3 @@
 #!/bin/sh
-/usr/local/cuda-6.5/bin/nvprof  /home/cuenat/BM3D/BM3D/BM3D_GPU3/bm3d_gpu f 
+/usr/local/cuda-6.5/bin/nvprof  /home/cuenat/BM3D/BM3D/BM3D_GPU3/bm3d_gpu ../BM3D_images/house.png ../BM3D_images/ImNoisy.png 30 
 #--devices 0 --analysis-metrics --replay-mode disabled --output-profile prof.nvprof

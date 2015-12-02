@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     BM3D::SourceImage imgOrig;
     unsigned width, height, chnls;
 
-    if(argc < 2)
+    if(argc < 3)
     {
 	printf("\ntoo few arguments\n");
         return EXIT_FAILURE;
@@ -38,7 +38,8 @@ int main(int argc, char **argv)
     if(load_image(argv[1], imgOrig, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
     
     Timer::start();
-    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (2500 * 64), (400 * 64), (30 * 2.7), sigma, false);  
+    //sigma = 25;
+    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (2500 * 64 * 3), (400 * 64), (sigma * 2.7), sigma, false);  
     //phard = 3, hard limit = 2500 * 64, Wien limit = 400 * 64,  hard threshol = sigma * 2.7
 
     Timer::add("BM3D-Initialization");

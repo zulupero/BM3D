@@ -69,12 +69,12 @@ private:
     static void BM3D_BlockMatching(bool final = false);
     static void BM3D_HardThresholdFilter();
     static void BM3D_WienFilter();
-    static void BM3D_Inverse3D();
-    static void BM3D_Aggregation();
+    static void BM3D_Inverse3D(bool final=false);
+    static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
 
     static void BM3D_ShowBlock(int block);
-    static void BM3D_ShowDistance(int x, int y);
+    static void BM3D_ShowDistance(int x, int y, bool vectorOnly = false);
     static void BM3D_ShowPixel(int x, int y);
 
 	BM3D();

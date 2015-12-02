@@ -1,10 +1,10 @@
 
 ************
 -sigma           = 30
--PSNR_basic      = 31.2897
--RMSE_basic      = 6.95109
--PSNR            = 31.8678
--RMSE            = 6.50357
+-PSNR_basic      = 31.2961
+-RMSE_basic      = 6.94601
+-PSNR            = 31.9168
+-RMSE            = 6.46694
 
 -PSNR_basic_bias = 33.6314
 -RMSE_basic_bias = 5.30851
