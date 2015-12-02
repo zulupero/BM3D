@@ -87,20 +87,30 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, BM3D::SourceImage imgOrig, int
     gpuErrchk(cudaMemset(BM3D::context.basicImage, 0, w2 * h2 * sizeof(float)));
     gpuErrchk(cudaMalloc(&BM3D::context.estimates, w2 * h2 * 2 * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.estimates, 0, w2 * h2 * 2 * sizeof(float)));
-    //Kaiser-window coef
-    float kaiserWindow[64] = {  0.1924, 0.2989, 0.3846, 0.4325, 0.4325, 0.3846, 0.2989, 0.1924,
-                                0.2989, 0.4642, 0.5974, 0.6717, 0.6717, 0.5974, 0.4642, 0.2989,
-                                0.3846, 0.5974, 0.7688, 0.8644, 0.8644, 0.7688, 0.5974, 0.3846,
-                                0.4325, 0.6717, 0.8644, 0.9718, 0.9718, 0.8644, 0.6717, 0.4325,
-                                0.4325, 0.6717, 0.8644, 0.9718, 0.9718, 0.8644, 0.6717, 0.4325,
-                                0.3846, 0.5974, 0.7688, 0.8644, 0.8644, 0.7688, 0.5974, 0.3846,
-                                0.2989, 0.4642, 0.5974, 0.6717, 0.6717, 0.5974, 0.4642, 0.2989,
-                                0.1924, 0.2989, 0.3846, 0.4325, 0.4325, 0.3846, 0.2989, 0.1924};
+    
+    //! First quarter of the matrix
+    float kaiserWindow[64];
+    int kHW = 8;
+    kaiserWindow[0 + kHW * 0] = 0.1924f; kaiserWindow[0 + kHW * 1] = 0.2989f; kaiserWindow[0 + kHW * 2] = 0.3846f; kaiserWindow[0 + kHW * 3] = 0.4325f;
+    kaiserWindow[1 + kHW * 0] = 0.2989f; kaiserWindow[1 + kHW * 1] = 0.4642f; kaiserWindow[1 + kHW * 2] = 0.5974f; kaiserWindow[1 + kHW * 3] = 0.6717f;
+    kaiserWindow[2 + kHW * 0] = 0.3846f; kaiserWindow[2 + kHW * 1] = 0.5974f; kaiserWindow[2 + kHW * 2] = 0.7688f; kaiserWindow[2 + kHW * 3] = 0.8644f;
+    kaiserWindow[3 + kHW * 0] = 0.4325f; kaiserWindow[3 + kHW * 1] = 0.6717f; kaiserWindow[3 + kHW * 2] = 0.8644f; kaiserWindow[3 + kHW * 3] = 0.9718f;
+
+    //! Completing the rest of the matrix by symmetry
+    for(unsigned i = 0; i < kHW / 2; i++)
+        for (unsigned j = kHW / 2; j < kHW; j++)
+            kaiserWindow[i + kHW * j] = kaiserWindow[i + kHW * (kHW - j - 1)];
+
+    for (unsigned i = kHW / 2; i < kHW; i++)
+        for (unsigned j = 0; j < kHW; j++)
+            kaiserWindow[i + kHW * j] = kaiserWindow[kHW - i - 1 + kHW * j];
 
     gpuErrchk(cudaMalloc(&BM3D::context.kaiserWindowCoef, 64 * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.kaiserWindowCoef, kaiserWindow, 64 * sizeof(float), cudaMemcpyHostToDevice));
     gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocksIntern * 100 * 10 * sizeof(int)));
+    gpuErrchk(cudaMemset(BM3D::context.blockMap, 0, BM3D::context.nbBlocksIntern * 100 * 10 * sizeof(int)));
     gpuErrchk(cudaMalloc(&BM3D::context.blocks, BM3D::context.nbBlocks * 66 * sizeof(double)));
+    gpuErrchk(cudaMemset(BM3D::context.blocks, 0, BM3D::context.nbBlocks * 66 * sizeof(double)));
     gpuErrchk(cudaMalloc(&BM3D::context.blocksOrig, BM3D::context.nbBlocks * 66 * sizeof(double)));
     gpuErrchk(cudaMalloc(&BM3D::context.bmVectors, BM3D::context.nbBlocksIntern * 32 * sizeof(int)));
     gpuErrchk(cudaMemset(BM3D::context.bmVectors, 0, BM3D::context.nbBlocksIntern * 32 * sizeof(int)));
@@ -111,9 +121,6 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, BM3D::SourceImage imgOrig, int
     gpuErrchk(cudaMalloc(&BM3D::context.wpArray, BM3D::context.nbBlocksIntern  * sizeof(float)));
     gpuErrchk(cudaMalloc(&BM3D::context.nbSimilarBlocks, BM3D::context.nbBlocksIntern  * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.nbSimilarBlocks, 0, BM3D::context.nbBlocksIntern  * sizeof(float)));
-
-    
-
 }
 
 void BM3D::BM3D_Run()
@@ -132,24 +139,48 @@ void BM3D::BM3D_SaveImage(bool final)
     {
         double psrn = 0, rmse =0;
         compute_psnr(BM3D::context.origImage, denoisedImage, &psrn, &rmse);  
-        printf("\n psrn = %f, rmse = %f", psrn, rmse);
+        printf("\n\t\tpsrn = %f, rmse = %f", psrn, rmse);
     }
 
     save_image(filename.c_str(), denoisedImage, BM3D::context.img_widthOrig, BM3D::context.img_heightOrig, 1);
 }
 
+__global__
+void InitBlocksArray(double* blocks, int size)
+{
+    int blockIndex = ((blockIdx.y * size) + blockIdx.x) * 66 + (threadIdx.y << 3) + threadIdx.x;
+    blocks[blockIndex] = 0;
+}
+
 void BM3D::BM3D_FinalEstimate()
 {
-    gpuErrchk(cudaMemset(BM3D::context.wpArray, 0, BM3D::context.nbBlocksIntern  * sizeof(float)));
+    //gpuErrchk(cudaMemset(BM3D::context.wpArray, 0, BM3D::context.nbBlocksIntern  * sizeof(float)));
     gpuErrchk(cudaMemset(BM3D::context.bmVectors, 0, BM3D::context.nbBlocksIntern * 32 * sizeof(int)));
-    
+    gpuErrchk(cudaMemset(BM3D::context.blockMap, 0, BM3D::context.nbBlocksIntern * 100 * 10 * sizeof(int))); 
+    gpuErrchk(cudaMemset(BM3D::context.basicImage, 0, BM3D::context.img_width * BM3D::context.img_height * sizeof(float)));
+    //gpuErrchk(cudaMemset(BM3D::context.blocks, 0, BM3D::context.nbBlocks * 66 * sizeof(double)));
+
+    //BM3D_ShowBlock(0);
+    {
+        //init blocks array
+        dim3 numBlocks(BM3D::context.widthBlocks, BM3D::context.widthBlocks);
+        dim3 numThreads(8,8);
+        InitBlocksArray<<<numBlocks,numThreads>>>(BM3D::context.blocks, BM3D::context.widthBlocks); 
+        cudaDeviceSynchronize();
+    }
+    //BM3D_ShowBlock(0);
+
     printf("\n\tFinal estimates (2 step)");
     Timer::start(); 
     BM3D_CreateBlock();
+    //BM3D_ShowBlock(0);
     BM3D_2DTransform(true);
     BM3D_BlockMatching(true);
+    //BM3D_ShowBlock3D(6515);
     BM3D_WienFilter();
+    //BM3D_ShowBlock3D(6515);
     BM3D_Inverse3D(true);
+    //BM3D_ShowBlock3D(6515);
     BM3D_Aggregation(true);
     BM3D_InverseShift();
     Timer::add("BM3D-Final estimates");
@@ -163,8 +194,12 @@ void BM3D::BM3D_BasicEstimate()
     BM3D_CreateBlock();
     BM3D_2DTransform();
     BM3D_BlockMatching();
+    //BM3D_ShowDistance(0);
+    //BM3D_ShowDistance(0, true);
     BM3D_HardThresholdFilter();
+    //BM3D_ShowBlock3D(6515);
     BM3D_Inverse3D();
+    //BM3D_ShowBlock3D(6515);
     BM3D_Aggregation();
     BM3D_InverseShift();
     Timer::add("BM3D-Basic estimates");
@@ -178,10 +213,10 @@ void WienFilter(double* blocks3D, double* blocks3DOrig, int size, float* similar
     int block = (blockIdx.y * size) + blockIdx.x;
     float coef = 1.0 / similarBlocks[block];    
     int blockPixelIndex = (block << 11) + (blockIdx.z << 6) + (threadIdx.y << 3) + threadIdx.x;
-    double estimateValue = blocks3D[blockPixelIndex];
-    float value = estimateValue * estimateValue; //* coef;
+    float estimateValue = blocks3D[blockPixelIndex];
+    float value = estimateValue * estimateValue;// * coef;
     value /= (value + (sigma * sigma));
-    blocks3D[blockPixelIndex] = blocks3DOrig[blockPixelIndex] * value; //* coef;
+    blocks3D[blockPixelIndex] = blocks3DOrig[blockPixelIndex] * value;// * coef;
     atomicAdd(&wpArray[block], value);
 }
 
@@ -203,7 +238,7 @@ void BM3D::BM3D_WienFilter()
     {    
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(1);
-        //CalculateFinalWP<<<numBlocks,numThreads>>>(BM3D::context.widthBlocksIntern, BM3D::context.sigma, BM3D::context.wpArray); 
+        CalculateFinalWP<<<numBlocks,numThreads>>>(BM3D::context.widthBlocksIntern, BM3D::context.sigma, BM3D::context.wpArray); 
         cudaDeviceSynchronize();
     }   
 }
@@ -548,10 +583,10 @@ void BM3D::BM3D_HardThresholdFilter()
 }
 
 __global__
-void showDistance(int x, int y, int size, int* blockMap, double* blocks, int* bmVectors, bool vectorOnly)
+void showDistance(int block, int size, int* blockMap, double* blocks, int* bmVectors, bool vectorOnly)
 {
-    int index = ((y * size) + x) * 1000;
-    int bmVectorIndex = ((y * size) + x) << 5;
+    int index = block * 1000;
+    int bmVectorIndex = block << 5;
     printf("\n");
     printf("\nBM Vector = ");
 
@@ -575,12 +610,12 @@ void showDistance(int x, int y, int size, int* blockMap, double* blocks, int* bm
     }
 }
 
-void BM3D::BM3D_ShowDistance(int x, int y, bool vectorOnly)
+void BM3D::BM3D_ShowDistance(int block, bool vectorOnly)
 {
    {
         dim3 numBlocks(1);
         dim3 numThreads(1);
-        showDistance<<<numBlocks,numThreads>>>(x, y, BM3D::context.widthBlocksIntern, BM3D::context.blockMap, BM3D::context.blocks, BM3D::context.bmVectors, vectorOnly); 
+        showDistance<<<numBlocks,numThreads>>>(block, BM3D::context.widthBlocksIntern, BM3D::context.blockMap, BM3D::context.blocks, BM3D::context.bmVectors, vectorOnly); 
         cudaDeviceSynchronize();   
    }     
 }
@@ -639,6 +674,7 @@ void BM_AddAndLimit(int* blockMap, int size, int limit)
 {
     int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1000) + (threadIdx.y * 10 + threadIdx.x) * 10;
     int sum = blockMap[blockMapIndex + 1] + blockMap[blockMapIndex + 2] + blockMap[blockMapIndex + 3] + blockMap[blockMapIndex + 4] + blockMap[blockMapIndex + 5] + blockMap[blockMapIndex + 6] + blockMap[blockMapIndex + 7] + blockMap[blockMapIndex + 8];
+    if(sum == 0 && threadIdx.x != 5 && threadIdx.y != 5) sum = limit;
     blockMap[blockMapIndex + 9] = (sum < limit) ? sum : 99999999;
 }
 
@@ -648,13 +684,14 @@ void BM_Sort(int* blockMap, int size)
 {
     int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1000);
     int currentBlockIndex = blockMapIndex + (threadIdx.y * 100) + (threadIdx.x *10);
-    int currentD = blockMap[currentBlockIndex+9];
-    if(currentD < 99999999)
+    int distance = blockMap[currentBlockIndex+9];
+
+    if(distance < 99999999)
     {
         int index = 0;
         for(int i=0; i<100; ++i)
         {
-            if(currentD > blockMap[blockMapIndex + i * 10 + 9]) index++;
+            if(distance > blockMap[blockMapIndex + i * 10 + 9]) index++;
         }
         blockMap[currentBlockIndex+1] = index;
     }
@@ -768,40 +805,45 @@ void Create3DBlocks32(double* blocks, double* blocks3D, int* bmVectors, int size
         double o2 = blocks[bmVectors[bmVectorIndex+30] + pixelIndex];
         double p2 = blocks[bmVectors[bmVectorIndex+31] + pixelIndex];
 
-        
-        blocks3D[block3DIndex] = ((a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) + (a2+b2+c2+d2+e2+f2+g2+h2+i2+j2+k2+l2+m2+n2+o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+64] = ((a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p) + (a2-b2+c2-d2+e2-f2+g2-h2+i2-j2+k2-l2+m2-n2+o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+128] = ((a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p) + (a2+b2-c2-d2+e2+f2-g2-h2+i2+j2-k2-l2+m2+n2-o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+192] = ((a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p) + (a2-b2-c2+d2+e2-f2-g2+h2+i2-j2-k2+l2+m2-n2-o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+256] = ((a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p) + (a2+b2+c2+d2-e2-f2-g2-h2+i2+j2+k2+l2-m2-n2-o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+320] = ((a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p) + (a2-b2+c2-d2-e2+f2-g2+h2+i2-j2+k2-l2-m2+n2-o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+384] = ((a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p) + (a2+b2-c2-d2-e2-f2+g2+h2+i2+j2-k2-l2-m2-n2+o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+448] = ((a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p) + (a2-b2-c2+d2-e2+f2+g2-h2+i2-j2-k2+l2-m2+n2+o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+512] = ((a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p) + (a2+b2+c2+d2+e2+f2+g2+h2-i2-j2-k2-l2-m2-n2-o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+576] = ((a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p) + (a2-b2+c2-d2+e2-f2+g2-h2-i2+j2-k2+l2-m2+n2-o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+640] = ((a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p) + (a2+b2-c2-d2+e2+f2-g2-h2-i2-j2+k2+l2-m2-n2+o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+704] = ((a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p) + (a2-b2-c2+d2+e2-f2-g2+h2-i2+j2+k2-l2-m2+n2+o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+768] = ((a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p) + (a2+b2+c2+d2-e2-f2-g2-h2-i2-j2-k2-l2+m2+n2+o2+p2)) / DIVISOR;
-        blocks3D[block3DIndex+832] = ((a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p) + (a2-b2+c2-d2-e2+f2-g2+h2-i2+j2-k2+l2+m2-n2+o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+896] = ((a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p) + (a2+b2-c2-d2-e2-f2+g2+h2-i2-j2+k2+l2+m2+n2-o2-p2)) / DIVISOR;
-        blocks3D[block3DIndex+960] = ((a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p) + (a2-b2-c2+d2-e2+f2+g2-h2-i2+j2+k2-l2+m2-n2-o2+p2)) / DIVISOR;
+        //if(index == 6515)
+          //  printf("\n%d, %d, %d, %d, %f", block3DIndex, index, pixelIndex, bmVectors[bmVectorIndex+30], blocks[0]);
+            //printf("\n%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f:%d:%d,%f:%d:%d,%f:%d, %d, %d, %d",
+                //a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,a2,b2,c2,d2,e2,f2,g2,h2,i2,j2,k2,l2,m2,n2, bmVectors[bmVectorIndex+29], bmVectorIndex,o2,bmVectors[bmVectorIndex+30], bmVectorIndex,p2, bmVectors[bmVectorIndex+31], block3DIndex, index, pixelIndex);
 
-        blocks3D[block3DIndex+1024] = ((a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) - a2-b2-c2-d2-e2-f2-g2-h2-i2-j2-k2-l2-m2-n2-o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1088] = ((a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p) - a2+b2-c2+d2-e2+f2-g2+h2-i2+j2-k2+l2-m2+n2-o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1152] = ((a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p) - a2-b2+c2+d2-e2-f2+g2+h2-i2-j2+k2+l2-m2-n2+o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1216] = ((a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p) - a2+b2+c2-d2-e2+f2+g2-h2-i2+j2+k2-l2-m2+n2+o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1280] = ((a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p) - a2-b2-c2-d2+e2+f2+g2+h2-i2-j2-k2-l2+m2+n2+o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1344] = ((a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p) - a2+b2-c2+d2+e2-f2+g2-h2-i2+j2-k2+l2+m2-n2+o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1408] = ((a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p) - a2-b2+c2+d2+e2+f2-g2-h2-i2-j2+k2+l2+m2+n2-o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1472] = ((a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p) - a2+b2+c2-d2+e2-f2-g2+h2-i2+j2+k2-l2+m2-n2-o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1536] = ((a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p) - a2-b2-c2-d2-e2-f2-g2-h2+i2+j2+k2+l2+m2+n2+o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1600] = ((a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p) - a2+b2-c2+d2-e2+f2-g2+h2+i2-j2+k2-l2+m2-n2+o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1664] = ((a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p) - a2-b2+c2+d2-e2-f2+g2+h2+i2+j2-k2-l2+m2+n2-o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1728] = ((a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p) - a2+b2+c2-d2-e2+f2+g2-h2+i2-j2-k2+l2+m2-n2-o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1792] = ((a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p) - a2-b2-c2-d2+e2+f2+g2+h2+i2+j2+k2+l2-m2-n2-o2-p2) / DIVISOR;
-        blocks3D[block3DIndex+1856] = ((a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p) - a2+b2-c2+d2+e2-f2+g2-h2+i2-j2+k2-l2-m2+n2-o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1920] = ((a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p) - a2-b2+c2+d2+e2+f2-g2-h2+i2+j2-k2-l2-m2-n2+o2+p2) / DIVISOR;
-        blocks3D[block3DIndex+1984] = ((a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p) - a2+b2+c2-d2+e2-f2-g2+h2+i2-j2-k2+l2-m2+n2+o2-p2) / DIVISOR;
+        
+        blocks3D[block3DIndex] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p + a2+b2+c2+d2+e2+f2+g2+h2+i2+j2+k2+l2+m2+n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+64] = (a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p + a2-b2+c2-d2+e2-f2+g2-h2+i2-j2+k2-l2+m2-n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+128] = (a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p + a2+b2-c2-d2+e2+f2-g2-h2+i2+j2-k2-l2+m2+n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+192] = (a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p + a2-b2-c2+d2+e2-f2-g2+h2+i2-j2-k2+l2+m2-n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+256] = (a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p + a2+b2+c2+d2-e2-f2-g2-h2+i2+j2+k2+l2-m2-n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+320] = (a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p + a2-b2+c2-d2-e2+f2-g2+h2+i2-j2+k2-l2-m2+n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+384] = (a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p + a2+b2-c2-d2-e2-f2+g2+h2+i2+j2-k2-l2-m2-n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+448] = (a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p + a2-b2-c2+d2-e2+f2+g2-h2+i2-j2-k2+l2-m2+n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+512] = (a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p + a2+b2+c2+d2+e2+f2+g2+h2-i2-j2-k2-l2-m2-n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+576] = (a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p + a2-b2+c2-d2+e2-f2+g2-h2-i2+j2-k2+l2-m2+n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+640] = (a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p + a2+b2-c2-d2+e2+f2-g2-h2-i2-j2+k2+l2-m2-n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+704] = (a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p + a2-b2-c2+d2+e2-f2-g2+h2-i2+j2+k2-l2-m2+n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+768] = (a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p + a2+b2+c2+d2-e2-f2-g2-h2-i2-j2-k2-l2+m2+n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+832] = (a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p + a2-b2+c2-d2-e2+f2-g2+h2-i2+j2-k2+l2+m2-n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+896] = (a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p + a2+b2-c2-d2-e2-f2+g2+h2-i2-j2+k2+l2+m2+n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+960] = (a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p + a2-b2-c2+d2-e2+f2+g2-h2-i2+j2+k2-l2+m2-n2-o2+p2) / DIVISOR;
+
+        blocks3D[block3DIndex+1024] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p - a2-b2-c2-d2-e2-f2-g2-h2-i2-j2-k2-l2-m2-n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1088] = (a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p - a2+b2-c2+d2-e2+f2-g2+h2-i2+j2-k2+l2-m2+n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1152] = (a+b-c-d+e+f-g-h+i+j-k-l+m+n-o-p - a2-b2+c2+d2-e2-f2+g2+h2-i2-j2+k2+l2-m2-n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1216] = (a-b-c+d+e-f-g+h+i-j-k+l+m-n-o+p - a2+b2+c2-d2-e2+f2+g2-h2-i2+j2+k2-l2-m2+n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1280] = (a+b+c+d-e-f-g-h+i+j+k+l-m-n-o-p - a2-b2-c2-d2+e2+f2+g2+h2-i2-j2-k2-l2+m2+n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1344] = (a-b+c-d-e+f-g+h+i-j+k-l-m+n-o+p - a2+b2-c2+d2+e2-f2+g2-h2-i2+j2-k2+l2+m2-n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1408] = (a+b-c-d-e-f+g+h+i+j-k-l-m-n+o+p - a2-b2+c2+d2+e2+f2-g2-h2-i2-j2+k2+l2+m2+n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1472] = (a-b-c+d-e+f+g-h+i-j-k+l-m+n+o-p - a2+b2+c2-d2+e2-f2-g2+h2-i2+j2+k2-l2+m2-n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1536] = (a+b+c+d+e+f+g+h-i-j-k-l-m-n-o-p - a2-b2-c2-d2-e2-f2-g2-h2+i2+j2+k2+l2+m2+n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1600] = (a-b+c-d+e-f+g-h-i+j-k+l-m+n-o+p - a2+b2-c2+d2-e2+f2-g2+h2+i2-j2+k2-l2+m2-n2+o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1664] = (a+b-c-d+e+f-g-h-i-j+k+l-m-n+o+p - a2-b2+c2+d2-e2-f2+g2+h2+i2+j2-k2-l2+m2+n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1728] = (a-b-c+d+e-f-g+h-i+j+k-l-m+n+o-p - a2+b2+c2-d2-e2+f2+g2-h2+i2-j2-k2+l2+m2-n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1792] = (a+b+c+d-e-f-g-h-i-j-k-l+m+n+o+p - a2-b2-c2-d2+e2+f2+g2+h2+i2+j2+k2+l2-m2-n2-o2-p2) / DIVISOR;
+        blocks3D[block3DIndex+1856] = (a-b+c-d-e+f-g+h-i+j-k+l+m-n+o-p - a2+b2-c2+d2+e2-f2+g2-h2+i2-j2+k2-l2-m2+n2-o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1920] = (a+b-c-d-e-f+g+h-i-j+k+l+m+n-o-p - a2-b2+c2+d2+e2+f2-g2-h2+i2+j2-k2-l2-m2-n2+o2+p2) / DIVISOR;
+        blocks3D[block3DIndex+1984] = (a-b-c+d-e+f+g-h-i+j+k-l+m-n-o+p - a2+b2+c2-d2+e2-f2-g2+h2+i2-j2-k2+l2-m2+n2+o2-p2) / DIVISOR;
     }
 }
 
@@ -813,7 +855,6 @@ void BM3D::BM3D_BlockMatching(bool final)
         BM_CalculateDistance<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.blocks, BM3D::context.widthBlocksIntern); 
         cudaDeviceSynchronize();   
     }
-    
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(10, 10);
@@ -828,7 +869,7 @@ void BM3D::BM3D_BlockMatching(bool final)
         BM_CreateBmVector<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.bmVectors, BM3D::context.widthBlocksIntern, BM3D::context.nbSimilarBlocks, (final) ? 32 : 16); 
         cudaDeviceSynchronize();
     }
-    BM3D_ShowDistance(30,30, true);
+    //BM3D_ShowDistance(6515, true);
     {
 
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
@@ -836,13 +877,15 @@ void BM3D::BM3D_BlockMatching(bool final)
         if(final)
         {
             float DIVISOR = sqrt(32);
+            //BM3D_ShowBlock(100);
             Create3DBlocks32<<<numBlocks,numThreads>>>(BM3D::context.blocks, BM3D::context.blocks3D, BM3D::context.bmVectors, BM3D::context.widthBlocksIntern, DIVISOR); 
-            //cudaDeviceSynchronize();
+            cudaDeviceSynchronize();
             Create3DBlocks32<<<numBlocks,numThreads>>>(BM3D::context.blocksOrig, BM3D::context.blocks3DOrig, BM3D::context.bmVectors, BM3D::context.widthBlocksIntern, DIVISOR); 
             cudaDeviceSynchronize(); 
         }
         else
         {
+            //BM3D_ShowBlock(100);
             Create3DBlocks16<<<numBlocks,numThreads>>>(BM3D::context.blocks, BM3D::context.blocks3D, BM3D::context.bmVectors, BM3D::context.widthBlocksIntern); 
             cudaDeviceSynchronize();
         }
@@ -865,6 +908,24 @@ void BM3D::BM3D_ShowBlock(int block)
         dim3 numBlocks(1);
         dim3 numThreads(1);
         ShowBlock<<<numBlocks,numThreads>>>(block, BM3D::context.widthBlocks, BM3D::context.blocks); 
+        cudaDeviceSynchronize();   
+   }
+}
+
+__global__
+void ShowBlock3D(int block, int size, double* blocks3D)
+{
+    int index = block << 11;
+    printf("\n\n");
+    for(int i = 0; i < 64; i++) printf("%f, ", blocks3D[index+i]);
+}
+
+void BM3D::BM3D_ShowBlock3D(int block, bool orig)
+{
+   {
+        dim3 numBlocks(1);
+        dim3 numThreads(1);
+        ShowBlock3D<<<numBlocks,numThreads>>>(block, BM3D::context.widthBlocks, (orig) ? BM3D::context.blocks3DOrig : BM3D::context.blocks3D); 
         cudaDeviceSynchronize();   
    }
 }

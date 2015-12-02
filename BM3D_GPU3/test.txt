@@ -40,668 +40,668 @@ Run BM3D
 
 BM Vector = 
 cmp block 0
-index: 5430
-block x=90, y=90
-	1: distance 15267
-	2: distance 11743
-	3: distance 15585
-	4: distance 14105
-	5: distance 8213
-	6: distance 15514
-	7: distance 4407
-	8: distance 13144
-	9: distance 97978
+index: 0
+block x=0, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 1
-index: 5431
-block x=93, y=90
-	1: distance 16925
-	2: distance 15254
-	3: distance 16151
-	4: distance 18172
-	5: distance 12661
-	6: distance 40188
-	7: distance 14897
-	8: distance 9896
-	9: distance 144144
+index: 1
+block x=3, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 2
-index: 5432
-block x=96, y=90
-	1: distance 17856
-	2: distance 12613
-	3: distance 3200
-	4: distance 8490
-	5: distance 16306
-	6: distance 29831
-	7: distance 7009
-	8: distance 18465
-	9: distance 113770
+index: 2
+block x=6, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 3
-index: 5433
-block x=99, y=90
-	1: distance 13066
-	2: distance 9527
-	3: distance 7458
-	4: distance 8003
-	5: distance 10744
-	6: distance 39321
-	7: distance 16490
-	8: distance 12773
-	9: distance 117382
+index: 3
+block x=9, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 4
-index: 5434
-block x=102, y=90
-	1: distance 12683
-	2: distance 10917
-	3: distance 18290
-	4: distance 8472
-	5: distance 15015
-	6: distance 28515
-	7: distance 6222
-	8: distance 10220
-	9: distance 110334
+index: 4
+block x=12, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 5
-index: 5435
-block x=105, y=90
-	1: distance 20775
-	2: distance 9376
-	3: distance 17888
-	4: distance 5962
-	5: distance 6909
-	6: distance 43190
-	7: distance 5505
-	8: distance 15089
-	9: distance 124694
+index: 5
+block x=15, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 6
-index: 5436
-block x=108, y=90
-	1: distance 27816
-	2: distance 8008
-	3: distance 11402
-	4: distance 12347
-	5: distance 8504
-	6: distance 25247
-	7: distance 7719
-	8: distance 21104
-	9: distance 122147
+index: 6
+block x=18, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 7
-index: 5437
-block x=111, y=90
-	1: distance 20890
-	2: distance 6254
-	3: distance 12251
-	4: distance 11226
-	5: distance 7293
-	6: distance 29043
-	7: distance 7393
-	8: distance 28931
-	9: distance 123281
+index: 7
+block x=21, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 8
-index: 5438
-block x=114, y=90
-	1: distance 21443
-	2: distance 8270
-	3: distance 15938
-	4: distance 6049
-	5: distance 5650
-	6: distance 34111
-	7: distance 2172
-	8: distance 6167
-	9: distance 99800
+index: 8
+block x=24, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 9
-index: 5439
-block x=117, y=90
-	1: distance 16823
-	2: distance 15290
-	3: distance 21504
-	4: distance 7658
-	5: distance 5326
-	6: distance 13632
-	7: distance 15046
-	8: distance 6295
-	9: distance 101574
+index: 9
+block x=27, y=0
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 10
-index: 5610
-block x=90, y=93
-	1: distance 24576
-	2: distance 4215
-	3: distance 17105
-	4: distance 6559
-	5: distance 5386
-	6: distance 40773
-	7: distance 15983
-	8: distance 10155
-	9: distance 124752
+index: 180
+block x=0, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 11
-index: 5611
-block x=93, y=93
-	1: distance 8188
-	2: distance 5347
-	3: distance 15460
-	4: distance 16162
-	5: distance 14802
-	6: distance 29250
-	7: distance 6010
-	8: distance 13769
-	9: distance 108988
+index: 181
+block x=3, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 12
-index: 5612
-block x=96, y=93
-	1: distance 18955
-	2: distance 6444
-	3: distance 11334
-	4: distance 6077
-	5: distance 8315
-	6: distance 21289
-	7: distance 14557
-	8: distance 22742
-	9: distance 109713
+index: 182
+block x=6, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 13
-index: 5613
-block x=99, y=93
-	1: distance 13767
-	2: distance 9966
-	3: distance 7600
-	4: distance 15869
-	5: distance 6762
-	6: distance 30431
-	7: distance 6737
-	8: distance 24326
-	9: distance 115458
+index: 183
+block x=9, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 14
-index: 5614
-block x=102, y=93
-	1: distance 16998
-	2: distance 8933
-	3: distance 14647
-	4: distance 12137
-	5: distance 6399
-	6: distance 23022
-	7: distance 4754
-	8: distance 15322
-	9: distance 102212
+index: 184
+block x=12, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 15
-index: 5615
-block x=105, y=93
-	1: distance 14688
-	2: distance 8821
-	3: distance 12224
-	4: distance 22681
-	5: distance 8214
-	6: distance 34997
-	7: distance 6343
-	8: distance 15456
-	9: distance 123424
+index: 185
+block x=15, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 16
-index: 5616
-block x=108, y=93
-	1: distance 23347
-	2: distance 6264
-	3: distance 29386
-	4: distance 9750
-	5: distance 7367
-	6: distance 24393
-	7: distance 10330
-	8: distance 23083
-	9: distance 133920
+index: 186
+block x=18, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 17
-index: 5617
-block x=111, y=93
-	1: distance 18916
-	2: distance 8014
-	3: distance 19517
-	4: distance 7906
-	5: distance 11457
-	6: distance 28186
-	7: distance 10402
-	8: distance 28980
-	9: distance 133378
+index: 187
+block x=21, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 18
-index: 5618
-block x=114, y=93
-	1: distance 23512
-	2: distance 6481
-	3: distance 17752
-	4: distance 4651
-	5: distance 7788
-	6: distance 42001
-	7: distance 13931
-	8: distance 14530
-	9: distance 130646
+index: 188
+block x=24, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 19
-index: 5619
-block x=117, y=93
-	1: distance 15417
-	2: distance 12270
-	3: distance 10368
-	4: distance 7973
-	5: distance 6200
-	6: distance 6356
-	7: distance 9930
-	8: distance 8407
-	9: distance 76921
+index: 189
+block x=27, y=3
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 20
-index: 5790
-block x=90, y=96
-	1: distance 14939
-	2: distance 11501
-	3: distance 16501
-	4: distance 9749
-	5: distance 3584
-	6: distance 37994
-	7: distance 4129
-	8: distance 8977
-	9: distance 107374
+index: 360
+block x=0, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 21
-index: 5791
-block x=93, y=96
-	1: distance 8993
-	2: distance 11140
-	3: distance 16858
-	4: distance 8933
-	5: distance 8171
-	6: distance 28639
-	7: distance 19599
-	8: distance 11003
-	9: distance 113336
+index: 361
+block x=3, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 22
-index: 5792
-block x=96, y=96
-	1: distance 20073
-	2: distance 7109
-	3: distance 16890
-	4: distance 12867
-	5: distance 15592
-	6: distance 30346
-	7: distance 5616
-	8: distance 18415
-	9: distance 126908
+index: 362
+block x=6, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 23
-index: 5793
-block x=99, y=96
-	1: distance 11150
-	2: distance 18254
-	3: distance 23783
-	4: distance 7975
-	5: distance 15777
-	6: distance 24053
-	7: distance 19083
-	8: distance 23524
-	9: distance 143599
+index: 363
+block x=9, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 24
-index: 5794
-block x=102, y=96
-	1: distance 12971
-	2: distance 8741
-	3: distance 32303
-	4: distance 4772
-	5: distance 8032
-	6: distance 40061
-	7: distance 13132
-	8: distance 11130
-	9: distance 131142
+index: 364
+block x=12, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 25
-index: 5795
-block x=105, y=96
-	1: distance 11092
-	2: distance 14777
-	3: distance 15779
-	4: distance 9931
-	5: distance 11682
-	6: distance 21531
-	7: distance 20371
-	8: distance 11023
-	9: distance 116186
+index: 365
+block x=15, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 26
-index: 5796
-block x=108, y=96
-	1: distance 29906
-	2: distance 5721
-	3: distance 28591
-	4: distance 5469
-	5: distance 16931
-	6: distance 43774
-	7: distance 10300
-	8: distance 14856
-	9: distance 155548
+index: 366
+block x=18, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 27
-index: 5797
-block x=111, y=96
-	1: distance 32207
-	2: distance 7651
-	3: distance 10503
-	4: distance 8618
-	5: distance 17483
-	6: distance 29311
-	7: distance 8935
-	8: distance 17525
-	9: distance 132233
+index: 367
+block x=21, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 28
-index: 5798
-block x=114, y=96
-	1: distance 26781
-	2: distance 8853
-	3: distance 12460
-	4: distance 10803
-	5: distance 13710
-	6: distance 46215
-	7: distance 5099
-	8: distance 10021
-	9: distance 133942
+index: 368
+block x=24, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 29
-index: 5799
-block x=117, y=96
-	1: distance 13441
-	2: distance 10293
-	3: distance 19176
-	4: distance 6833
-	5: distance 3581
-	6: distance 46915
-	7: distance 5646
-	8: distance 5693
-	9: distance 111578
+index: 369
+block x=27, y=6
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 30
-index: 5970
-block x=90, y=99
-	1: distance 11014
-	2: distance 9867
-	3: distance 19732
-	4: distance 15945
-	5: distance 10659
-	6: distance 41648
-	7: distance 15472
-	8: distance 13175
-	9: distance 137512
+index: 540
+block x=0, y=9
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 31
-index: 5971
-block x=93, y=99
-	1: distance 15899
-	2: distance 10971
-	3: distance 25770
-	4: distance 9640
-	5: distance 6439
-	6: distance 15528
-	7: distance 10959
-	8: distance 17364
-	9: distance 112570
+index: 541
+block x=3, y=9
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 32
-index: 5972
-block x=96, y=99
-	1: distance 26289
-	2: distance 20455
-	3: distance 25134
-	4: distance 10085
-	5: distance 17189
-	6: distance 42666
-	7: distance 11193
-	8: distance 14325
-	9: distance 167336
+index: 542
+block x=6, y=9
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 33
-index: 5973
-block x=99, y=99
-	1: distance 6141
-	2: distance 10853
-	3: distance 13924
-	4: distance 14736
-	5: distance 19159
-	6: distance 12913
-	7: distance 3174
-	8: distance 18746
-	9: distance 99646
+index: 543
+block x=9, y=9
+	1: distance 1461358
+	2: distance 4795
+	3: distance 31779
+	4: distance 5830
+	5: distance 32494
+	6: distance 6692
+	7: distance 31157
+	8: distance 9957
+	9: distance 99999999
 cmp block 34
-index: 5974
-block x=102, y=99
-	1: distance 18809
-	2: distance 27601
-	3: distance 8760
-	4: distance 12366
-	5: distance 5344
-	6: distance 50619
-	7: distance 9799
-	8: distance 16024
-	9: distance 149322
+index: 544
+block x=12, y=9
+	1: distance 1199562
+	2: distance 7464
+	3: distance 86877
+	4: distance 4253
+	5: distance 63264
+	6: distance 7282
+	7: distance 69464
+	8: distance 9062
+	9: distance 99999999
 cmp block 35
-index: 5975
-block x=105, y=99
-	1: distance 9554
-	2: distance 6607
-	3: distance 13947
-	4: distance 21616
-	5: distance 6678
-	6: distance 40988
-	7: distance 3563
-	8: distance 8247
-	9: distance 111200
+index: 545
+block x=15, y=9
+	1: distance 925207
+	2: distance 3361
+	3: distance 130233
+	4: distance 9964
+	5: distance 101346
+	6: distance 7956
+	7: distance 88837
+	8: distance 6608
+	9: distance 99999999
 cmp block 36
-index: 5976
-block x=108, y=99
-	1: distance 47182
-	2: distance 10252
-	3: distance 11371
-	4: distance 11975
-	5: distance 9009
-	6: distance 68152
-	7: distance 7993
-	8: distance 14528
-	9: distance 180462
+index: 546
+block x=18, y=9
+	1: distance 933243
+	2: distance 6286
+	3: distance 126093
+	4: distance 5659
+	5: distance 99416
+	6: distance 4591
+	7: distance 89487
+	8: distance 10073
+	9: distance 99999999
 cmp block 37
-index: 5977
-block x=111, y=99
-	1: distance 34659
-	2: distance 8403
-	3: distance 14376
-	4: distance 11268
-	5: distance 1248
-	6: distance 40035
-	7: distance 11884
-	8: distance 8039
-	9: distance 129912
+index: 547
+block x=21, y=9
+	1: distance 924239
+	2: distance 6471
+	3: distance 129771
+	4: distance 7824
+	5: distance 100719
+	6: distance 8832
+	7: distance 94286
+	8: distance 10626
+	9: distance 99999999
 cmp block 38
-index: 5978
-block x=114, y=99
-	1: distance 44999
-	2: distance 14224
-	3: distance 11762
-	4: distance 7210
-	5: distance 5473
-	6: distance 37093
-	7: distance 14566
-	8: distance 19033
-	9: distance 154360
+index: 548
+block x=24, y=9
+	1: distance 906457
+	2: distance 5069
+	3: distance 136307
+	4: distance 6502
+	5: distance 104613
+	6: distance 6729
+	7: distance 98052
+	8: distance 12551
+	9: distance 99999999
 cmp block 39
-index: 5979
-block x=117, y=99
-	1: distance 12060
-	2: distance 11171
-	3: distance 13422
-	4: distance 8118
-	5: distance 8570
-	6: distance 51219
-	7: distance 9234
-	8: distance 12405
-	9: distance 126199
+index: 549
+block x=27, y=9
+	1: distance 920836
+	2: distance 6817
+	3: distance 128326
+	4: distance 6152
+	5: distance 100285
+	6: distance 8434
+	7: distance 90483
+	8: distance 7331
+	9: distance 99999999
 cmp block 40
-index: 6150
-block x=90, y=102
-	1: distance 8113
-	2: distance 5708
-	3: distance 21831
-	4: distance 11120
-	5: distance 8839
-	6: distance 34174
-	7: distance 8893
-	8: distance 22361
-	9: distance 121039
+index: 720
+block x=0, y=12
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 41
-index: 6151
-block x=93, y=102
-	1: distance 34371
-	2: distance 11586
-	3: distance 23398
-	4: distance 20053
-	5: distance 15709
-	6: distance 39513
-	7: distance 7476
-	8: distance 7932
-	9: distance 160038
+index: 721
+block x=3, y=12
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 42
-index: 6152
-block x=96, y=102
-	1: distance 18560
-	2: distance 12219
-	3: distance 14811
-	4: distance 18862
-	5: distance 3508
-	6: distance 20514
-	7: distance 13761
-	8: distance 13893
-	9: distance 116128
+index: 722
+block x=6, y=12
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 43
-index: 6153
-block x=99, y=102
-	1: distance 8430
-	2: distance 13758
-	3: distance 32236
-	4: distance 27584
-	5: distance 6586
-	6: distance 34786
-	7: distance 21256
-	8: distance 12012
-	9: distance 156648
+index: 723
+block x=9, y=12
+	1: distance 1304311
+	2: distance 13005
+	3: distance 5243
+	4: distance 15435
+	5: distance 51349
+	6: distance 10317
+	7: distance 26085
+	8: distance 8515
+	9: distance 99999999
 cmp block 44
-index: 6154
-block x=102, y=102
-	1: distance 34136
-	2: distance 5643
-	3: distance 13643
-	4: distance 7586
-	5: distance 3205
-	6: distance 26995
-	7: distance 16928
-	8: distance 11411
-	9: distance 119547
+index: 724
+block x=12, y=12
+	1: distance 799729
+	2: distance 16629
+	3: distance 15231
+	4: distance 34591
+	5: distance 127350
+	6: distance 11848
+	7: distance 36023
+	8: distance 6801
+	9: distance 99999999
 cmp block 45
-index: 6155
-block x=105, y=102
-	1: distance 6139
-	2: distance 25079
-	3: distance 21738
-	4: distance 2082
-	5: distance 8697
-	6: distance 22772
-	7: distance 19462
-	8: distance 3601
-	9: distance 109570
+index: 725
+block x=15, y=12
+	1: distance 253760
+	2: distance 22286
+	3: distance 34813
+	4: distance 48810
+	5: distance 199318
+	6: distance 36345
+	7: distance 52975
+	8: distance 17631
+	9: distance 99999999
 cmp block 46
-index: 6156
-block x=108, y=102
-	1: distance 35527
-	2: distance 8651
-	3: distance 17916
-	4: distance 7991
-	5: distance 14900
-	6: distance 66936
-	7: distance 9806
-	8: distance 20121
-	9: distance 181848
+index: 726
+block x=18, y=12
+	1: distance 229844
+	2: distance 21028
+	3: distance 56354
+	4: distance 50877
+	5: distance 224062
+	6: distance 35496
+	7: distance 33355
+	8: distance 24003
+	9: distance 99999999
 cmp block 47
-index: 6157
-block x=111, y=102
-	1: distance 17912
-	2: distance 15912
-	3: distance 17469
-	4: distance 11256
-	5: distance 14351
-	6: distance 29889
-	7: distance 17662
-	8: distance 23231
-	9: distance 147682
+index: 727
+block x=21, y=12
+	1: distance 211138
+	2: distance 28660
+	3: distance 54389
+	4: distance 47678
+	5: distance 230518
+	6: distance 32345
+	7: distance 33908
+	8: distance 33722
+	9: distance 99999999
 cmp block 48
-index: 6158
-block x=114, y=102
-	1: distance 31546
-	2: distance 6734
-	3: distance 14798
-	4: distance 10953
-	5: distance 17819
-	6: distance 44199
-	7: distance 19554
-	8: distance 12123
-	9: distance 157726
+index: 728
+block x=24, y=12
+	1: distance 213512
+	2: distance 24086
+	3: distance 33877
+	4: distance 50674
+	5: distance 250967
+	6: distance 31748
+	7: distance 44987
+	8: distance 18361
+	9: distance 99999999
 cmp block 49
-index: 6159
-block x=117, y=102
-	1: distance 13565
-	2: distance 8527
-	3: distance 7804
-	4: distance 7757
-	5: distance 4645
-	6: distance 34811
-	7: distance 11436
-	8: distance 11537
-	9: distance 100082
+index: 729
+block x=27, y=12
+	1: distance 228641
+	2: distance 20500
+	3: distance 35187
+	4: distance 44065
+	5: distance 232148
+	6: distance 32671
+	7: distance 54528
+	8: distance 18008
+	9: distance 99999999
 cmp block 50
-index: 6330
-block x=90, y=105
-	1: distance 22132
-	2: distance 25917
-	3: distance 21298
-	4: distance 5297
-	5: distance 8418
-	6: distance 24019
-	7: distance 6932
-	8: distance 26387
-	9: distance 140400
+index: 900
+block x=0, y=15
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 51
-index: 6331
-block x=93, y=105
-	1: distance 41245
-	2: distance 18209
-	3: distance 11183
-	4: distance 7949
-	5: distance 7753
-	6: distance 31834
-	7: distance 3888
-	8: distance 21219
-	9: distance 143280
+index: 901
+block x=3, y=15
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 52
-index: 6332
-block x=96, y=105
-	1: distance 20988
-	2: distance 9345
-	3: distance 19319
-	4: distance 6120
-	5: distance 8897
-	6: distance 28938
-	7: distance 2983
-	8: distance 14980
-	9: distance 111570
+index: 902
+block x=6, y=15
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 53
-index: 6333
-block x=99, y=105
-	1: distance 7213
-	2: distance 13269
-	3: distance 15693
-	4: distance 6518
-	5: distance 3504
-	6: distance 26704
-	7: distance 2884
-	8: distance 12893
-	9: distance 88678
+index: 903
+block x=9, y=15
+	1: distance 1249411
+	2: distance 7902
+	3: distance 5705
+	4: distance 5717
+	5: distance 5996
+	6: distance 10704
+	7: distance 3609
+	8: distance 14648
+	9: distance 99999999
 cmp block 54
-index: 6334
-block x=102, y=105
-	1: distance 29009
-	2: distance 11276
-	3: distance 15274
-	4: distance 7446
-	5: distance 9255
-	6: distance 50924
-	7: distance 5314
-	8: distance 12528
-	9: distance 141026
+index: 904
+block x=12, y=15
+	1: distance 656460
+	2: distance 6054
+	3: distance 5364
+	4: distance 10424
+	5: distance 4699
+	6: distance 12031
+	7: distance 6633
+	8: distance 10545
+	9: distance 99999999
 cmp block 55
-index: 6335
-block x=105, y=105
+index: 905
+block x=15, y=15
 	1: distance 0
 	2: distance 0
 	3: distance 0
@@ -712,2945 +712,540 @@ block x=105, y=105
 	8: distance 0
 	9: distance 0
 cmp block 56
-index: 6336
-block x=108, y=105
-	1: distance 21299
-	2: distance 8526
-	3: distance 14899
-	4: distance 5499
-	5: distance 16273
-	6: distance 56390
-	7: distance 6431
-	8: distance 28908
-	9: distance 158225
-cmp block 57
-index: 6337
-block x=111, y=105
-	1: distance 5114
-	2: distance 3316
-	3: distance 27921
-	4: distance 13710
-	5: distance 20207
-	6: distance 34060
-	7: distance 8122
-	8: distance 31750
-	9: distance 144200
-cmp block 58
-index: 6338
-block x=114, y=105
-	1: distance 23259
-	2: distance 6134
-	3: distance 26785
-	4: distance 10853
-	5: distance 19690
-	6: distance 19663
-	7: distance 7056
-	8: distance 11764
-	9: distance 125204
-cmp block 59
-index: 6339
-block x=117, y=105
-	1: distance 16244
-	2: distance 3734
-	3: distance 23576
-	4: distance 7199
-	5: distance 8381
-	6: distance 39076
-	7: distance 15745
-	8: distance 13921
-	9: distance 127876
-cmp block 60
-index: 6510
-block x=90, y=108
-	1: distance 23260
-	2: distance 8354
-	3: distance 28248
-	4: distance 17712
-	5: distance 10476
-	6: distance 29077
-	7: distance 11628
-	8: distance 23047
-	9: distance 151802
-cmp block 61
-index: 6511
-block x=93, y=108
-	1: distance 26306
-	2: distance 11130
-	3: distance 26557
-	4: distance 20438
-	5: distance 8756
-	6: distance 38477
-	7: distance 14324
-	8: distance 9670
-	9: distance 155658
-cmp block 62
-index: 6512
-block x=96, y=108
-	1: distance 14279
-	2: distance 10529
-	3: distance 15811
-	4: distance 7679
-	5: distance 6752
-	6: distance 24160
-	7: distance 21513
-	8: distance 21247
-	9: distance 121970
-cmp block 63
-index: 6513
-block x=99, y=108
-	1: distance 10204
-	2: distance 5172
-	3: distance 17333
-	4: distance 14225
-	5: distance 11445
-	6: distance 19826
-	7: distance 10626
-	8: distance 15805
-	9: distance 104636
-cmp block 64
-index: 6514
-block x=102, y=108
-	1: distance 20402
-	2: distance 3781
-	3: distance 23531
-	4: distance 16761
-	5: distance 11261
-	6: distance 27378
-	7: distance 9792
-	8: distance 21776
-	9: distance 134682
-cmp block 65
-index: 6515
-block x=105, y=108
-	1: distance 7448
-	2: distance 13363
-	3: distance 16669
-	4: distance 23394
-	5: distance 11798
-	6: distance 27717
-	7: distance 23952
-	8: distance 6433
-	9: distance 130774
-cmp block 66
-index: 6516
-block x=108, y=108
-	1: distance 11687
-	2: distance 10818
-	3: distance 10793
-	4: distance 7190
-	5: distance 18817
-	6: distance 10495
-	7: distance 8920
-	8: distance 21406
-	9: distance 100126
-cmp block 67
-index: 6517
-block x=111, y=108
-	1: distance 11884
-	2: distance 6395
-	3: distance 15073
-	4: distance 15344
-	5: distance 16955
-	6: distance 51972
-	7: distance 7222
-	8: distance 28787
-	9: distance 153632
-cmp block 68
-index: 6518
-block x=114, y=108
-	1: distance 19552
-	2: distance 11577
-	3: distance 12231
-	4: distance 17896
-	5: distance 10666
-	6: distance 31739
-	7: distance 9654
-	8: distance 11379
-	9: distance 124694
-cmp block 69
-index: 6519
-block x=117, y=108
-	1: distance 15774
-	2: distance 11271
-	3: distance 20790
-	4: distance 17490
-	5: distance 9508
-	6: distance 30258
-	7: distance 10883
-	8: distance 14758
-	9: distance 130732
-cmp block 70
-index: 6690
-block x=90, y=111
-	1: distance 28434
-	2: distance 22134
-	3: distance 9445
-	4: distance 6317
-	5: distance 8577
-	6: distance 22230
-	7: distance 5421
-	8: distance 31661
-	9: distance 134219
-cmp block 71
-index: 6691
-block x=93, y=111
-	1: distance 24472
-	2: distance 19457
-	3: distance 18833
-	4: distance 3335
-	5: distance 9234
-	6: distance 40767
-	7: distance 7852
-	8: distance 35700
-	9: distance 159650
-cmp block 72
-index: 6692
-block x=96, y=111
-	1: distance 18413
-	2: distance 21276
-	3: distance 18815
-	4: distance 7946
-	5: distance 5811
-	6: distance 38322
-	7: distance 6426
-	8: distance 24879
-	9: distance 141888
-cmp block 73
-index: 6693
-block x=99, y=111
-	1: distance 7370
-	2: distance 29835
-	3: distance 30639
-	4: distance 2868
-	5: distance 8764
-	6: distance 39556
-	7: distance 3111
-	8: distance 7223
-	9: distance 129366
-cmp block 74
-index: 6694
-block x=102, y=111
-	1: distance 13037
-	2: distance 14106
-	3: distance 26238
-	4: distance 2845
-	5: distance 13671
-	6: distance 32005
-	7: distance 15374
-	8: distance 16070
-	9: distance 133346
-cmp block 75
-index: 6695
-block x=105, y=111
-	1: distance 10256
-	2: distance 13049
-	3: distance 36870
-	4: distance 16507
-	5: distance 10890
-	6: distance 48683
-	7: distance 4265
-	8: distance 10264
-	9: distance 150784
-cmp block 76
-index: 6696
-block x=108, y=111
-	1: distance 19864
-	2: distance 6531
-	3: distance 16093
-	4: distance 6647
-	5: distance 8410
-	6: distance 28587
-	7: distance 14505
-	8: distance 14941
-	9: distance 115578
-cmp block 77
-index: 6697
-block x=111, y=111
-	1: distance 12566
-	2: distance 13097
-	3: distance 9296
-	4: distance 2206
-	5: distance 5210
-	6: distance 28586
-	7: distance 8031
-	8: distance 27618
-	9: distance 106610
-cmp block 78
-index: 6698
-block x=114, y=111
-	1: distance 19359
-	2: distance 8452
-	3: distance 7858
-	4: distance 11473
-	5: distance 8356
-	6: distance 42563
-	7: distance 13797
-	8: distance 22976
-	9: distance 134834
-cmp block 79
-index: 6699
-block x=117, y=111
-	1: distance 13019
-	2: distance 6683
-	3: distance 11317
-	4: distance 4373
-	5: distance 6596
-	6: distance 31940
-	7: distance 22567
-	8: distance 14705
-	9: distance 111200
-cmp block 80
-index: 6870
-block x=90, y=114
-	1: distance 31942
-	2: distance 10248
-	3: distance 27418
-	4: distance 20009
-	5: distance 12310
-	6: distance 37535
-	7: distance 7448
-	8: distance 20523
-	9: distance 167433
-cmp block 81
-index: 6871
-block x=93, y=114
-	1: distance 17439
-	2: distance 11662
-	3: distance 19683
-	4: distance 5597
-	5: distance 18230
-	6: distance 14155
-	7: distance 4468
-	8: distance 20000
-	9: distance 111234
-cmp block 82
-index: 6872
-block x=96, y=114
-	1: distance 14012
-	2: distance 8185
-	3: distance 18075
-	4: distance 7994
-	5: distance 18082
-	6: distance 33906
-	7: distance 4937
-	8: distance 29221
-	9: distance 134412
-cmp block 83
-index: 6873
-block x=99, y=114
-	1: distance 11223
-	2: distance 7500
-	3: distance 11283
-	4: distance 3891
-	5: distance 9662
-	6: distance 40653
-	7: distance 9808
-	8: distance 29650
-	9: distance 123670
-cmp block 84
-index: 6874
-block x=102, y=114
-	1: distance 11723
-	2: distance 7429
-	3: distance 14141
-	4: distance 7255
-	5: distance 11976
-	6: distance 11399
-	7: distance 6874
-	8: distance 14179
-	9: distance 84976
-cmp block 85
-index: 6875
-block x=105, y=114
-	1: distance 25676
-	2: distance 14436
-	3: distance 11214
-	4: distance 6090
-	5: distance 13502
-	6: distance 41730
-	7: distance 14540
-	8: distance 9410
-	9: distance 136598
-cmp block 86
-index: 6876
-block x=108, y=114
-	1: distance 17188
-	2: distance 13661
-	3: distance 8925
-	4: distance 25269
-	5: distance 15202
-	6: distance 39553
-	7: distance 4854
-	8: distance 7534
-	9: distance 132186
-cmp block 87
-index: 6877
-block x=111, y=114
-	1: distance 10719
-	2: distance 9731
-	3: distance 10135
-	4: distance 12118
-	5: distance 6682
-	6: distance 21138
-	7: distance 4628
-	8: distance 5941
-	9: distance 81092
-cmp block 88
-index: 6878
-block x=114, y=114
-	1: distance 22359
-	2: distance 9040
-	3: distance 12334
-	4: distance 12803
-	5: distance 8661
-	6: distance 39870
-	7: distance 8491
-	8: distance 17800
-	9: distance 131358
-cmp block 89
-index: 6879
-block x=117, y=114
-	1: distance 15253
-	2: distance 12013
-	3: distance 19688
-	4: distance 4953
-	5: distance 7315
-	6: distance 26005
-	7: distance 9315
-	8: distance 14916
-	9: distance 109458
-cmp block 90
-index: 7050
-block x=90, y=117
-	1: distance 28524
-	2: distance 28576
-	3: distance 27992
-	4: distance 17570
-	5: distance 23461
-	6: distance 42437
-	7: distance 10839
-	8: distance 15919
-	9: distance 195318
-cmp block 91
-index: 7051
-block x=93, y=117
-	1: distance 19605
-	2: distance 15836
-	3: distance 19680
-	4: distance 17303
-	5: distance 9007
-	6: distance 17839
-	7: distance 12400
-	8: distance 20610
-	9: distance 132280
-cmp block 92
-index: 7052
-block x=96, y=117
-	1: distance 11571
-	2: distance 9645
-	3: distance 18465
-	4: distance 10483
-	5: distance 18731
-	6: distance 19036
-	7: distance 16251
-	8: distance 27562
-	9: distance 131744
-cmp block 93
-index: 7053
-block x=99, y=117
-	1: distance 17656
-	2: distance 4734
-	3: distance 12886
-	4: distance 19689
-	5: distance 9647
-	6: distance 46836
-	7: distance 6092
-	8: distance 33066
-	9: distance 150606
-cmp block 94
-index: 7054
-block x=102, y=117
-	1: distance 14328
-	2: distance 10319
-	3: distance 7629
-	4: distance 16183
-	5: distance 6469
-	6: distance 33671
-	7: distance 12442
-	8: distance 10709
-	9: distance 111750
-cmp block 95
-index: 7055
-block x=105, y=117
-	1: distance 13969
-	2: distance 10940
-	3: distance 5449
-	4: distance 13209
-	5: distance 4874
-	6: distance 34448
-	7: distance 2302
-	8: distance 16355
-	9: distance 101546
-cmp block 96
-index: 7056
-block x=108, y=117
-	1: distance 17952
-	2: distance 10316
-	3: distance 17219
-	4: distance 9875
-	5: distance 1502
-	6: distance 26269
-	7: distance 12390
-	8: distance 28599
-	9: distance 124122
-cmp block 97
-index: 7057
-block x=111, y=117
-	1: distance 8280
-	2: distance 10103
-	3: distance 15369
-	4: distance 13168
-	5: distance 8639
-	6: distance 33997
-	7: distance 5774
-	8: distance 10344
-	9: distance 105674
-cmp block 98
-index: 7058
-block x=114, y=117
-	1: distance 26082
-	2: distance 12446
-	3: distance 24829
-	4: distance 14024
-	5: distance 5915
-	6: distance 25842
-	7: distance 7529
-	8: distance 5231
-	9: distance 121898
-cmp block 99
-index: 7059
-block x=117, y=117
-	1: distance 16507
-	2: distance 12662
-	3: distance 15440
-	4: distance 16244
-	5: distance 2576
-	6: distance 66132
-	7: distance 16620
-	8: distance 18083
-	9: distance 164264
-
-BM Vector =  6335,  5619,  6877,  6874,  6333,  5430,  5973,  5438,  6159,  6516,  7055,  5439,  5614,  6513,  7057,  6697,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-
-BM Vector = 
-cmp block 0
-index: 5430
-block x=90, y=90
-	1: distance 5
-	2: distance 11743
-	3: distance 15585
-	4: distance 14105
-	5: distance 8213
-	6: distance 15514
-	7: distance 4407
-	8: distance 13144
-	9: distance 97978
-cmp block 1
-index: 5431
-block x=93, y=90
-	1: distance 78
-	2: distance 15254
-	3: distance 16151
-	4: distance 18172
-	5: distance 12661
-	6: distance 40188
-	7: distance 14897
-	8: distance 9896
-	9: distance 144144
-cmp block 2
-index: 5432
-block x=96, y=90
-	1: distance 30
-	2: distance 12613
-	3: distance 3200
-	4: distance 8490
-	5: distance 16306
-	6: distance 29831
-	7: distance 7009
-	8: distance 18465
-	9: distance 113770
-cmp block 3
-index: 5433
-block x=99, y=90
-	1: distance 35
-	2: distance 9527
-	3: distance 7458
-	4: distance 8003
-	5: distance 10744
-	6: distance 39321
-	7: distance 16490
-	8: distance 12773
-	9: distance 117382
-cmp block 4
-index: 5434
-block x=102, y=90
-	1: distance 21
-	2: distance 10917
-	3: distance 18290
-	4: distance 8472
-	5: distance 15015
-	6: distance 28515
-	7: distance 6222
-	8: distance 10220
-	9: distance 110334
-cmp block 5
-index: 5435
-block x=105, y=90
-	1: distance 45
-	2: distance 9376
-	3: distance 17888
-	4: distance 5962
-	5: distance 6909
-	6: distance 43190
-	7: distance 5505
-	8: distance 15089
-	9: distance 124694
-cmp block 6
-index: 5436
-block x=108, y=90
-	1: distance 40
-	2: distance 8008
-	3: distance 11402
-	4: distance 12347
-	5: distance 8504
-	6: distance 25247
-	7: distance 7719
-	8: distance 21104
-	9: distance 122147
-cmp block 7
-index: 5437
-block x=111, y=90
-	1: distance 41
-	2: distance 6254
-	3: distance 12251
-	4: distance 11226
-	5: distance 7293
-	6: distance 29043
-	7: distance 7393
-	8: distance 28931
-	9: distance 123281
-cmp block 8
-index: 5438
-block x=114, y=90
-	1: distance 7
-	2: distance 8270
-	3: distance 15938
-	4: distance 6049
-	5: distance 5650
-	6: distance 34111
-	7: distance 2172
-	8: distance 6167
-	9: distance 99800
-cmp block 9
-index: 5439
-block x=117, y=90
-	1: distance 11
-	2: distance 15290
-	3: distance 21504
-	4: distance 7658
-	5: distance 5326
-	6: distance 13632
-	7: distance 15046
-	8: distance 6295
-	9: distance 101574
-cmp block 10
-index: 5610
-block x=90, y=93
-	1: distance 47
-	2: distance 4215
-	3: distance 17105
-	4: distance 6559
-	5: distance 5386
-	6: distance 40773
-	7: distance 15983
-	8: distance 10155
-	9: distance 124752
-cmp block 11
-index: 5611
-block x=93, y=93
-	1: distance 17
-	2: distance 5347
-	3: distance 15460
-	4: distance 16162
-	5: distance 14802
-	6: distance 29250
-	7: distance 6010
-	8: distance 13769
-	9: distance 108988
-cmp block 12
-index: 5612
-block x=96, y=93
-	1: distance 20
-	2: distance 6444
-	3: distance 11334
-	4: distance 6077
-	5: distance 8315
-	6: distance 21289
-	7: distance 14557
-	8: distance 22742
-	9: distance 109713
-cmp block 13
-index: 5613
-block x=99, y=93
-	1: distance 31
-	2: distance 9966
-	3: distance 7600
-	4: distance 15869
-	5: distance 6762
-	6: distance 30431
-	7: distance 6737
-	8: distance 24326
-	9: distance 115458
-cmp block 14
-index: 5614
-block x=102, y=93
-	1: distance 12
-	2: distance 8933
-	3: distance 14647
-	4: distance 12137
-	5: distance 6399
-	6: distance 23022
-	7: distance 4754
-	8: distance 15322
-	9: distance 102212
-cmp block 15
-index: 5615
-block x=105, y=93
-	1: distance 42
-	2: distance 8821
-	3: distance 12224
-	4: distance 22681
-	5: distance 8214
-	6: distance 34997
-	7: distance 6343
-	8: distance 15456
-	9: distance 123424
-cmp block 16
-index: 5616
-block x=108, y=93
-	1: distance 65
-	2: distance 6264
-	3: distance 29386
-	4: distance 9750
-	5: distance 7367
-	6: distance 24393
-	7: distance 10330
-	8: distance 23083
-	9: distance 133920
-cmp block 17
-index: 5617
-block x=111, y=93
-	1: distance 64
-	2: distance 8014
-	3: distance 19517
-	4: distance 7906
-	5: distance 11457
-	6: distance 28186
-	7: distance 10402
-	8: distance 28980
-	9: distance 133378
-cmp block 18
-index: 5618
-block x=114, y=93
-	1: distance 54
-	2: distance 6481
-	3: distance 17752
-	4: distance 4651
-	5: distance 7788
-	6: distance 42001
-	7: distance 13931
-	8: distance 14530
-	9: distance 130646
-cmp block 19
-index: 5619
-block x=117, y=93
-	1: distance 1
-	2: distance 12270
-	3: distance 10368
-	4: distance 7973
-	5: distance 6200
-	6: distance 6356
-	7: distance 9930
-	8: distance 8407
-	9: distance 76921
-cmp block 20
-index: 5790
-block x=90, y=96
-	1: distance 16
-	2: distance 11501
-	3: distance 16501
-	4: distance 9749
-	5: distance 3584
-	6: distance 37994
-	7: distance 4129
-	8: distance 8977
-	9: distance 107374
-cmp block 21
-index: 5791
-block x=93, y=96
-	1: distance 29
-	2: distance 11140
-	3: distance 16858
-	4: distance 8933
-	5: distance 8171
-	6: distance 28639
-	7: distance 19599
-	8: distance 11003
-	9: distance 113336
-cmp block 22
-index: 5792
-block x=96, y=96
-	1: distance 50
-	2: distance 7109
-	3: distance 16890
-	4: distance 12867
-	5: distance 15592
-	6: distance 30346
-	7: distance 5616
-	8: distance 18415
-	9: distance 126908
-cmp block 23
-index: 5793
-block x=99, y=96
-	1: distance 77
-	2: distance 18254
-	3: distance 23783
-	4: distance 7975
-	5: distance 15777
-	6: distance 24053
-	7: distance 19083
-	8: distance 23524
-	9: distance 143599
-cmp block 24
-index: 5794
-block x=102, y=96
-	1: distance 57
-	2: distance 8741
-	3: distance 32303
-	4: distance 4772
-	5: distance 8032
-	6: distance 40061
-	7: distance 13132
-	8: distance 11130
-	9: distance 131142
-cmp block 25
-index: 5795
-block x=105, y=96
-	1: distance 34
-	2: distance 14777
-	3: distance 15779
-	4: distance 9931
-	5: distance 11682
-	6: distance 21531
-	7: distance 20371
-	8: distance 11023
-	9: distance 116186
-cmp block 26
-index: 5796
-block x=108, y=96
-	1: distance 87
-	2: distance 5721
-	3: distance 28591
-	4: distance 5469
-	5: distance 16931
-	6: distance 43774
-	7: distance 10300
-	8: distance 14856
-	9: distance 155548
-cmp block 27
-index: 5797
-block x=111, y=96
-	1: distance 61
-	2: distance 7651
-	3: distance 10503
-	4: distance 8618
-	5: distance 17483
-	6: distance 29311
-	7: distance 8935
-	8: distance 17525
-	9: distance 132233
-cmp block 28
-index: 5798
-block x=114, y=96
-	1: distance 66
-	2: distance 8853
-	3: distance 12460
-	4: distance 10803
-	5: distance 13710
-	6: distance 46215
-	7: distance 5099
-	8: distance 10021
-	9: distance 133942
-cmp block 29
-index: 5799
-block x=117, y=96
-	1: distance 26
-	2: distance 10293
-	3: distance 19176
-	4: distance 6833
-	5: distance 3581
-	6: distance 46915
-	7: distance 5646
-	8: distance 5693
-	9: distance 111578
-cmp block 30
-index: 5970
-block x=90, y=99
-	1: distance 72
-	2: distance 9867
-	3: distance 19732
-	4: distance 15945
-	5: distance 10659
-	6: distance 41648
-	7: distance 15472
-	8: distance 13175
-	9: distance 137512
-cmp block 31
-index: 5971
-block x=93, y=99
-	1: distance 28
-	2: distance 10971
-	3: distance 25770
-	4: distance 9640
-	5: distance 6439
-	6: distance 15528
-	7: distance 10959
-	8: distance 17364
-	9: distance 112570
-cmp block 32
-index: 5972
-block x=96, y=99
-	1: distance 95
-	2: distance 20455
-	3: distance 25134
-	4: distance 10085
-	5: distance 17189
-	6: distance 42666
-	7: distance 11193
-	8: distance 14325
-	9: distance 167336
-cmp block 33
-index: 5973
-block x=99, y=99
+index: 906
+block x=18, y=15
 	1: distance 6
-	2: distance 10853
-	3: distance 13924
-	4: distance 14736
-	5: distance 19159
-	6: distance 12913
-	7: distance 3174
-	8: distance 18746
-	9: distance 99646
-cmp block 34
-index: 5974
-block x=102, y=99
-	1: distance 81
-	2: distance 27601
-	3: distance 8760
-	4: distance 12366
-	5: distance 5344
-	6: distance 50619
-	7: distance 9799
-	8: distance 16024
-	9: distance 149322
-cmp block 35
-index: 5975
-block x=105, y=99
-	1: distance 22
-	2: distance 6607
-	3: distance 13947
-	4: distance 21616
-	5: distance 6678
-	6: distance 40988
-	7: distance 3563
-	8: distance 8247
-	9: distance 111200
-cmp block 36
-index: 5976
-block x=108, y=99
-	1: distance 97
-	2: distance 10252
-	3: distance 11371
-	4: distance 11975
-	5: distance 9009
-	6: distance 68152
-	7: distance 7993
-	8: distance 14528
-	9: distance 180462
-cmp block 37
-index: 5977
-block x=111, y=99
-	1: distance 53
-	2: distance 8403
-	3: distance 14376
-	4: distance 11268
-	5: distance 1248
-	6: distance 40035
-	7: distance 11884
-	8: distance 8039
-	9: distance 129912
-cmp block 38
-index: 5978
-block x=114, y=99
-	1: distance 86
-	2: distance 14224
-	3: distance 11762
-	4: distance 7210
-	5: distance 5473
-	6: distance 37093
-	7: distance 14566
-	8: distance 19033
-	9: distance 154360
-cmp block 39
-index: 5979
-block x=117, y=99
-	1: distance 49
-	2: distance 11171
-	3: distance 13422
-	4: distance 8118
-	5: distance 8570
-	6: distance 51219
-	7: distance 9234
-	8: distance 12405
-	9: distance 126199
-cmp block 40
-index: 6150
-block x=90, y=102
-	1: distance 37
-	2: distance 5708
-	3: distance 21831
-	4: distance 11120
-	5: distance 8839
-	6: distance 34174
-	7: distance 8893
-	8: distance 22361
-	9: distance 121039
-cmp block 41
-index: 6151
-block x=93, y=102
-	1: distance 93
-	2: distance 11586
-	3: distance 23398
-	4: distance 20053
-	5: distance 15709
-	6: distance 39513
-	7: distance 7476
-	8: distance 7932
-	9: distance 160038
-cmp block 42
-index: 6152
-block x=96, y=102
-	1: distance 33
-	2: distance 12219
-	3: distance 14811
-	4: distance 18862
-	5: distance 3508
-	6: distance 20514
-	7: distance 13761
-	8: distance 13893
-	9: distance 116128
-cmp block 43
-index: 6153
-block x=99, y=102
-	1: distance 89
-	2: distance 13758
-	3: distance 32236
-	4: distance 27584
-	5: distance 6586
-	6: distance 34786
-	7: distance 21256
-	8: distance 12012
-	9: distance 156648
-cmp block 44
-index: 6154
-block x=102, y=102
-	1: distance 36
-	2: distance 5643
-	3: distance 13643
-	4: distance 7586
-	5: distance 3205
-	6: distance 26995
-	7: distance 16928
-	8: distance 11411
-	9: distance 119547
-cmp block 45
-index: 6155
-block x=105, y=102
-	1: distance 19
-	2: distance 25079
-	3: distance 21738
-	4: distance 2082
-	5: distance 8697
-	6: distance 22772
-	7: distance 19462
-	8: distance 3601
-	9: distance 109570
-cmp block 46
-index: 6156
-block x=108, y=102
-	1: distance 98
-	2: distance 8651
-	3: distance 17916
-	4: distance 7991
-	5: distance 14900
-	6: distance 66936
-	7: distance 9806
-	8: distance 20121
-	9: distance 181848
-cmp block 47
-index: 6157
-block x=111, y=102
-	1: distance 80
-	2: distance 15912
-	3: distance 17469
-	4: distance 11256
-	5: distance 14351
-	6: distance 29889
-	7: distance 17662
-	8: distance 23231
-	9: distance 147682
-cmp block 48
-index: 6158
-block x=114, y=102
-	1: distance 90
-	2: distance 6734
-	3: distance 14798
-	4: distance 10953
-	5: distance 17819
-	6: distance 44199
-	7: distance 19554
-	8: distance 12123
-	9: distance 157726
-cmp block 49
-index: 6159
-block x=117, y=102
+	2: distance 8976
+	3: distance 10309
+	4: distance 18811
+	5: distance 5616
+	6: distance 10053
+	7: distance 7683
+	8: distance 14754
+	9: distance 86700
+cmp block 57
+index: 907
+block x=21, y=15
 	1: distance 8
-	2: distance 8527
-	3: distance 7804
-	4: distance 7757
-	5: distance 4645
-	6: distance 34811
-	7: distance 11436
-	8: distance 11537
-	9: distance 100082
-cmp block 50
-index: 6330
-block x=90, y=105
-	1: distance 73
-	2: distance 25917
-	3: distance 21298
-	4: distance 5297
-	5: distance 8418
-	6: distance 24019
-	7: distance 6932
-	8: distance 26387
-	9: distance 140400
-cmp block 51
-index: 6331
-block x=93, y=105
-	1: distance 76
-	2: distance 18209
-	3: distance 11183
-	4: distance 7949
-	5: distance 7753
-	6: distance 31834
-	7: distance 3888
-	8: distance 21219
-	9: distance 143280
-cmp block 52
-index: 6332
-block x=96, y=105
-	1: distance 25
-	2: distance 9345
-	3: distance 19319
-	4: distance 6120
-	5: distance 8897
-	6: distance 28938
-	7: distance 2983
-	8: distance 14980
-	9: distance 111570
-cmp block 53
-index: 6333
-block x=99, y=105
-	1: distance 4
-	2: distance 13269
-	3: distance 15693
-	4: distance 6518
-	5: distance 3504
-	6: distance 26704
-	7: distance 2884
-	8: distance 12893
-	9: distance 88678
-cmp block 54
-index: 6334
-block x=102, y=105
-	1: distance 74
-	2: distance 11276
-	3: distance 15274
-	4: distance 7446
-	5: distance 9255
-	6: distance 50924
-	7: distance 5314
-	8: distance 12528
-	9: distance 141026
-cmp block 55
-index: 6335
-block x=105, y=105
-	1: distance 0
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 0
-cmp block 56
-index: 6336
-block x=108, y=105
-	1: distance 91
-	2: distance 8526
-	3: distance 14899
-	4: distance 5499
-	5: distance 16273
-	6: distance 56390
-	7: distance 6431
-	8: distance 28908
-	9: distance 158225
-cmp block 57
-index: 6337
-block x=111, y=105
-	1: distance 79
-	2: distance 3316
-	3: distance 27921
-	4: distance 13710
-	5: distance 20207
-	6: distance 34060
-	7: distance 8122
-	8: distance 31750
-	9: distance 144200
+	2: distance 9977
+	3: distance 5148
+	4: distance 10733
+	5: distance 8185
+	6: distance 10387
+	7: distance 5873
+	8: distance 20808
+	9: distance 89206
 cmp block 58
-index: 6338
-block x=114, y=105
-	1: distance 48
-	2: distance 6134
-	3: distance 26785
-	4: distance 10853
-	5: distance 19690
-	6: distance 19663
-	7: distance 7056
-	8: distance 11764
-	9: distance 125204
+index: 908
+block x=24, y=15
+	1: distance 4
+	2: distance 9184
+	3: distance 2470
+	4: distance 12849
+	5: distance 9364
+	6: distance 11390
+	7: distance 8951
+	8: distance 15096
+	9: distance 79962
 cmp block 59
-index: 6339
-block x=117, y=105
-	1: distance 51
-	2: distance 3734
-	3: distance 23576
-	4: distance 7199
-	5: distance 8381
-	6: distance 39076
-	7: distance 15745
-	8: distance 13921
-	9: distance 127876
-cmp block 60
-index: 6510
-block x=90, y=108
-	1: distance 84
-	2: distance 8354
-	3: distance 28248
-	4: distance 17712
-	5: distance 10476
-	6: distance 29077
-	7: distance 11628
-	8: distance 23047
-	9: distance 151802
-cmp block 61
-index: 6511
-block x=93, y=108
-	1: distance 88
-	2: distance 11130
-	3: distance 26557
-	4: distance 20438
-	5: distance 8756
-	6: distance 38477
-	7: distance 14324
-	8: distance 9670
-	9: distance 155658
-cmp block 62
-index: 6512
-block x=96, y=108
-	1: distance 39
-	2: distance 10529
-	3: distance 15811
-	4: distance 7679
-	5: distance 6752
-	6: distance 24160
-	7: distance 21513
-	8: distance 21247
-	9: distance 121970
-cmp block 63
-index: 6513
-block x=99, y=108
-	1: distance 13
-	2: distance 5172
-	3: distance 17333
-	4: distance 14225
-	5: distance 11445
-	6: distance 19826
-	7: distance 10626
-	8: distance 15805
-	9: distance 104636
-cmp block 64
-index: 6514
-block x=102, y=108
-	1: distance 69
-	2: distance 3781
-	3: distance 23531
-	4: distance 16761
-	5: distance 11261
-	6: distance 27378
-	7: distance 9792
-	8: distance 21776
-	9: distance 134682
-cmp block 65
-index: 6515
-block x=105, y=108
-	1: distance 56
-	2: distance 13363
-	3: distance 16669
-	4: distance 23394
-	5: distance 11798
-	6: distance 27717
-	7: distance 23952
-	8: distance 6433
-	9: distance 130774
-cmp block 66
-index: 6516
-block x=108, y=108
-	1: distance 9
-	2: distance 10818
-	3: distance 10793
-	4: distance 7190
-	5: distance 18817
-	6: distance 10495
-	7: distance 8920
-	8: distance 21406
-	9: distance 100126
-cmp block 67
-index: 6517
-block x=111, y=108
-	1: distance 85
-	2: distance 6395
-	3: distance 15073
-	4: distance 15344
-	5: distance 16955
-	6: distance 51972
-	7: distance 7222
-	8: distance 28787
-	9: distance 153632
-cmp block 68
-index: 6518
-block x=114, y=108
-	1: distance 45
-	2: distance 11577
-	3: distance 12231
-	4: distance 17896
-	5: distance 10666
-	6: distance 31739
-	7: distance 9654
-	8: distance 11379
-	9: distance 124694
-cmp block 69
-index: 6519
-block x=117, y=108
-	1: distance 55
-	2: distance 11271
-	3: distance 20790
-	4: distance 17490
-	5: distance 9508
-	6: distance 30258
-	7: distance 10883
-	8: distance 14758
-	9: distance 130732
-cmp block 70
-index: 6690
-block x=90, y=111
-	1: distance 67
-	2: distance 22134
-	3: distance 9445
-	4: distance 6317
-	5: distance 8577
-	6: distance 22230
-	7: distance 5421
-	8: distance 31661
-	9: distance 134219
-cmp block 71
-index: 6691
-block x=93, y=111
-	1: distance 92
-	2: distance 19457
-	3: distance 18833
-	4: distance 3335
-	5: distance 9234
-	6: distance 40767
-	7: distance 7852
-	8: distance 35700
-	9: distance 159650
-cmp block 72
-index: 6692
-block x=96, y=111
-	1: distance 75
-	2: distance 21276
-	3: distance 18815
-	4: distance 7946
-	5: distance 5811
-	6: distance 38322
-	7: distance 6426
-	8: distance 24879
-	9: distance 141888
-cmp block 73
-index: 6693
-block x=99, y=111
-	1: distance 52
-	2: distance 29835
-	3: distance 30639
-	4: distance 2868
-	5: distance 8764
-	6: distance 39556
-	7: distance 3111
-	8: distance 7223
-	9: distance 129366
-cmp block 74
-index: 6694
-block x=102, y=111
-	1: distance 63
-	2: distance 14106
-	3: distance 26238
-	4: distance 2845
-	5: distance 13671
-	6: distance 32005
-	7: distance 15374
-	8: distance 16070
-	9: distance 133346
-cmp block 75
-index: 6695
-block x=105, y=111
-	1: distance 83
-	2: distance 13049
-	3: distance 36870
-	4: distance 16507
-	5: distance 10890
-	6: distance 48683
-	7: distance 4265
-	8: distance 10264
-	9: distance 150784
-cmp block 76
-index: 6696
-block x=108, y=111
-	1: distance 32
-	2: distance 6531
-	3: distance 16093
-	4: distance 6647
-	5: distance 8410
-	6: distance 28587
-	7: distance 14505
-	8: distance 14941
-	9: distance 115578
-cmp block 77
-index: 6697
-block x=111, y=111
-	1: distance 15
-	2: distance 13097
-	3: distance 9296
-	4: distance 2206
-	5: distance 5210
-	6: distance 28586
-	7: distance 8031
-	8: distance 27618
-	9: distance 106610
-cmp block 78
-index: 6698
-block x=114, y=111
-	1: distance 70
-	2: distance 8452
-	3: distance 7858
-	4: distance 11473
-	5: distance 8356
-	6: distance 42563
-	7: distance 13797
-	8: distance 22976
-	9: distance 134834
-cmp block 79
-index: 6699
-block x=117, y=111
-	1: distance 22
-	2: distance 6683
-	3: distance 11317
-	4: distance 4373
-	5: distance 6596
-	6: distance 31940
-	7: distance 22567
-	8: distance 14705
-	9: distance 111200
-cmp block 80
-index: 6870
-block x=90, y=114
-	1: distance 96
-	2: distance 10248
-	3: distance 27418
-	4: distance 20009
-	5: distance 12310
-	6: distance 37535
-	7: distance 7448
-	8: distance 20523
-	9: distance 167433
-cmp block 81
-index: 6871
-block x=93, y=114
-	1: distance 24
-	2: distance 11662
-	3: distance 19683
-	4: distance 5597
-	5: distance 18230
-	6: distance 14155
-	7: distance 4468
-	8: distance 20000
-	9: distance 111234
-cmp block 82
-index: 6872
-block x=96, y=114
-	1: distance 68
-	2: distance 8185
-	3: distance 18075
-	4: distance 7994
-	5: distance 18082
-	6: distance 33906
-	7: distance 4937
-	8: distance 29221
-	9: distance 134412
-cmp block 83
-index: 6873
-block x=99, y=114
-	1: distance 43
-	2: distance 7500
-	3: distance 11283
-	4: distance 3891
-	5: distance 9662
-	6: distance 40653
-	7: distance 9808
-	8: distance 29650
-	9: distance 123670
-cmp block 84
-index: 6874
-block x=102, y=114
-	1: distance 3
-	2: distance 7429
-	3: distance 14141
-	4: distance 7255
-	5: distance 11976
-	6: distance 11399
-	7: distance 6874
-	8: distance 14179
-	9: distance 84976
-cmp block 85
-index: 6875
-block x=105, y=114
-	1: distance 71
-	2: distance 14436
-	3: distance 11214
-	4: distance 6090
-	5: distance 13502
-	6: distance 41730
-	7: distance 14540
-	8: distance 9410
-	9: distance 136598
-cmp block 86
-index: 6876
-block x=108, y=114
-	1: distance 60
-	2: distance 13661
-	3: distance 8925
-	4: distance 25269
-	5: distance 15202
-	6: distance 39553
-	7: distance 4854
-	8: distance 7534
-	9: distance 132186
-cmp block 87
-index: 6877
-block x=111, y=114
-	1: distance 2
-	2: distance 9731
-	3: distance 10135
-	4: distance 12118
-	5: distance 6682
-	6: distance 21138
-	7: distance 4628
-	8: distance 5941
-	9: distance 81092
-cmp block 88
-index: 6878
-block x=114, y=114
-	1: distance 58
-	2: distance 9040
-	3: distance 12334
-	4: distance 12803
-	5: distance 8661
-	6: distance 39870
-	7: distance 8491
-	8: distance 17800
-	9: distance 131358
-cmp block 89
-index: 6879
-block x=117, y=114
-	1: distance 18
-	2: distance 12013
-	3: distance 19688
-	4: distance 4953
-	5: distance 7315
-	6: distance 26005
-	7: distance 9315
-	8: distance 14916
-	9: distance 109458
-cmp block 90
-index: 7050
-block x=90, y=117
-	1: distance 99
-	2: distance 28576
-	3: distance 27992
-	4: distance 17570
-	5: distance 23461
-	6: distance 42437
-	7: distance 10839
-	8: distance 15919
-	9: distance 195318
-cmp block 91
-index: 7051
-block x=93, y=117
-	1: distance 62
-	2: distance 15836
-	3: distance 19680
-	4: distance 17303
-	5: distance 9007
-	6: distance 17839
-	7: distance 12400
-	8: distance 20610
-	9: distance 132280
-cmp block 92
-index: 7052
-block x=96, y=117
-	1: distance 59
-	2: distance 9645
-	3: distance 18465
-	4: distance 10483
-	5: distance 18731
-	6: distance 19036
-	7: distance 16251
-	8: distance 27562
-	9: distance 131744
-cmp block 93
-index: 7053
-block x=99, y=117
-	1: distance 82
-	2: distance 4734
-	3: distance 12886
-	4: distance 19689
-	5: distance 9647
-	6: distance 46836
-	7: distance 6092
-	8: distance 33066
-	9: distance 150606
-cmp block 94
-index: 7054
-block x=102, y=117
-	1: distance 27
-	2: distance 10319
-	3: distance 7629
-	4: distance 16183
-	5: distance 6469
-	6: distance 33671
-	7: distance 12442
-	8: distance 10709
-	9: distance 111750
-cmp block 95
-index: 7055
-block x=105, y=117
-	1: distance 10
-	2: distance 10940
-	3: distance 5449
-	4: distance 13209
-	5: distance 4874
-	6: distance 34448
-	7: distance 2302
-	8: distance 16355
-	9: distance 101546
-cmp block 96
-index: 7056
-block x=108, y=117
-	1: distance 44
-	2: distance 10316
-	3: distance 17219
-	4: distance 9875
-	5: distance 1502
-	6: distance 26269
-	7: distance 12390
-	8: distance 28599
-	9: distance 124122
-cmp block 97
-index: 7057
-block x=111, y=117
-	1: distance 14
-	2: distance 10103
-	3: distance 15369
-	4: distance 13168
-	5: distance 8639
-	6: distance 33997
-	7: distance 5774
-	8: distance 10344
-	9: distance 105674
-cmp block 98
-index: 7058
-block x=114, y=117
-	1: distance 38
-	2: distance 12446
-	3: distance 24829
-	4: distance 14024
-	5: distance 5915
-	6: distance 25842
-	7: distance 7529
-	8: distance 5231
-	9: distance 121898
-cmp block 99
-index: 7059
-block x=117, y=117
-	1: distance 94
-	2: distance 12662
-	3: distance 15440
-	4: distance 16244
-	5: distance 2576
-	6: distance 66132
-	7: distance 16620
-	8: distance 18083
-	9: distance 164264
-	Final estimates (2 step)
-
-BM Vector = 
-cmp block 0
-index: 5430
-block x=90, y=90
-	1: distance 2345
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 2349
-cmp block 1
-index: 5431
-block x=93, y=90
-	1: distance 1204
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 1213
-cmp block 2
-index: 5432
-block x=96, y=90
-	1: distance 455
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 9
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 465
-cmp block 3
-index: 5433
-block x=99, y=90
-	1: distance 90
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 6
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 96
-cmp block 4
-index: 5434
-block x=102, y=90
+index: 909
+block x=27, y=15
 	1: distance 1
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 3
-cmp block 5
-index: 5435
-block x=105, y=90
-	1: distance 72
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 76
-cmp block 6
-index: 5436
-block x=108, y=90
-	1: distance 264
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 6
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 271
-cmp block 7
-index: 5437
-block x=111, y=90
-	1: distance 473
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 480
-cmp block 8
-index: 5438
-block x=114, y=90
-	1: distance 550
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 557
-cmp block 9
-index: 5439
-block x=117, y=90
-	1: distance 541
-	2: distance 1
-	3: distance 3
-	4: distance 0
-	5: distance 17
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 562
-cmp block 10
-index: 5610
-block x=90, y=93
-	1: distance 2034
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 6
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 2042
-cmp block 11
-index: 5611
-block x=93, y=93
-	1: distance 937
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 6
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 945
-cmp block 12
-index: 5612
-block x=96, y=93
-	1: distance 363
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 5
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 369
-cmp block 13
-index: 5613
-block x=99, y=93
-	1: distance 92
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 95
-cmp block 14
-index: 5614
-block x=102, y=93
-	1: distance 3
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 7
-cmp block 15
-index: 5615
-block x=105, y=93
-	1: distance 39
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 9
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 48
-cmp block 16
-index: 5616
-block x=108, y=93
-	1: distance 171
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 13
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 184
-cmp block 17
-index: 5617
-block x=111, y=93
-	1: distance 332
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 12
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 344
-cmp block 18
-index: 5618
-block x=114, y=93
-	1: distance 420
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 427
-cmp block 19
-index: 5619
-block x=117, y=93
-	1: distance 414
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 417
-cmp block 20
-index: 5790
-block x=90, y=96
-	1: distance 1677
-	2: distance 0
-	3: distance 2
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 1686
-cmp block 21
-index: 5791
-block x=93, y=96
-	1: distance 835
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 844
-cmp block 22
-index: 5792
-block x=96, y=96
-	1: distance 418
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 12
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 431
-cmp block 23
-index: 5793
-block x=99, y=96
-	1: distance 149
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 11
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 161
-cmp block 24
-index: 5794
-block x=102, y=96
-	1: distance 16
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 6
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 23
-cmp block 25
-index: 5795
-block x=105, y=96
-	1: distance 17
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 22
-cmp block 26
-index: 5796
-block x=108, y=96
-	1: distance 109
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 113
-cmp block 27
-index: 5797
-block x=111, y=96
-	1: distance 247
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 251
-cmp block 28
-index: 5798
-block x=114, y=96
-	1: distance 345
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 347
-cmp block 29
-index: 5799
-block x=117, y=96
-	1: distance 378
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 378
-cmp block 30
-index: 5970
-block x=90, y=99
-	1: distance 1457
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 1460
-cmp block 31
-index: 5971
-block x=93, y=99
-	1: distance 850
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 5
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 855
-cmp block 32
-index: 5972
-block x=96, y=99
-	1: distance 530
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 538
-cmp block 33
-index: 5973
-block x=99, y=99
-	1: distance 233
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 8
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 243
-cmp block 34
-index: 5974
-block x=102, y=99
-	1: distance 43
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 52
-cmp block 35
-index: 5975
-block x=105, y=99
-	1: distance 4
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 5
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 9
-cmp block 36
-index: 5976
-block x=108, y=99
-	1: distance 78
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 79
-cmp block 37
-index: 5977
-block x=111, y=99
-	1: distance 223
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 224
-cmp block 38
-index: 5978
-block x=114, y=99
-	1: distance 355
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 357
-cmp block 39
-index: 5979
-block x=117, y=99
-	1: distance 488
-	2: distance 0
-	3: distance 8
-	4: distance 0
-	5: distance 9
-	6: distance 0
-	7: distance 4
-	8: distance 0
-	9: distance 509
-cmp block 40
-index: 6150
-block x=90, y=102
-	1: distance 1541
-	2: distance 0
-	3: distance 4
-	4: distance 0
-	5: distance 13
-	6: distance 0
-	7: distance 8
-	8: distance 0
-	9: distance 1566
-cmp block 41
-index: 6151
-block x=93, y=102
-	1: distance 826
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 828
-cmp block 42
-index: 6152
-block x=96, y=102
-	1: distance 519
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 522
-cmp block 43
-index: 6153
-block x=99, y=102
-	1: distance 250
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 252
-cmp block 44
-index: 6154
-block x=102, y=102
-	1: distance 60
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 64
-cmp block 45
-index: 6155
-block x=105, y=102
-	1: distance 0
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 3
-cmp block 46
-index: 6156
-block x=108, y=102
-	1: distance 56
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 6
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 63
-cmp block 47
-index: 6157
-block x=111, y=102
-	1: distance 227
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 8
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 236
-cmp block 48
-index: 6158
-block x=114, y=102
-	1: distance 487
-	2: distance 0
-	3: distance 5
-	4: distance 0
-	5: distance 19
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 511
-cmp block 49
-index: 6159
-block x=117, y=102
-	1: distance 919
-	2: distance 3
-	3: distance 13
-	4: distance 0
-	5: distance 61
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 998
-cmp block 50
-index: 6330
-block x=90, y=105
-	1: distance 2097
-	2: distance 3
-	3: distance 8
-	4: distance 0
-	5: distance 72
-	6: distance 0
-	7: distance 1
-	8: distance 2
-	9: distance 2183
-cmp block 51
-index: 6331
-block x=93, y=105
-	1: distance 823
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 10
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 835
-cmp block 52
-index: 6332
-block x=96, y=105
-	1: distance 415
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 418
-cmp block 53
-index: 6333
-block x=99, y=105
-	1: distance 206
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 210
-cmp block 54
-index: 6334
-block x=102, y=105
-	1: distance 56
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 57
-cmp block 55
-index: 6335
-block x=105, y=105
-	1: distance 0
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 0
-cmp block 56
-index: 6336
-block x=108, y=105
-	1: distance 54
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 59
-cmp block 57
-index: 6337
-block x=111, y=105
-	1: distance 289
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 7
-	6: distance 0
-	7: distance 3
-	8: distance 0
-	9: distance 300
-cmp block 58
-index: 6338
-block x=114, y=105
-	1: distance 798
-	2: distance 1
-	3: distance 3
-	4: distance 0
-	5: distance 19
-	6: distance 0
-	7: distance 4
-	8: distance 0
-	9: distance 825
-cmp block 59
-index: 6339
-block x=117, y=105
-	1: distance 1690
-	2: distance 2
-	3: distance 6
-	4: distance 0
-	5: distance 36
-	6: distance 0
-	7: distance 4
-	8: distance 0
-	9: distance 1738
+	2: distance 14145
+	3: distance 4011
+	4: distance 13904
+	5: distance 8565
+	6: distance 6542
+	7: distance 5717
+	8: distance 5726
+	9: distance 62340
 cmp block 60
-index: 6510
-block x=90, y=108
-	1: distance 2870
-	2: distance 1
-	3: distance 5
-	4: distance 0
-	5: distance 18
-	6: distance 0
-	7: distance 5
-	8: distance 0
-	9: distance 2899
+index: 1080
+block x=0, y=18
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 61
-index: 6511
-block x=93, y=108
-	1: distance 867
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 870
+index: 1081
+block x=3, y=18
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 62
-index: 6512
-block x=96, y=108
-	1: distance 363
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 364
+index: 1082
+block x=6, y=18
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 63
-index: 6513
-block x=99, y=108
-	1: distance 199
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 201
+index: 1083
+block x=9, y=18
+	1: distance 1249993
+	2: distance 6186
+	3: distance 4778
+	4: distance 5351
+	5: distance 3348
+	6: distance 5028
+	7: distance 7924
+	8: distance 8664
+	9: distance 99999999
 cmp block 64
-index: 6514
-block x=102, y=108
-	1: distance 57
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 58
+index: 1084
+block x=12, y=18
+	1: distance 654786
+	2: distance 17251
+	3: distance 7450
+	4: distance 5144
+	5: distance 10047
+	6: distance 7827
+	7: distance 4846
+	8: distance 8941
+	9: distance 99999999
 cmp block 65
-index: 6515
-block x=105, y=108
-	1: distance 0
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 0
+index: 1085
+block x=15, y=18
+	1: distance 5
+	2: distance 21469
+	3: distance 5985
+	4: distance 4489
+	5: distance 21621
+	6: distance 12763
+	7: distance 10206
+	8: distance 4378
+	9: distance 83034
 cmp block 66
-index: 6516
-block x=108, y=108
-	1: distance 78
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 80
+index: 1086
+block x=18, y=18
+	1: distance 7
+	2: distance 4909
+	3: distance 12309
+	4: distance 8692
+	5: distance 16907
+	6: distance 4734
+	7: distance 12807
+	8: distance 17135
+	9: distance 87930
 cmp block 67
-index: 6517
-block x=111, y=108
-	1: distance 391
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 394
+index: 1087
+block x=21, y=18
+	1: distance 14
+	2: distance 9302
+	3: distance 14525
+	4: distance 7238
+	5: distance 10286
+	6: distance 9871
+	7: distance 11927
+	8: distance 18275
+	9: distance 95371
 cmp block 68
-index: 6518
-block x=114, y=108
-	1: distance 1092
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 1099
+index: 1088
+block x=24, y=18
+	1: distance 12
+	2: distance 18905
+	3: distance 2798
+	4: distance 9707
+	5: distance 10875
+	6: distance 14104
+	7: distance 12357
+	8: distance 15049
+	9: distance 92890
 cmp block 69
-index: 6519
-block x=117, y=108
-	1: distance 2205
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 4
-	8: distance 0
-	9: distance 2210
-cmp block 70
-index: 6690
-block x=90, y=111
-	1: distance 3192
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 3193
-cmp block 71
-index: 6691
-block x=93, y=111
-	1: distance 861
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 864
-cmp block 72
-index: 6692
-block x=96, y=111
-	1: distance 366
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 367
-cmp block 73
-index: 6693
-block x=99, y=111
-	1: distance 202
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 202
-cmp block 74
-index: 6694
-block x=102, y=111
-	1: distance 56
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 57
-cmp block 75
-index: 6695
-block x=105, y=111
+index: 1089
+block x=27, y=18
 	1: distance 2
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 4
+	2: distance 8736
+	3: distance 3139
+	4: distance 8456
+	5: distance 12071
+	6: distance 12708
+	7: distance 11858
+	8: distance 9576
+	9: distance 70556
+cmp block 70
+index: 1260
+block x=0, y=21
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
+cmp block 71
+index: 1261
+block x=3, y=21
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
+cmp block 72
+index: 1262
+block x=6, y=21
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
+cmp block 73
+index: 1263
+block x=9, y=21
+	1: distance 1248455
+	2: distance 4887
+	3: distance 3888
+	4: distance 7040
+	5: distance 7413
+	6: distance 6097
+	7: distance 4054
+	8: distance 5794
+	9: distance 99999999
+cmp block 74
+index: 1264
+block x=12, y=21
+	1: distance 651940
+	2: distance 3966
+	3: distance 14148
+	4: distance 2889
+	5: distance 13320
+	6: distance 12347
+	7: distance 8821
+	8: distance 10869
+	9: distance 99999999
+cmp block 75
+index: 1265
+block x=15, y=21
+	1: distance 24
+	2: distance 5487
+	3: distance 27673
+	4: distance 11620
+	5: distance 19847
+	6: distance 29400
+	7: distance 9346
+	8: distance 14609
+	9: distance 124698
 cmp block 76
-index: 6696
-block x=108, y=111
-	1: distance 110
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 110
+index: 1266
+block x=18, y=21
+	1: distance 3
+	2: distance 5768
+	3: distance 15073
+	4: distance 10068
+	5: distance 10655
+	6: distance 9057
+	7: distance 2703
+	8: distance 11578
+	9: distance 77350
 cmp block 77
-index: 6697
-block x=111, y=111
-	1: distance 466
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 467
+index: 1267
+block x=21, y=21
+	1: distance 9
+	2: distance 7173
+	3: distance 9416
+	4: distance 13137
+	5: distance 17266
+	6: distance 12183
+	7: distance 10213
+	8: distance 15251
+	9: distance 90184
 cmp block 78
-index: 6698
-block x=114, y=111
-	1: distance 1180
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 1182
+index: 1268
+block x=24, y=21
+	1: distance 19
+	2: distance 13168
+	3: distance 7934
+	4: distance 13190
+	5: distance 21048
+	6: distance 16113
+	7: distance 6867
+	8: distance 9773
+	9: distance 101261
 cmp block 79
-index: 6699
-block x=117, y=111
-	1: distance 2204
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 2208
+index: 1269
+block x=27, y=21
+	1: distance 20
+	2: distance 13719
+	3: distance 18204
+	4: distance 6369
+	5: distance 15283
+	6: distance 11000
+	7: distance 8646
+	8: distance 10994
+	9: distance 101820
 cmp block 80
-index: 6870
-block x=90, y=114
-	1: distance 3171
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 3174
+index: 1440
+block x=0, y=24
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 81
-index: 6871
-block x=93, y=114
-	1: distance 842
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 5
-	6: distance 0
-	7: distance 1
-	8: distance 0
-	9: distance 848
+index: 1441
+block x=3, y=24
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 82
-index: 6872
-block x=96, y=114
-	1: distance 393
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 3
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 396
+index: 1442
+block x=6, y=24
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
 cmp block 83
-index: 6873
-block x=99, y=114
-	1: distance 192
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 192
+index: 1443
+block x=9, y=24
+	1: distance 1244920
+	2: distance 4966
+	3: distance 3745
+	4: distance 5133
+	5: distance 3515
+	6: distance 6728
+	7: distance 5717
+	8: distance 6813
+	9: distance 99999999
 cmp block 84
-index: 6874
-block x=102, y=114
-	1: distance 40
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 40
+index: 1444
+block x=12, y=24
+	1: distance 653258
+	2: distance 6424
+	3: distance 6566
+	4: distance 12715
+	5: distance 9356
+	6: distance 8637
+	7: distance 4269
+	8: distance 17517
+	9: distance 99999999
 cmp block 85
-index: 6875
-block x=105, y=114
-	1: distance 6
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 7
+index: 1445
+block x=15, y=24
+	1: distance 23
+	2: distance 8646
+	3: distance 12294
+	4: distance 19569
+	5: distance 11655
+	6: distance 6313
+	7: distance 7026
+	8: distance 26898
+	9: distance 112528
 cmp block 86
-index: 6876
-block x=108, y=114
-	1: distance 138
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 139
+index: 1446
+block x=18, y=24
+	1: distance 16
+	2: distance 14403
+	3: distance 10087
+	4: distance 8967
+	5: distance 12473
+	6: distance 13785
+	7: distance 4167
+	8: distance 18147
+	9: distance 96232
 cmp block 87
-index: 6877
-block x=111, y=114
-	1: distance 497
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 2
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 499
+index: 1447
+block x=21, y=24
+	1: distance 15
+	2: distance 12928
+	3: distance 12051
+	4: distance 17949
+	5: distance 3050
+	6: distance 12408
+	7: distance 4324
+	8: distance 18564
+	9: distance 95942
 cmp block 88
-index: 6878
-block x=114, y=114
-	1: distance 1192
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 1193
+index: 1448
+block x=24, y=24
+	1: distance 11
+	2: distance 8258
+	3: distance 20411
+	4: distance 6349
+	5: distance 8224
+	6: distance 7749
+	7: distance 18184
+	8: distance 10808
+	9: distance 92366
 cmp block 89
-index: 6879
-block x=117, y=114
-	1: distance 2194
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 2197
-cmp block 90
-index: 7050
-block x=90, y=117
-	1: distance 3313
-	2: distance 1
-	3: distance 2
-	4: distance 0
-	5: distance 20
-	6: distance 0
-	7: distance 3
-	8: distance 0
-	9: distance 3339
-cmp block 91
-index: 7051
-block x=93, y=117
-	1: distance 1020
-	2: distance 1
-	3: distance 3
-	4: distance 0
-	5: distance 21
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 1047
-cmp block 92
-index: 7052
-block x=96, y=117
-	1: distance 483
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 10
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 494
-cmp block 93
-index: 7053
-block x=99, y=117
-	1: distance 189
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 190
-cmp block 94
-index: 7054
-block x=102, y=117
+index: 1449
+block x=27, y=24
 	1: distance 22
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 1
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 23
+	2: distance 13710
+	3: distance 11816
+	4: distance 10793
+	5: distance 6994
+	6: distance 9304
+	7: distance 27302
+	8: distance 13412
+	9: distance 111560
+cmp block 90
+index: 1620
+block x=0, y=27
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
+cmp block 91
+index: 1621
+block x=3, y=27
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
+cmp block 92
+index: 1622
+block x=6, y=27
+	1: distance 1667224
+	2: distance 4240
+	3: distance 3888
+	4: distance 4620
+	5: distance 3965
+	6: distance 5625
+	7: distance 3608
+	8: distance 7673
+	9: distance 99999999
+cmp block 93
+index: 1623
+block x=9, y=27
+	1: distance 1244426
+	2: distance 3708
+	3: distance 3717
+	4: distance 6457
+	5: distance 4579
+	6: distance 9041
+	7: distance 5681
+	8: distance 7267
+	9: distance 99999999
+cmp block 94
+index: 1624
+block x=12, y=27
+	1: distance 666862
+	2: distance 7232
+	3: distance 6986
+	4: distance 12557
+	5: distance 8128
+	6: distance 10085
+	7: distance 11660
+	8: distance 15655
+	9: distance 99999999
 cmp block 95
-index: 7055
-block x=105, y=117
-	1: distance 30
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 34
+index: 1625
+block x=15, y=27
+	1: distance 21
+	2: distance 11522
+	3: distance 5964
+	4: distance 18872
+	5: distance 3843
+	6: distance 2514
+	7: distance 13202
+	8: distance 19606
+	9: distance 110816
 cmp block 96
-index: 7056
-block x=108, y=117
-	1: distance 218
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 5
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 224
+index: 1626
+block x=18, y=27
+	1: distance 10
+	2: distance 7341
+	3: distance 5729
+	4: distance 11911
+	5: distance 12557
+	6: distance 13663
+	7: distance 5173
+	8: distance 7751
+	9: distance 92192
 cmp block 97
-index: 7057
-block x=111, y=117
-	1: distance 587
-	2: distance 0
-	3: distance 1
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 592
+index: 1627
+block x=21, y=27
+	1: distance 18
+	2: distance 11706
+	3: distance 5935
+	4: distance 12845
+	5: distance 14084
+	6: distance 10445
+	7: distance 7870
+	8: distance 15235
+	9: distance 100439
 cmp block 98
-index: 7058
-block x=114, y=117
-	1: distance 1293
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 4
-	6: distance 0
-	7: distance 2
-	8: distance 0
-	9: distance 1299
+index: 1628
+block x=24, y=27
+	1: distance 13
+	2: distance 19035
+	3: distance 4030
+	4: distance 13631
+	5: distance 10301
+	6: distance 18029
+	7: distance 8329
+	8: distance 8339
+	9: distance 92986
 cmp block 99
-index: 7059
-block x=117, y=117
-	1: distance 2453
-	2: distance 1
-	3: distance 1
-	4: distance 0
-	5: distance 12
-	6: distance 0
-	7: distance 4
-	8: distance 3
-	9: distance 2474
+index: 1629
+block x=27, y=27
+	1: distance 17
+	2: distance 9297
+	3: distance 7065
+	4: distance 18745
+	5: distance 10252
+	6: distance 20442
+	7: distance 9127
+	8: distance 8588
+	9: distance 98217
 
-BM Vector =  6515,  0,  5434,  0,  6695,  5614,  0,  5975,  5795,  5794,  0,  7055,  6874,  5615,  5974,  6694,  0,  6514,  6336,  6156,  6154,  5435,  5976,  6516,  5613,  5433,  6696,  5796,  6876,  5793,  5616,  7053, 
- psrn = nan, rmse = nan
+BM Vector =  905,  909,  1089,  1266,  908,  1085,  906,  1086,  907,  1267,  1626,  1448,  1088,  1628,  1087,  1447,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+		psrn = 25.769779, rmse = 13.123545
+	Final estimates (2 step)
+		psrn = 25.856121, rmse = 12.993738
 
 Statistics:
-[CPU] BM3D-Initialization: 419.537994 ms
-[CPU] BM3D-Basic estimates: 275.546021 ms
-[CPU] BM3D-Final estimates: 235.531998 ms
+[CPU] BM3D-Initialization: 410.750000 ms
+[CPU] BM3D-Basic estimates: 175.052994 ms
+[CPU] BM3D-Final estimates: 127.306999 ms

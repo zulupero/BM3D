@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     BM3D::SourceImage imgOrig;
     unsigned width, height, chnls;
 
-    if(argc < 3)
+    if(argc < 6)
     {
 	printf("\ntoo few arguments\n");
         return EXIT_FAILURE;
@@ -28,6 +28,9 @@ int main(int argc, char **argv)
     printf("Noised Image: %s\n", argv[2]);
     printf("Sigma: %s\n", argv[3]);
     int sigma = atoi(argv[3]);
+    float HTThreshold = atof(argv[4]);
+    int distanceWienThreshold = atoi(argv[5]);
+    int distanceHTThreshold = atoi(argv[6]);
     
     if(load_image(argv[2], img, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
     //Hardacoded for test purposes
@@ -39,7 +42,7 @@ int main(int argc, char **argv)
     
     Timer::start();
     //sigma = 25;
-    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (2500 * 64 * 3), (400 * 64), (sigma * 2.7), sigma, false);  
+    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (2500 * 64 * 3), (400 * 64), (sigma * HTThreshold), sigma, false);  
     //phard = 3, hard limit = 2500 * 64, Wien limit = 400 * 64,  hard threshol = sigma * 2.7
 
     Timer::add("BM3D-Initialization");

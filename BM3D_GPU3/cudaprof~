@@ -1,3 +1,4 @@
 #!/bin/sh
-/usr/local/cuda-6.5/bin/nvprof  /home/cuenat/BM3D/BM3D/BM3D_GPU3/bm3d_gpu ../BM3D_images/house.png ../BM3D_images/ImNoisy.png 30 
+#/usr/local/cuda-6.5/bin/nvprof  /home/cuenat/BM3D/BM3D/BM3D_GPU3/bm3d_gpu ../BM3D_images/house.png ../BM3D_images/ImNoisy.png 30 
+/usr/local/cuda-6.5/bin/nvprof  /home/cuenat/BM3D/BM3D/BM3D_GPU3/bm3d_gpu ../BM3D_images/Lena512.png ../BM3D_images/Lena512_noi_s30.png 30 2.7
 #--devices 0 --analysis-metrics --replay-mode disabled --output-profile prof.nvprof
