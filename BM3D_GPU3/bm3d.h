@@ -47,7 +47,8 @@ public:
         float*      wpArray;
         float*      estimates;
         float*      nbSimilarBlocks;
-        float*      integralImageMap;
+        float*      Tforward;
+        float*      Tinverse;
 	};
 
 private:	
@@ -67,10 +68,12 @@ private:
     static void BM3D_FinalEstimate();
     static void BM3D_CreateBlock();
     static void BM3D_2DTransform(bool final = false);
+    static void BM3D_2DTransform2(bool final = false);
     static void BM3D_BlockMatching(bool final = false);
     static void BM3D_HardThresholdFilter();
     static void BM3D_WienFilter();
     static void BM3D_Inverse3D(bool final=false);
+    static void BM3D_Inverse3D2(bool final = false);
     static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
 
