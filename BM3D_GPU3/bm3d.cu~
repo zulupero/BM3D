@@ -686,8 +686,8 @@ void BM_CalculateDistance(int* blockMap, double* blocks, int size)
                                 ((blocks[cmpBlockIndex+7] - blocks[blockIndex+7]) * (blocks[cmpBlockIndex+7] - blocks[blockIndex+7])));
 }
 
-__global__
-void BM_CalculateDistance2(int* blockMap, double* blocks, int size, float* integralImage)
+/*__global__
+void BM_CalculateDistance2(int* blockMap, double* blocks, int size, float* integralImage, int width)
 {
     int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1000) + ((threadIdx.y * 10 + threadIdx.x) * 10);
     int cmpBlockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1000) + 550;
@@ -697,7 +697,7 @@ void BM_CalculateDistance2(int* blockMap, double* blocks, int size, float* integ
     int yRefBlock = int(blocks[blockIndex + 65]);
     int xCmpBlock = int(blocks[cmpBlockIndex + 64]);
     int yCmpBlock = int(blocks[cmpBlockIndex + 65]);
-    float A = 
+    float A = integralImage[
 
     blockMap[blockMapIndex + 1 + threadIdx.z] = int(
           
@@ -709,7 +709,7 @@ void BM_CalculateDistance2(int* blockMap, double* blocks, int size, float* integ
                                 ((blocks[cmpBlockIndex+5] - blocks[blockIndex+5]) * (blocks[cmpBlockIndex+5] - blocks[blockIndex+5])) +
                                 ((blocks[cmpBlockIndex+6] - blocks[blockIndex+6]) * (blocks[cmpBlockIndex+6] - blocks[blockIndex+6])) +
                                 ((blocks[cmpBlockIndex+7] - blocks[blockIndex+7]) * (blocks[cmpBlockIndex+7] - blocks[blockIndex+7])));
-}
+}*/
 
 __global__
 void BM_AddAndLimit(int* blockMap, int size, int limit)

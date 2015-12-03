@@ -686,7 +686,7 @@ void BM_CalculateDistance(int* blockMap, double* blocks, int size)
                                 ((blocks[cmpBlockIndex+7] - blocks[blockIndex+7]) * (blocks[cmpBlockIndex+7] - blocks[blockIndex+7])));
 }
 
-__global__
+/*__global__
 void BM_CalculateDistance2(int* blockMap, double* blocks, int size, float* integralImage, int width)
 {
     int blockMapIndex = (((blockIdx.y * size) + blockIdx.x) * 1000) + ((threadIdx.y * 10 + threadIdx.x) * 10);
@@ -709,7 +709,7 @@ void BM_CalculateDistance2(int* blockMap, double* blocks, int size, float* integ
                                 ((blocks[cmpBlockIndex+5] - blocks[blockIndex+5]) * (blocks[cmpBlockIndex+5] - blocks[blockIndex+5])) +
                                 ((blocks[cmpBlockIndex+6] - blocks[blockIndex+6]) * (blocks[cmpBlockIndex+6] - blocks[blockIndex+6])) +
                                 ((blocks[cmpBlockIndex+7] - blocks[blockIndex+7]) * (blocks[cmpBlockIndex+7] - blocks[blockIndex+7])));
-}
+}*/
 
 __global__
 void BM_AddAndLimit(int* blockMap, int size, int limit)
@@ -892,21 +892,12 @@ void Create3DBlocks32(double* blocks, double* blocks3D, int* bmVectors, int size
 void BM3D::BM3D_BlockMatching(bool final)
 {
 
-    if(final)
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(10, 10, 8);
         BM_CalculateDistance<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.blocks, BM3D::context.widthBlocksIntern); 
         cudaDeviceSynchronize();   
     }
-    else
-    {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
-        dim3 numThreads(10, 10);
-        BM_CalculateDistance2<<<numBlocks,numThreads>>>(BM3D::context.blockMap, BM3D::context.blocks, BM3D::context.widthBlocksIntern, BM3D::context.integralImageMap); 
-        cudaDeviceSynchronize();
-    }
-
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(10, 10);
