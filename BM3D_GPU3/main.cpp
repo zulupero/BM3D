@@ -42,7 +42,8 @@ int main(int argc, char **argv)
     
     Timer::start();
     //sigma = 25;
-    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (distanceHTThreshold * 64), (distanceWienThreshold * 64), (sigma * HTThreshold), sigma, false);  
+    
+    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (3 * distanceHTThreshold * 64), (distanceWienThreshold * 64), (sigma * HTThreshold), sigma, false);  
     //phard = 3, hard limit = 2500 * 64, Wien limit = 400 * 64,  hard threshol = sigma * 2.7
 
     Timer::add("BM3D-Initialization");

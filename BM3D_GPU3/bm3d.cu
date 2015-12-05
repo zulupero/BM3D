@@ -122,6 +122,15 @@ void BM3D::BM3D_Initialize(BM3D::SourceImage img, BM3D::SourceImage imgOrig, int
         0.2989  ,  0.4642 ,   0.5974 ,   0.6717,    0.6717 ,   0.5974  ,  0.4642 ,   0.2989,
         0.1924 ,   0.2989  ,  0.3846  ,  0.4325 ,   0.4325 ,   0.3846 ,   0.2989  ,  0.1924};
 
+    /*float kaiserWindow[64] = { 0.4387, 0.4665, 0.4943, 0.5219, 0.5494, 0.5766, 0.6034, 0.6299, 
+                               0.6559, 0.6813, 0.7062, 0.7304, 0.7539, 0.7767, 0.7986, 0.8196,
+                               0.8397, 0.8588, 0.8768, 0.8938, 0.9096, 0.9243, 0.9378, 0.9500,
+                               0.9609, 0.9706, 0.9789, 0.9858, 0.9914, 0.9956, 0.9984, 0.9998,
+                               0.9998, 0.9984, 0.9956, 0.9914, 0.9858, 0.9789, 0.9706, 0.9609,
+                               0.9500, 0.9378, 0.9243, 0.9096, 0.8938, 0.8768, 0.8588, 0.8397,
+                               0.8196, 0.7986, 0.7767, 0.7539, 0.7304, 0.7062, 0.6813, 0.6559,
+                               0.6299, 0.6034, 0.5766, 0.5494, 0.5219, 0.4943, 0.4665, 0.4387 };*/
+
     gpuErrchk(cudaMalloc(&BM3D::context.kaiserWindowCoef, 64 * sizeof(float)));
     gpuErrchk(cudaMemcpy(BM3D::context.kaiserWindowCoef, kaiserWindow, 64 * sizeof(float), cudaMemcpyHostToDevice));
     gpuErrchk(cudaMalloc(&BM3D::context.blockMap, BM3D::context.nbBlocksIntern * 100 * 10 * sizeof(int)));
@@ -280,8 +289,8 @@ void pre_aggregation(double* blocks3D, float* wpArray, double* blocks, int* bmVe
         int estimateIndex = ((yPixel * width) + xPixel) << 1;
         int kaiserIndex = (threadIdx.y << 3) + threadIdx.x;
         int block3DIndex = (block << 11) + (blockIdx.z << 6) + kaiserIndex;
-        atomicAdd(&estimates[estimateIndex], (/*kaiserCoef[kaiserIndex] **/ wpArray[block] * blocks3D[block3DIndex]));
-        atomicAdd(&estimates[estimateIndex+1], (/*kaiserCoef[kaiserIndex] **/ wpArray[block]));
+        atomicAdd(&estimates[estimateIndex], (kaiserCoef[kaiserIndex] * wpArray[block] * blocks3D[block3DIndex]));
+        atomicAdd(&estimates[estimateIndex+1], (kaiserCoef[kaiserIndex] * wpArray[block]));
     }
 }
 
@@ -603,7 +612,7 @@ void HardThresholdFilter(double* blocks3D, double threshold, int size, float* nb
     int block = (blockIdx.y * size) + blockIdx.x;
     int blockPixelIndex = (block << 11) + (blockIdx.z << 6) + (threadIdx.y << 3) + threadIdx.x;
     //float coef_norm = sqrtf(nbSimilarBlocks[block]);
-    if(fabs(blocks3D[blockPixelIndex]) < (threshold /** coef_norm*/)) blocks3D[blockPixelIndex] = 0;  
+    if(fabs(blocks3D[blockPixelIndex]) < threshold) blocks3D[blockPixelIndex] = 0;  
 }
 
 __global__
@@ -611,7 +620,7 @@ void CalculateNP(double* blocks3D, int* npArray, int size)
 {
     int block = ((blockIdx.y * size) + blockIdx.x);
     int blockIndex = (block << 11) + (blockIdx.z << 6) + (threadIdx.y << 3) + threadIdx.x;
-    if(blocks3D[blockIndex] > 0) atomicAdd(&npArray[block], 1);  
+    if(blocks3D[blockIndex] != 0) atomicAdd(&npArray[block], 1);  
 }
 
 
@@ -801,9 +810,9 @@ void Create3DBlocks16(double* blocks, double* blocks3D, int* bmVectors, int size
         double o = blocks[bmVectors[bmVectorIndex+14] + pixelIndex];
         double p = blocks[bmVectors[bmVectorIndex+15] + pixelIndex];
 
-        if(index == 6515 && pixelIndex == 0)
-            printf("\n%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
-                a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p);
+        //if(index == 6515 && pixelIndex == 0)
+          //  printf("\n%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
+            //    a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p);
 
         blocks3D[block3DIndex] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) / 4.0;
         blocks3D[block3DIndex+64] = (a-b+c-d+e-f+g-h+i-j+k-l+m-n+o-p) / 4.0;
