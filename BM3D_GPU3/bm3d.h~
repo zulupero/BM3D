@@ -73,6 +73,7 @@ private:
     static void BM3D_HardThresholdFilter();
     static void BM3D_WienFilter();
     static void BM3D_Inverse3D(bool final=false);
+    static void BM3D_Inverse3D2(bool final = false);
     static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
 

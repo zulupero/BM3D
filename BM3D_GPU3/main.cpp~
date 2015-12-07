@@ -31,6 +31,7 @@ int main(int argc, char **argv)
     float HTThreshold = atof(argv[4]);
     int distanceWienThreshold = atoi(argv[5]);
     int distanceHTThreshold = atoi(argv[6]);
+    int step = atoi(argv[7]);
     
     if(load_image(argv[2], img, &width, &height, &chnls) != EXIT_SUCCESS) return EXIT_FAILURE;
     //Hardacoded for test purposes
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
     Timer::start();
     //sigma = 25;
     
-    BM3D::BM3D_Initialize(img, imgOrig, width, height, 3, (distanceHTThreshold * 64), (distanceWienThreshold * 64), (sigma * HTThreshold), sigma, false);  
+    BM3D::BM3D_Initialize(img, imgOrig, width, height, step, (step * distanceHTThreshold * 64), (step * distanceWienThreshold * 64), (sigma * HTThreshold), sigma, false);  
     //phard = 3, hard limit = 2500 * 64, Wien limit = 400 * 64,  hard threshol = sigma * 2.7
 
     Timer::add("BM3D-Initialization");

@@ -49,6 +49,7 @@ public:
         float*      nbSimilarBlocks;
         float*      Tforward;
         float*      Tinverse;
+        double*     meanValues;
 	};
 
 private:	
