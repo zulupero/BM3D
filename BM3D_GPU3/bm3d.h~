@@ -32,6 +32,7 @@ public:
         int             wienLimit;
         double          hardThreshold;
         int             sigma;
+        int             windowSize;
         
         //Device (member-variables):
         float*      deviceImage;
@@ -49,13 +50,14 @@ public:
         float*      nbSimilarBlocks;
         float*      Tforward;
         float*      Tinverse;
+        double*     meanValues;
 	};
 
 private:	
 	static BM3D_Context context;	
 
 public:
-	static void BM3D_Initialize(SourceImage img, SourceImage imgOrig, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, bool debug = false);	
+	static void BM3D_Initialize(SourceImage img, SourceImage imgOrig, int width, int height, int pHard, int hardLimit, int wienLimit, double hardThreshold, int sigma, int windowSize, bool debug = false);	
 	static void BM3D_Run();
 	~BM3D()
 	{}
