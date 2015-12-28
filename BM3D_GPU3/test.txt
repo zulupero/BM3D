@@ -1,1251 +1,1128 @@
-Orig Image: ../BM3D_images/Lena512.png
-Noised Image: ../BM3D_images/Lena512_noi_s30.png
+Orig Image: ../BM3D_images/house.png
+Noised Image: ../BM3D_images/ImNoisy.png
 Sigma: 30
+Window size: 10 blocks
 
 Read input image...done.
 image size :
- - width          = 512
- - height         = 512
+ - width          = 256
+ - height         = 256
  - nb of channels = 1
 
 Read input image...done.
 image size :
- - width          = 512
- - height         = 512
+ - width          = 256
+ - height         = 256
  - nb of channels = 1
 
 --> Execution on Tesla K40c
 BM3D context initialization
-	Number of blocks          = 32400
-	Number of blocks (intern) = 28900
-	Width blocks (intern)     = 170
-	Width blocks              = 180
-	Width                     = 548
-	Height                    = 548
-	Device image              = 1.000000 Mb
-	Basic image               = 1.145569 Mb
-	Blocks array              = 16.314697 Mb
-	Blocks array (orig)       = 16.314697 Mb
-	Blocks map                = 123.596191 Mb
-	BM vectors                = 3.527832 Mb
-	Blocks 3D                 = 451.562500 Mb
-	Blocks 3D (orig)          = 451.562500 Mb
-	NP array                  = 0.110245 Mb
-	WP array                  = 0.220490 Mb
-	Estimates array           = 2.291138 Mb
-	Similar blocks array      = 0.110245 Mb
+	Number of blocks          = 9025
+	Number of blocks (intern) = 7225
+	Width blocks (intern)     = 85
+	Width blocks              = 95
+	Width                     = 293
+	Height                    = 293
+	Device image              = 0.250000 Mb
+	Basic image               = 0.327488 Mb
+	Blocks array              = 4.544449 Mb
+	Blocks array (orig)       = 4.544449 Mb
+	Blocks map                = 34.427643 Mb
+	BM vectors                = 0.881958 Mb
+	Blocks 3D                 = 112.890625 Mb
+	Blocks 3D (orig)          = 112.890625 Mb
+	NP array                  = 0.027561 Mb
+	WP array                  = 0.055122 Mb
+	Estimates array           = 0.654976 Mb
+	Similar blocks array      = 0.027561 Mb
+	Tinv +Tfor ma             = 0.000488 Mb
+	Mean values               = 0.068855 Mb
 
 Run BM3D
 	Basic estimates (1 step)
 
-BM Vector = 
-cmp block 0
-index: 0
-block x=0, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 1
-index: 1
-block x=3, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 2
-index: 2
-block x=6, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 3
-index: 3
-block x=9, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 4
-index: 4
-block x=12, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 5
-index: 5
-block x=15, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 6
-index: 6
-block x=18, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 7
-index: 7
-block x=21, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 8
-index: 8
-block x=24, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 9
-index: 9
-block x=27, y=0
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 10
-index: 180
-block x=0, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 11
-index: 181
-block x=3, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 12
-index: 182
-block x=6, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 13
-index: 183
-block x=9, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 14
-index: 184
-block x=12, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 15
-index: 185
-block x=15, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 16
-index: 186
-block x=18, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 17
-index: 187
-block x=21, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 18
-index: 188
-block x=24, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 19
-index: 189
-block x=27, y=3
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 20
-index: 360
-block x=0, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 21
-index: 361
-block x=3, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 22
-index: 362
-block x=6, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 23
-index: 363
-block x=9, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 24
-index: 364
-block x=12, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 25
-index: 365
-block x=15, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 26
-index: 366
-block x=18, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 27
-index: 367
-block x=21, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 28
-index: 368
-block x=24, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 29
-index: 369
-block x=27, y=6
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 30
-index: 540
-block x=0, y=9
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 31
-index: 541
-block x=3, y=9
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 32
-index: 542
-block x=6, y=9
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 33
-index: 543
-block x=9, y=9
-	1: distance 1461358
-	2: distance 4795
-	3: distance 31779
-	4: distance 5830
-	5: distance 32494
-	6: distance 6692
-	7: distance 31157
-	8: distance 9957
-	9: distance 99999999
-cmp block 34
-index: 544
-block x=12, y=9
-	1: distance 1199562
-	2: distance 7464
-	3: distance 86877
-	4: distance 4253
-	5: distance 63264
-	6: distance 7282
-	7: distance 69464
-	8: distance 9062
-	9: distance 99999999
-cmp block 35
-index: 545
-block x=15, y=9
-	1: distance 925207
-	2: distance 3361
-	3: distance 130233
-	4: distance 9964
-	5: distance 101346
-	6: distance 7956
-	7: distance 88837
-	8: distance 6608
-	9: distance 99999999
-cmp block 36
-index: 546
-block x=18, y=9
-	1: distance 933243
-	2: distance 6286
-	3: distance 126093
-	4: distance 5659
-	5: distance 99416
-	6: distance 4591
-	7: distance 89487
-	8: distance 10073
-	9: distance 99999999
-cmp block 37
-index: 547
-block x=21, y=9
-	1: distance 924239
-	2: distance 6471
-	3: distance 129771
-	4: distance 7824
-	5: distance 100719
-	6: distance 8832
-	7: distance 94286
-	8: distance 10626
-	9: distance 99999999
-cmp block 38
-index: 548
-block x=24, y=9
-	1: distance 906457
-	2: distance 5069
-	3: distance 136307
-	4: distance 6502
-	5: distance 104613
-	6: distance 6729
-	7: distance 98052
-	8: distance 12551
-	9: distance 99999999
-cmp block 39
-index: 549
-block x=27, y=9
-	1: distance 920836
-	2: distance 6817
-	3: distance 128326
-	4: distance 6152
-	5: distance 100285
-	6: distance 8434
-	7: distance 90483
-	8: distance 7331
-	9: distance 99999999
-cmp block 40
-index: 720
-block x=0, y=12
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 41
-index: 721
-block x=3, y=12
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 42
-index: 722
-block x=6, y=12
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 43
-index: 723
-block x=9, y=12
-	1: distance 1304311
-	2: distance 13005
-	3: distance 5243
-	4: distance 15435
-	5: distance 51349
-	6: distance 10317
-	7: distance 26085
-	8: distance 8515
-	9: distance 99999999
-cmp block 44
-index: 724
-block x=12, y=12
-	1: distance 799729
-	2: distance 16629
-	3: distance 15231
-	4: distance 34591
-	5: distance 127350
-	6: distance 11848
-	7: distance 36023
-	8: distance 6801
-	9: distance 99999999
-cmp block 45
-index: 725
-block x=15, y=12
-	1: distance 253760
-	2: distance 22286
-	3: distance 34813
-	4: distance 48810
-	5: distance 199318
-	6: distance 36345
-	7: distance 52975
-	8: distance 17631
-	9: distance 99999999
-cmp block 46
-index: 726
-block x=18, y=12
-	1: distance 229844
-	2: distance 21028
-	3: distance 56354
-	4: distance 50877
-	5: distance 224062
-	6: distance 35496
-	7: distance 33355
-	8: distance 24003
-	9: distance 99999999
-cmp block 47
-index: 727
-block x=21, y=12
-	1: distance 211138
-	2: distance 28660
-	3: distance 54389
-	4: distance 47678
-	5: distance 230518
-	6: distance 32345
-	7: distance 33908
-	8: distance 33722
-	9: distance 99999999
-cmp block 48
-index: 728
-block x=24, y=12
-	1: distance 213512
-	2: distance 24086
-	3: distance 33877
-	4: distance 50674
-	5: distance 250967
-	6: distance 31748
-	7: distance 44987
-	8: distance 18361
-	9: distance 99999999
-cmp block 49
-index: 729
-block x=27, y=12
-	1: distance 228641
-	2: distance 20500
-	3: distance 35187
-	4: distance 44065
-	5: distance 232148
-	6: distance 32671
-	7: distance 54528
-	8: distance 18008
-	9: distance 99999999
-cmp block 50
-index: 900
-block x=0, y=15
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 51
-index: 901
-block x=3, y=15
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 52
-index: 902
-block x=6, y=15
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 53
-index: 903
-block x=9, y=15
-	1: distance 1249411
-	2: distance 7902
-	3: distance 5705
-	4: distance 5717
-	5: distance 5996
-	6: distance 10704
-	7: distance 3609
-	8: distance 14648
-	9: distance 99999999
-cmp block 54
-index: 904
-block x=12, y=15
-	1: distance 656460
-	2: distance 6054
-	3: distance 5364
-	4: distance 10424
-	5: distance 4699
-	6: distance 12031
-	7: distance 6633
-	8: distance 10545
-	9: distance 99999999
-cmp block 55
-index: 905
-block x=15, y=15
-	1: distance 0
-	2: distance 0
-	3: distance 0
-	4: distance 0
-	5: distance 0
-	6: distance 0
-	7: distance 0
-	8: distance 0
-	9: distance 0
-cmp block 56
-index: 906
-block x=18, y=15
-	1: distance 6
-	2: distance 8976
-	3: distance 10309
-	4: distance 18811
-	5: distance 5616
-	6: distance 10053
-	7: distance 7683
-	8: distance 14754
-	9: distance 86700
-cmp block 57
-index: 907
-block x=21, y=15
-	1: distance 8
-	2: distance 9977
-	3: distance 5148
-	4: distance 10733
-	5: distance 8185
-	6: distance 10387
-	7: distance 5873
-	8: distance 20808
-	9: distance 89206
-cmp block 58
-index: 908
-block x=24, y=15
-	1: distance 4
-	2: distance 9184
-	3: distance 2470
-	4: distance 12849
-	5: distance 9364
-	6: distance 11390
-	7: distance 8951
-	8: distance 15096
-	9: distance 79962
-cmp block 59
-index: 909
-block x=27, y=15
-	1: distance 1
-	2: distance 14145
-	3: distance 4011
-	4: distance 13904
-	5: distance 8565
-	6: distance 6542
-	7: distance 5717
-	8: distance 5726
-	9: distance 62340
-cmp block 60
-index: 1080
-block x=0, y=18
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 61
-index: 1081
-block x=3, y=18
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 62
-index: 1082
-block x=6, y=18
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 63
-index: 1083
-block x=9, y=18
-	1: distance 1249993
-	2: distance 6186
-	3: distance 4778
-	4: distance 5351
-	5: distance 3348
-	6: distance 5028
-	7: distance 7924
-	8: distance 8664
-	9: distance 99999999
-cmp block 64
-index: 1084
-block x=12, y=18
-	1: distance 654786
-	2: distance 17251
-	3: distance 7450
-	4: distance 5144
-	5: distance 10047
-	6: distance 7827
-	7: distance 4846
-	8: distance 8941
-	9: distance 99999999
-cmp block 65
-index: 1085
-block x=15, y=18
-	1: distance 5
-	2: distance 21469
-	3: distance 5985
-	4: distance 4489
-	5: distance 21621
-	6: distance 12763
-	7: distance 10206
-	8: distance 4378
-	9: distance 83034
-cmp block 66
-index: 1086
-block x=18, y=18
-	1: distance 7
-	2: distance 4909
-	3: distance 12309
-	4: distance 8692
-	5: distance 16907
-	6: distance 4734
-	7: distance 12807
-	8: distance 17135
-	9: distance 87930
-cmp block 67
-index: 1087
-block x=21, y=18
-	1: distance 14
-	2: distance 9302
-	3: distance 14525
-	4: distance 7238
-	5: distance 10286
-	6: distance 9871
-	7: distance 11927
-	8: distance 18275
-	9: distance 95371
-cmp block 68
-index: 1088
-block x=24, y=18
-	1: distance 12
-	2: distance 18905
-	3: distance 2798
-	4: distance 9707
-	5: distance 10875
-	6: distance 14104
-	7: distance 12357
-	8: distance 15049
-	9: distance 92890
-cmp block 69
-index: 1089
-block x=27, y=18
-	1: distance 2
-	2: distance 8736
-	3: distance 3139
-	4: distance 8456
-	5: distance 12071
-	6: distance 12708
-	7: distance 11858
-	8: distance 9576
-	9: distance 70556
-cmp block 70
-index: 1260
-block x=0, y=21
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 71
-index: 1261
-block x=3, y=21
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 72
-index: 1262
-block x=6, y=21
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 73
-index: 1263
-block x=9, y=21
-	1: distance 1248455
-	2: distance 4887
-	3: distance 3888
-	4: distance 7040
-	5: distance 7413
-	6: distance 6097
-	7: distance 4054
-	8: distance 5794
-	9: distance 99999999
-cmp block 74
-index: 1264
-block x=12, y=21
-	1: distance 651940
-	2: distance 3966
-	3: distance 14148
-	4: distance 2889
-	5: distance 13320
-	6: distance 12347
-	7: distance 8821
-	8: distance 10869
-	9: distance 99999999
-cmp block 75
-index: 1265
-block x=15, y=21
-	1: distance 24
-	2: distance 5487
-	3: distance 27673
-	4: distance 11620
-	5: distance 19847
-	6: distance 29400
-	7: distance 9346
-	8: distance 14609
-	9: distance 124698
-cmp block 76
-index: 1266
-block x=18, y=21
-	1: distance 3
-	2: distance 5768
-	3: distance 15073
-	4: distance 10068
-	5: distance 10655
-	6: distance 9057
-	7: distance 2703
-	8: distance 11578
-	9: distance 77350
-cmp block 77
-index: 1267
-block x=21, y=21
-	1: distance 9
-	2: distance 7173
-	3: distance 9416
-	4: distance 13137
-	5: distance 17266
-	6: distance 12183
-	7: distance 10213
-	8: distance 15251
-	9: distance 90184
-cmp block 78
-index: 1268
-block x=24, y=21
-	1: distance 19
-	2: distance 13168
-	3: distance 7934
-	4: distance 13190
-	5: distance 21048
-	6: distance 16113
-	7: distance 6867
-	8: distance 9773
-	9: distance 101261
-cmp block 79
-index: 1269
-block x=27, y=21
-	1: distance 20
-	2: distance 13719
-	3: distance 18204
-	4: distance 6369
-	5: distance 15283
-	6: distance 11000
-	7: distance 8646
-	8: distance 10994
-	9: distance 101820
-cmp block 80
-index: 1440
-block x=0, y=24
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 81
-index: 1441
-block x=3, y=24
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 82
-index: 1442
-block x=6, y=24
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 83
-index: 1443
-block x=9, y=24
-	1: distance 1244920
-	2: distance 4966
-	3: distance 3745
-	4: distance 5133
-	5: distance 3515
-	6: distance 6728
-	7: distance 5717
-	8: distance 6813
-	9: distance 99999999
-cmp block 84
-index: 1444
-block x=12, y=24
-	1: distance 653258
-	2: distance 6424
-	3: distance 6566
-	4: distance 12715
-	5: distance 9356
-	6: distance 8637
-	7: distance 4269
-	8: distance 17517
-	9: distance 99999999
-cmp block 85
-index: 1445
-block x=15, y=24
-	1: distance 23
-	2: distance 8646
-	3: distance 12294
-	4: distance 19569
-	5: distance 11655
-	6: distance 6313
-	7: distance 7026
-	8: distance 26898
-	9: distance 112528
-cmp block 86
-index: 1446
-block x=18, y=24
-	1: distance 16
-	2: distance 14403
-	3: distance 10087
-	4: distance 8967
-	5: distance 12473
-	6: distance 13785
-	7: distance 4167
-	8: distance 18147
-	9: distance 96232
-cmp block 87
-index: 1447
-block x=21, y=24
-	1: distance 15
-	2: distance 12928
-	3: distance 12051
-	4: distance 17949
-	5: distance 3050
-	6: distance 12408
-	7: distance 4324
-	8: distance 18564
-	9: distance 95942
-cmp block 88
-index: 1448
-block x=24, y=24
-	1: distance 11
-	2: distance 8258
-	3: distance 20411
-	4: distance 6349
-	5: distance 8224
-	6: distance 7749
-	7: distance 18184
-	8: distance 10808
-	9: distance 92366
-cmp block 89
-index: 1449
-block x=27, y=24
-	1: distance 22
-	2: distance 13710
-	3: distance 11816
-	4: distance 10793
-	5: distance 6994
-	6: distance 9304
-	7: distance 27302
-	8: distance 13412
-	9: distance 111560
-cmp block 90
-index: 1620
-block x=0, y=27
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 91
-index: 1621
-block x=3, y=27
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 92
-index: 1622
-block x=6, y=27
-	1: distance 1667224
-	2: distance 4240
-	3: distance 3888
-	4: distance 4620
-	5: distance 3965
-	6: distance 5625
-	7: distance 3608
-	8: distance 7673
-	9: distance 99999999
-cmp block 93
-index: 1623
-block x=9, y=27
-	1: distance 1244426
-	2: distance 3708
-	3: distance 3717
-	4: distance 6457
-	5: distance 4579
-	6: distance 9041
-	7: distance 5681
-	8: distance 7267
-	9: distance 99999999
-cmp block 94
-index: 1624
-block x=12, y=27
-	1: distance 666862
-	2: distance 7232
-	3: distance 6986
-	4: distance 12557
-	5: distance 8128
-	6: distance 10085
-	7: distance 11660
-	8: distance 15655
-	9: distance 99999999
-cmp block 95
-index: 1625
-block x=15, y=27
-	1: distance 21
-	2: distance 11522
-	3: distance 5964
-	4: distance 18872
-	5: distance 3843
-	6: distance 2514
-	7: distance 13202
-	8: distance 19606
-	9: distance 110816
-cmp block 96
-index: 1626
-block x=18, y=27
-	1: distance 10
-	2: distance 7341
-	3: distance 5729
-	4: distance 11911
-	5: distance 12557
-	6: distance 13663
-	7: distance 5173
-	8: distance 7751
-	9: distance 92192
-cmp block 97
-index: 1627
-block x=21, y=27
-	1: distance 18
-	2: distance 11706
-	3: distance 5935
-	4: distance 12845
-	5: distance 14084
-	6: distance 10445
-	7: distance 7870
-	8: distance 15235
-	9: distance 100439
-cmp block 98
-index: 1628
-block x=24, y=27
-	1: distance 13
-	2: distance 19035
-	3: distance 4030
-	4: distance 13631
-	5: distance 10301
-	6: distance 18029
-	7: distance 8329
-	8: distance 8339
-	9: distance 92986
-cmp block 99
-index: 1629
-block x=27, y=27
-	1: distance 17
-	2: distance 9297
-	3: distance 7065
-	4: distance 18745
-	5: distance 10252
-	6: distance 20442
-	7: distance 9127
-	8: distance 8588
-	9: distance 98217
 
-BM Vector =  905,  909,  1089,  1266,  908,  1085,  906,  1086,  907,  1267,  1626,  1448,  1088,  1628,  1087,  1447,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-		psrn = 25.769779, rmse = 13.123545
+179.000000, 138.000000, 179.000000, 205.000000, 217.000000, 145.000000, 149.000000, 135.000000, 
+201.000000, 205.000000, 245.000000, 215.000000, 195.000000, 255.000000, 206.000000, 164.000000, 
+164.000000, 231.000000, 155.000000, 203.000000, 179.000000, 153.000000, 148.000000, 151.000000, 
+179.000000, 164.000000, 129.000000, 176.000000, 193.000000, 180.000000, 169.000000, 173.000000, 
+211.000000, 145.000000, 190.000000, 140.000000, 197.000000, 154.000000, 165.000000, 160.000000, 
+107.000000, 166.000000, 176.000000, 149.000000, 147.000000, 137.000000, 123.000000, 194.000000, 
+197.000000, 214.000000, 181.000000, 194.000000, 160.000000, 160.000000, 168.000000, 188.000000, 
+191.000000, 202.000000, 204.000000, 217.000000, 199.000000, 172.000000, 178.000000, 141.000000, 
+x = 15.000000, y = 63.000000
+
+
+1258.975671, -310.687633, 216.267207, -71.210947, 147.022764, -14.732569, 76.478395, 34.821905, 
+-277.109848, 52.914599, -88.021463, 51.269368, -58.778924, 33.486504, -16.267526, -9.645439, 
+331.551257, -55.913424, 27.285408, -45.474282, 8.943919, 10.794615, 21.908660, 1.298614, 
+-149.531080, 10.216672, -30.053499, -12.750421, -19.352043, -24.800876, 20.783008, 50.306744, 
+164.672098, -58.136442, 6.357206, 27.751848, 32.865780, 37.148709, 14.059410, 68.678969, 
+-56.284029, -3.066965, 0.555738, 5.228948, 39.808178, 5.895825, -2.999086, -16.259906, 
+10.703902, -9.477714, -37.064323, -19.962547, 29.996667, -19.884150, -24.146694, -19.285880, 
+11.173155, 36.869000, -12.691138, 6.893276, 40.722434, 9.064358, -24.141807, 16.959791, 
+x = 15.000000, y = 63.000000
+
+
+
+18887.052779, -3016.153931, 3488.591794, -628.147033, 1897.919801, -47.410257, 1298.151562, 757.048886, 
+-9181.279149, 2486.931045, -1645.331207, 604.287344, -892.565875, 110.791733, -699.947255, -299.873427, 
+4409.556887, -1532.760382, 1042.702876, -406.571503, 369.005649, -77.680739, 285.235683, 88.034310, 
+-2522.134758, 964.191754, -619.854510, 254.816894, -165.017597, 32.292404, -226.871884, 34.044651, 
+2273.207786, -521.641135, 448.527073, -233.189312, 104.563444, -380.638406, 305.496229, 80.098053, 
+-643.518533, 174.862254, -150.584269, -52.066081, -59.815762, -24.571335, 94.653711, 156.804741, 
+1177.210221, -194.872675, 323.858547, -32.572097, 267.220813, -222.871701, -12.416282, 38.142616, 
+179.242644, -67.528476, 88.120374, 5.222030, 87.351141, 0.770780, 83.956566, 9.919871, 
+
+
+18887.052779, -3016.153931, 3488.591794, -628.147033, 1897.919801, 0.000000, 1298.151562, 757.048886, 
+-9181.279149, 2486.931045, -1645.331207, 604.287344, -892.565875, 110.791733, -699.947255, -299.873427, 
+4409.556887, -1532.760382, 1042.702876, -406.571503, 369.005649, 0.000000, 285.235683, 88.034310, 
+-2522.134758, 964.191754, -619.854510, 254.816894, -165.017597, 0.000000, -226.871884, 0.000000, 
+2273.207786, -521.641135, 448.527073, -233.189312, 104.563444, -380.638406, 305.496229, 0.000000, 
+-643.518533, 174.862254, -150.584269, 0.000000, 0.000000, 0.000000, 94.653711, 156.804741, 
+1177.210221, -194.872675, 323.858547, 0.000000, 267.220813, -222.871701, 0.000000, 0.000000, 
+179.242644, 0.000000, 88.120374, 0.000000, 87.351141, 0.000000, 0.000000, 0.000000, 
+
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+block = 2000, num = 16.000000
+
+158.394700, 137.972501, 136.222741, 85.706683, 132.401750, 123.002826, 130.897824, 124.190482, 
+170.474752, 183.079407, 77.077111, 146.429690, 74.791466, 136.712154, 106.463566, 121.954791, 
+236.015582, 206.757272, 172.948792, 158.636069, 144.359643, 152.962023, 127.881376, 73.085205, 
+246.005290, 201.623491, 200.725711, 206.459456, 167.849512, 201.470024, 134.626828, 122.678755, 
+244.931771, 234.664411, 249.324342, 165.138530, 183.638985, 167.087060, 211.993155, 192.616262, 
+207.738522, 246.223095, 207.648689, 212.248676, 208.472003, 183.329270, 246.195604, 161.732352, 
+244.385275, 231.813461, 239.593448, 253.804768, 257.009601, 229.399834, 239.296313, 231.050510, 
+233.907630, 199.798102, 193.150531, 187.275482, 168.437865, 250.449666, 237.248853, 230.540386, 
+
+		psrn = 19.418173, rmse = 27.266634
 	Final estimates (2 step)
-		psrn = 25.856121, rmse = 12.993738
+		psrn = -2.981970, rmse = 359.450165
 
 Statistics:
-[CPU] BM3D-Initialization: 410.750000 ms
-[CPU] BM3D-Basic estimates: 175.052994 ms
-[CPU] BM3D-Final estimates: 127.306999 ms
+[CPU] BM3D-Initialization: 1097.033936 ms
+[CPU] BM3D-Basic estimates: 87.751999 ms
+[CPU] BM3D-Final estimates: 78.956001 ms

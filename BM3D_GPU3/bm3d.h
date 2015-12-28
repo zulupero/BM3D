@@ -38,7 +38,7 @@ public:
         //Device (member-variables):
         float*      deviceImage;
         float*      basicImage;     
-        float*      kaiserWindowCoef;
+        //float*      kaiserWindowCoef;
         int*        blockMap;
         double*     blocks;
         double*     blocksOrig;
@@ -49,8 +49,8 @@ public:
         float*      wpArray;
         float*      estimates;
         float*      nbSimilarBlocks;
-        float*      Tforward;
-        float*      Tinverse;
+        //float*      Tforward;
+        //float*      Tinverse;
         double*     meanValues;
 	};
 
@@ -79,6 +79,7 @@ private:
     static void BM3D_Inverse3D2(bool final = false);
     static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
+    static void BM3D_Create3DBlocks(bool final=false);
 
     static void BM3D_ShowBlock(int block);
     static void BM3D_ShowDistance(int block, bool vectorOnly = false);

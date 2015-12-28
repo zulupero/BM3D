@@ -33,6 +33,7 @@ public:
         double          hardThreshold;
         int             sigma;
         int             windowSize;
+        int             offset;
         
         //Device (member-variables):
         float*      deviceImage;
@@ -78,6 +79,7 @@ private:
     static void BM3D_Inverse3D2(bool final = false);
     static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
+    static void BM3D_Create3DBlocks(bool final=false);
 
     static void BM3D_ShowBlock(int block);
     static void BM3D_ShowDistance(int block, bool vectorOnly = false);
