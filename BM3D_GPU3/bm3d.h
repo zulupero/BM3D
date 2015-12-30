@@ -22,11 +22,12 @@ public:
 	  	int             img_height;
 	   	int             pHard;
 	   	SourceImage     sourceImage;
-        SourceImage     origImage;		
-        int             nbBlocksIntern;        
+        SourceImage     origImage;		        
         int             nbBlocks;
+        int             nbBlocksIntern;
+        int             nbBlocksPerWindow;
         int             widthBlocksIntern;
-        int             widthBlocks;
+        int             widthBlocksWindow;
         bool            debugMode; 
         int             hardLimit;
         int             wienLimit;
@@ -34,24 +35,19 @@ public:
         int             sigma;
         int             windowSize;
         int             offset;
+        int             halfWindowSize;
+        int             windowSize;
         
         //Device (member-variables):
         float*      deviceImage;
         float*      basicImage;     
-        //float*      kaiserWindowCoef;
-        int*        blockMap;
-        double*     blocks;
-        double*     blocksOrig;
-        int*        bmVectors;
+        int*        windowMap;
         double*     blocks3D;
         double*     blocks3DOrig;
         int*        npArray;
         float*      wpArray;
         float*      estimates;
-        float*      nbSimilarBlocks;
-        //float*      Tforward;
-        //float*      Tinverse;
-        double*     meanValues;
+        int*        nbSimilarBlocks;
 	};
 
 private:	
@@ -69,7 +65,7 @@ private:
     static void BM3D_SaveImage(bool final = false);
     static void BM3D_BasicEstimate();
     static void BM3D_FinalEstimate();
-    static void BM3D_CreateBlock();
+    static void BM3D_CreateWindow();
     static void BM3D_2DTransform(bool final = false);
     static void BM3D_2DTransform2(bool final = false);
     static void BM3D_BlockMatching(bool final = false);
