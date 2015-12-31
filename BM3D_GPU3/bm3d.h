@@ -14,8 +14,6 @@ public:
 	class BM3D_Context 
 	{
 	   public: 
-        int             debugPixel;
-        int             debugBlock;
 		int             img_widthOrig;
 	  	int             img_heightOrig;
         int             img_width;
@@ -33,7 +31,6 @@ public:
         int             wienLimit;
         double          hardThreshold;
         int             sigma;
-        int             windowSize;
         int             offset;
         int             halfWindowSize;
         int             windowSize;
@@ -76,11 +73,6 @@ private:
     static void BM3D_Aggregation(bool final=false);
     static void BM3D_InverseShift();
     static void BM3D_Create3DBlocks(bool final=false);
-
-    static void BM3D_ShowBlock(int block);
-    static void BM3D_ShowDistance(int block, bool vectorOnly = false);
-    static void BM3D_ShowPixel(int x, int y);
-    static void BM3D_ShowBlock3D(int block, bool orig = false);
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
