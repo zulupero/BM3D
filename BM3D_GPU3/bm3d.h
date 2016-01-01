@@ -74,6 +74,10 @@ private:
     static void BM3D_InverseShift();
     static void BM3D_Create3DBlocks(bool final=false);
 
+    static void BM3D_ShowPosition(int block);
+    static void BM3D_ShowBlock(int block);
+    static void BM3D_ShowDistance(int block);
+
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
 };
