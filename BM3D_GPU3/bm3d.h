@@ -37,6 +37,7 @@ public:
         
         //Device (member-variables):
         float*      deviceImage;
+        float*      noisyImage;
         float*      basicImage;     
         int*        windowMap;
         double*     blocks3D;
@@ -62,7 +63,7 @@ private:
     static void BM3D_SaveImage(bool final = false);
     static void BM3D_BasicEstimate();
     static void BM3D_FinalEstimate();
-    static void BM3D_CreateWindow();
+    static void BM3D_CreateWindow(bool final = false);
     static void BM3D_2DTransform(bool final = false);
     static void BM3D_2DTransform2(bool final = false);
     static void BM3D_BlockMatching(bool final = false);

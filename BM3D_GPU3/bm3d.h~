@@ -37,6 +37,7 @@ public:
         
         //Device (member-variables):
         float*      deviceImage;
+        float*      noisyImage;
         float*      basicImage;     
         int*        windowMap;
         double*     blocks3D;
@@ -76,6 +77,7 @@ private:
 
     static void BM3D_ShowPosition(int block);
     static void BM3D_ShowBlock(int block);
+    static void BM3D_ShowDistance(int block);
 
 	BM3D();
 	BM3D operator=(BM3D& bm3d);
