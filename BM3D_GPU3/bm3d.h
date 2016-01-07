@@ -34,6 +34,7 @@ public:
         int             offset;
         int             halfWindowSize;
         int             windowSize;
+        int             blockSize;
         
         //Device (member-variables):
         float*      deviceImage;
@@ -46,6 +47,7 @@ public:
         float*      wpArray;
         float*      estimates;
         int*        nbSimilarBlocks;
+        double*     blocks;
 	};
 
 private:	
