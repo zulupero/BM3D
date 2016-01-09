@@ -195,7 +195,7 @@ void BM3D::BM3D_FinalEstimate()
     Timer::start(); 
     BM3D_CreateWindow(true);    
     BM3D_BlockMatching(true);
-    BM3D_ShowDistance(6289);
+    BM3D_ShowDistance(1000);
     BM3D_Create3DBlocks(true);
     BM3D_WienFilter();
     BM3D_Inverse3D(true);
@@ -211,9 +211,10 @@ void BM3D::BM3D_BasicEstimate()
     Timer::start();
     BM3D_CreateWindow();
     BM3D_BlockMatching();
-    BM3D_ShowDistance(6289);
+    BM3D_ShowDistance(1000);
     BM3D_Create3DBlocks();
     BM3D_HardThresholdFilter();
+    BM3D_ShowBlock(1000);
     BM3D_Inverse3D();
     BM3D_Aggregation();
     BM3D_InverseShift();
@@ -234,7 +235,7 @@ void WienFilter(double* blocks3D, double* blocks3DOrig, int size, int* similarBl
         float value = (estimateValue * estimateValue) * coef;
         value = value/ (value + (float)sigma2);
         blocks3D[blockPixelIndex] = blocks3DOrig[blockPixelIndex] * value * coef;
-        //if(block==6289) printf("\nblock = %d, z = %d, val = %f, orig=%f, value = %f, coef = %f, calc val = %f", block, blockIdx.z, estimateValue, blocks3DOrig[blockPixelIndex], value, coef, blocks3D[blockPixelIndex] );
+        //if(block==1000) printf("\nblock = %d, z = %d, val = %f, orig=%f, value = %f, coef = %f, calc val = %f", block, blockIdx.z, estimateValue, blocks3DOrig[blockPixelIndex], value, coef, blocks3D[blockPixelIndex] );
         atomicAdd(&wpArray[block], value);
     }
 }
@@ -254,7 +255,7 @@ void BM3D::BM3D_WienFilter()
         WienFilter<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.blocks3DOrig, BM3D::context.widthBlocksIntern, BM3D::context.nbSimilarBlocks, (BM3D::context.sigma * BM3D::context.sigma), BM3D::context.wpArray); 
         cudaDeviceSynchronize();
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
     {    
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(1);
@@ -386,7 +387,7 @@ void HadamarTransform32(double* blocks3D, int size, int* nbSimilarBlocks, int ap
     index += 66;
     double p2 = blocks3D[index]; //32
 
-    //if(block == 6289) printf("\n\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f",
+    //if(block == 1000) printf("\n\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f",
       //                      a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,a2,b2,c2,d2,e2,f2,g2,h2,i2,j2,k2,l2,m2,n2,o2,p2);
 
     index = block3DIndex;
@@ -511,7 +512,7 @@ void HadamarTransform16(double* blocks3D, int size, int* nbSimilarBlocks, int ap
     index += 66;
     double p = blocks3D[index];
 
-    //if((blockIdx.y * size) + blockIdx.x == 6289) printf("\n\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f",                            a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p);
+    //if((blockIdx.y * size) + blockIdx.x == 1000) printf("\n\n%f, %f, %f, %f, %f, %f,%f, %f\n%f, %f, %f, %f, %f, %f,%f, %f",                            a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p);
 
     index = block3DIndex;
     blocks3D[index] = (a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p) * MUL;
@@ -717,7 +718,7 @@ void BM3D::BM3D_Inverse3D(bool final)
         }        
         cudaDeviceSynchronize();   
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
     //double MUL = 1.0f/sqrt(8);
     /*if(!final)
     {
@@ -732,7 +733,7 @@ void BM3D::BM3D_Inverse3D(bool final)
         invTransform2D<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.widthBlocksIntern); 
         cudaDeviceSynchronize();   
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
     /*
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
@@ -814,9 +815,9 @@ void BM_CreateBlocks(int* windowMap, int size, int windowSize, int width, float*
         }
     }
 
-    if(block == 6289 && threadIdx.x == 0)
+    /*if(block == 1000 && threadIdx.x == 0)
     {
-        printf("\nBlock 6289: %d, %d, x= %d, y =%d\n", windowMapIndex, windowSize, (refX-offset), (refY-offset));
+        printf("\nBlock 1000: %d, %d, x= %d, y =%d\n", windowMapIndex, windowSize, (refX-offset), (refY-offset));
         for(int i=0; i<8; i++)
         {
             for(int j=0;j<8;j++)
@@ -825,7 +826,7 @@ void BM_CreateBlocks(int* windowMap, int size, int windowSize, int width, float*
             }
             printf("\n");
         }
-    }
+    }*/
 
     double dct[64];
     for(int y=0; y< 8; ++y)
@@ -855,9 +856,9 @@ void BM_CreateBlocks(int* windowMap, int size, int windowSize, int width, float*
         }
     }
 
-    if(block == 6289 && threadIdx.x == 0)
+    /*if(block == 1000 && threadIdx.x == 0)
     {
-        printf("\nBlock 6289:\n");
+        printf("\nBlock 1000:\n");
         for(int i=0; i<8; i++)
         {
             for(int j=0;j<8;j++)
@@ -866,7 +867,7 @@ void BM_CreateBlocks(int* windowMap, int size, int windowSize, int width, float*
             }
             printf("\n");
         }
-    }
+    }*/
     
 }
 
@@ -904,7 +905,7 @@ void BM_CalculateDistance(int* windowMap, int size, int windowSize, int width, f
     if(threadIdx.x == 0)
     {
         windowMap[windowMapBlockIndex+2] = int(distances[0] + distances[1] + distances[2] + distances[3] + distances[4] + distances[5] + distances[6] + distances[7]);
-        if(block == 6289) printf("\nblock %d, distance = %d", blockIdx.z, windowMap[windowMapBlockIndex+2]);
+        //if(block == 1000) printf("\nblock %d, distance = %d", blockIdx.z, windowMap[windowMapBlockIndex+2]);
     }
 }
 
@@ -912,9 +913,9 @@ __global__
 void BM_DistanceThreshold(int* windowMap, int size, int windowSize, int limit)
 {
     int windowMapIndex = (((blockIdx.y * size) + blockIdx.x) * windowSize) + 4 + (threadIdx.x * 4);
-    if((blockIdx.y * size) + blockIdx.x == 6289) printf("\nthreashold: %d, %d", limit, windowMap[windowMapIndex+2]);
+    //if((blockIdx.y * size) + blockIdx.x == 1000) printf("\nthreashold: %d, %d", limit, windowMap[windowMapIndex+2]);
     if(windowMap[windowMapIndex+2] >= limit) windowMap[windowMapIndex+2] = -1;
-    if((blockIdx.y * size) + blockIdx.x == 6289) printf("\nafter threashold: %d, %d", limit, windowMap[windowMapIndex+2]);
+    //if((blockIdx.y * size) + blockIdx.x == 1000) printf("\nafter threashold: %d, %d", limit, windowMap[windowMapIndex+2]);
 }
     
 
@@ -937,7 +938,7 @@ void BM_Sort(int* windowMap, int size, int windowSize, int nbBlocksPerWindow, in
             windowMap[windowMapIndex + foundIndex * 4 + 2] = -1 * windowMap[windowMapIndex + foundIndex * 4 + 2];
             windowMap[windowMapIndex + foundIndex * 4 + 3] = index;
             indexes[index-1] = foundIndex;
-            if((blockIdx.y * size) + blockIdx.x == 6289) printf("\nset index %d to %d", index, foundIndex);
+            if((blockIdx.y * size) + blockIdx.x == 1000) printf("\nset index %d to %d", index, foundIndex);
             index++;            
         }
     }
@@ -959,7 +960,7 @@ void BM_Sort(int* windowMap, int size, int windowSize, int nbBlocksPerWindow, in
     for(int i= r; i < index-1; i++)
     {
         windowMap[windowMapIndex + indexes[i] * 4 + 3] = -1;
-        if((blockIdx.y * size) + blockIdx.x == 6289) printf("\nreset %d", i);
+        if((blockIdx.y * size) + blockIdx.x == 1000) printf("\nreset %d", i);
     }
 
     nbSimilarBlocks[(blockIdx.y * size) + blockIdx.x] = r;
@@ -1176,7 +1177,7 @@ void BM3D::BM3D_Create3DBlocks(bool final)
         Create3DBlock<<<numBlocks,numThreads>>>(BM3D::context.basicImage, BM3D::context.blocks3D, BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, BM3D::context.img_width, BM3D::context.nbSimilarBlocks);
         cudaDeviceSynchronize(); 
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
     if(final)
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, BM3D::context.nbBlocksPerWindow + 1);
@@ -1190,7 +1191,7 @@ void BM3D::BM3D_Create3DBlocks(bool final)
         AddBlockPosition<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, BM3D::context.nbSimilarBlocks);
         cudaDeviceSynchronize(); 
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads((final) ? 32 : 16);
@@ -1220,7 +1221,7 @@ void BM3D::BM3D_Create3DBlocks(bool final)
         Transform2D<<<numBlocks,numThreads>>>(BM3D::context.blocks3DOrig, BM3D::context.widthBlocksIntern, BM3D::context.nbSimilarBlocks); 
         cudaDeviceSynchronize();
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(8, 8);
@@ -1237,7 +1238,7 @@ void BM3D::BM3D_Create3DBlocks(bool final)
         }
         cudaDeviceSynchronize();    
     }
-    BM3D_ShowBlock(6289);
+    BM3D_ShowBlock(1000);
 }
 
 
