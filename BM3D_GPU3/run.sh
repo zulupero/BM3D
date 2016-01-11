@@ -3,7 +3,7 @@
 #mv basic.png outputs/test_basic.png
 #mv final.png outputs/test_final.png
 
-./bm3d_gpu ../BM3D_images/house.png ../BM3D_images/ImNoisy.png $1 $2 $3 $4 $5 $6 $7
+./bm3d_gpu ../BM3D_images/house.png ../BM3D_images/house_$1.png $1 $2 $3 $4 $5 $6 $7
 mv basic.png outputs/house_basic.png
 mv final.png outputs/house_final.png
 

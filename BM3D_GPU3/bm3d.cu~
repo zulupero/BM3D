@@ -196,7 +196,7 @@ void BM3D::BM3D_FinalEstimate()
     Timer::start(); 
     BM3D_CreateWindow(true);    
     BM3D_BlockMatching(true);
-    //BM3D_ShowDistance(1000);
+    BM3D_ShowDistance(1000);
     BM3D_Create3DBlocks(true);
     BM3D_WienFilter();
     BM3D_Inverse3D(true);
@@ -212,7 +212,7 @@ void BM3D::BM3D_BasicEstimate()
     Timer::start();
     BM3D_CreateWindow();
     BM3D_BlockMatching();
-    //BM3D_ShowDistance(1000);
+    BM3D_ShowDistance(1000);
     BM3D_Create3DBlocks();
     BM3D_HardThresholdFilter();
     //BM3D_ShowBlock(1000);
@@ -245,7 +245,7 @@ __global__
 void CalculateFinalWP(int size, int sigma2, float* wpArray)
 {
     int block = (blockIdx.y * size) + blockIdx.x;
-    wpArray[block] = 1.0f / (sigma2 * wpArray[block]);
+    wpArray[block] = (1.0f / (sigma2 * wpArray[block]));
 }
 
 void BM3D::BM3D_WienFilter()
@@ -659,7 +659,7 @@ void invTransform2D(double* blocks3D, int size)
     
     double iDct[64];
     int blockIndex = (((blockIdx.y * size) + blockIdx.x) * 2112) + (threadIdx.x * 66);
-    //for(int i=0;i < 64;i++) blocks3D[blockIndex + i] = blocks3D[blockIndex + i] * coef_norm_inv[i];
+    
     for(int y=0; y< 8; ++y)
     {
         for(int x =0; x< 8; ++x)
@@ -728,14 +728,14 @@ void BM3D::BM3D_Inverse3D(bool final)
         ApplyCoefBasicEstimate<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.widthBlocksIntern, BM3D::context.nbSimilarBlocks); 
         cudaDeviceSynchronize();   
     }*/
-    if(!final)
+    //if(!final)
     {
         dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads((final) ? 32 : 16);
         invTransform2D<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.widthBlocksIntern); 
         cudaDeviceSynchronize();   
     }
-    else
+    /*else
     {
         double MUL = 1.0f/sqrt(8);
         {
@@ -750,7 +750,7 @@ void BM3D::BM3D_Inverse3D(bool final)
             inverseTransform2D_row<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.widthBlocksIntern, MUL); 
             cudaDeviceSynchronize();   
         }
-    }
+    }*/
     //BM3D_ShowBlock(1000);
     /*
     {
@@ -892,19 +892,47 @@ void BM_CreateBlocks(int* windowMap, int size, int windowSize, int width, float*
 __global__
 void BM_CalculateDistance(int* windowMap, int size, int windowSize, int width, float* image, double* blocks, int blockSize)
 {
+    int block = (blockIdx.y * size) + blockIdx.z;
+    int windowMapRefIndex = block * windowSize;
+    int refX = windowMap[windowMapRefIndex];
+    int refY = windowMap[windowMapRefIndex+1];    
+
+    int windowMapBlockIndex = windowMapRefIndex + 4 + blockIdx.x * 4;
+    int blockX = windowMap[windowMapBlockIndex];
+    int blockY = windowMap[windowMapBlockIndex+1];
+
+    double distance = 0;
+    for(int y=0; y<8; ++y)
+    {
+        for(int x=0; x<8; ++x)
+        {   
+            float valueRef = image[(refY + y) * width + refX + x];
+            float valueBlock = image[(blockY + y) * width + blockX + x];
+            distance += (valueRef - valueBlock) * (valueRef - valueBlock);
+            //if(block == 1000) printf("\nvalue ref = %f,  value block = %f, blockY = %d, blockX = %d", valueRef, valueBlock, blockY, blockX);
+        }
+    }
+    
+    windowMap[windowMapBlockIndex+2] = int(distance);
+    //if(block == 1000) printf("\nblock %d, distance = %d", blockIdx.x, windowMap[windowMapBlockIndex+2]);
+}
+
+/*__global__
+void BM_CalculateDistance(int* windowMap, int size, int windowSize, int width, float* image, double* blocks, int blockSize)
+{
     __shared__ float distances[8];
-    for(int i=0; i<16; ++i) distances[i] = 0;
+    for(int i=0; i<8; ++i) distances[i] = 0;
     __syncthreads();
 
-    int block = (blockIdx.y * size) + blockIdx.x;
-    int blockIndex = (block * blockSize) + 64 + (blockIdx.z << 6) + (threadIdx.x << 3);
+    int block = (blockIdx.y * size) + blockIdx.z;
+    int blockIndex = (block * blockSize) + 64 + (blockIdx.x << 6) + (threadIdx.x << 3);
     int blockRefIndex = block * blockSize + (threadIdx.x << 3);
 
     int windowMapRefIndex = block * windowSize;
     int refX = windowMap[windowMapRefIndex];
     int refY = windowMap[windowMapRefIndex+1] + threadIdx.x;    
 
-    int windowMapBlockIndex = windowMapRefIndex + 4 + blockIdx.z * 4;
+    int windowMapBlockIndex = windowMapRefIndex + 4 + blockIdx.x * 4;
     int blockX = windowMap[windowMapBlockIndex];
     int blockY = windowMap[windowMapBlockIndex+1] + threadIdx.x;
 
@@ -923,14 +951,14 @@ void BM_CalculateDistance(int* windowMap, int size, int windowSize, int width, f
     if(threadIdx.x == 0)
     {
         windowMap[windowMapBlockIndex+2] = int(distances[0] + distances[1] + distances[2] + distances[3] + distances[4] + distances[5] + distances[6] + distances[7]);
-        //if(block == 1000) printf("\nblock %d, distance = %d", blockIdx.z, windowMap[windowMapBlockIndex+2]);
+        if(block == 1000) printf("\nblock %d, distance = %d", blockIdx.x, windowMap[windowMapBlockIndex+2]);
     }
-}
+}*/
 
 __global__
 void BM_DistanceThreshold(int* windowMap, int size, int windowSize, int limit)
 {
-    int windowMapIndex = (((blockIdx.y * size) + blockIdx.x) * windowSize) + 4 + (threadIdx.x * 4);
+    int windowMapIndex = (((blockIdx.y * size) + blockIdx.z) * windowSize) + 4 + (blockIdx.x * 4);
     //if((blockIdx.y * size) + blockIdx.x == 1000) printf("\nthreashold: %d, %d", limit, windowMap[windowMapIndex+2]);
     if(windowMap[windowMapIndex+2] >= limit) windowMap[windowMapIndex+2] = -1;
     //if((blockIdx.y * size) + blockIdx.x == 1000) printf("\nafter threashold: %d, %d", limit, windowMap[windowMapIndex+2]);
@@ -949,7 +977,7 @@ void BM_Sort(int* windowMap, int size, int windowSize, int nbBlocksPerWindow, in
         int foundIndex = -1;
         for(int i=0; i< nbBlocksPerWindow; i++)
         {                
-            if(windowMap[windowMapIndex + i * 4 + 2] > -1  && windowMap[windowMapIndex + i * 4 + 2] < currentDistance) { foundIndex = i; currentDistance = windowMap[windowMapIndex + i * 4 + 2]; }
+            if(windowMap[windowMapIndex + i * 4 + 2] > -1  && windowMap[windowMapIndex + i * 4 + 2] < currentDistance && windowMap[windowMapIndex + i * 4 + 2] > 0) { foundIndex = i; currentDistance = windowMap[windowMapIndex + i * 4 + 2]; }
         }   
         if(foundIndex > -1)
         {
@@ -1022,14 +1050,14 @@ void BM3D::BM3D_BlockMatching(bool final)
         cudaDeviceSynchronize();   
     }*/
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, BM3D::context.nbBlocksPerWindow);
-        dim3 numThreads(8);
+        dim3 numBlocks(BM3D::context.nbBlocksPerWindow, BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+        dim3 numThreads(1);
         BM_CalculateDistance<<<numBlocks,numThreads>>>(BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, BM3D::context.img_width, BM3D::context.basicImage, BM3D::context.blocks, BM3D::context.blockSize ); 
         cudaDeviceSynchronize();   
     }
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
-        dim3 numThreads(BM3D::context.nbBlocksPerWindow);
+        dim3 numBlocks(BM3D::context.nbBlocksPerWindow, BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+        dim3 numThreads(1);
         BM_DistanceThreshold<<<numBlocks,numThreads>>>(BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, (final) ? BM3D::context.wienLimit : BM3D::context.hardLimit); 
         cudaDeviceSynchronize();   
     }
@@ -1045,11 +1073,11 @@ void BM3D::BM3D_BlockMatching(bool final)
 __global__
 void Create3DBlock(float* image, double* blocks3D, int* windowMap, int size, int windowSize, int width, int* similarBlock)
 {
-    int block = (blockIdx.y * size) + blockIdx.x;
-    int windowMapIndex = (block * windowSize) + (blockIdx.z * 4);
+    int block = (blockIdx.y * size) + blockIdx.z;
+    int windowMapIndex = (block * windowSize) + (blockIdx.x * 4);
     if(windowMap[windowMapIndex+3] < similarBlock[block] && windowMap[windowMapIndex+3] > -1)
     { 
-        int block3DIndex = (((blockIdx.y * size) + blockIdx.x) * 2112) + (windowMap[windowMapIndex+3] * 66) +  (threadIdx.y << 3) + threadIdx.x;
+        int block3DIndex = (((blockIdx.y * size) + blockIdx.z) * 2112) + (windowMap[windowMapIndex+3] * 66) +  (threadIdx.y << 3) + threadIdx.x;
         int xImg = windowMap[windowMapIndex] + threadIdx.x;
         int yImg = windowMap[windowMapIndex+1] + threadIdx.y;
         blocks3D[block3DIndex] = image[yImg * width + xImg];       
@@ -1059,11 +1087,11 @@ void Create3DBlock(float* image, double* blocks3D, int* windowMap, int size, int
 __global__
 void AddBlockPosition(double* blocks3D, int* windowMap, int size, int windowSize, int* similarBlock)
 {
-    int block = ((blockIdx.y * size) + blockIdx.x);
-    int windowMapIndex = block * windowSize + (threadIdx.x * 4);
+    int block = ((blockIdx.y * size) + blockIdx.z);
+    int windowMapIndex = block * windowSize + (blockIdx.x * 4);
     if(windowMap[windowMapIndex+3] < similarBlock[block] && windowMap[windowMapIndex+3] > -1)
     { 
-        int block3DIndex = (((blockIdx.y * size) + blockIdx.x) * 2112) + (windowMap[windowMapIndex+3] * 66);
+        int block3DIndex = (((blockIdx.y * size) + blockIdx.z) * 2112) + (windowMap[windowMapIndex+3] * 66);
         blocks3D[block3DIndex+64] = windowMap[windowMapIndex];
         blocks3D[block3DIndex+65] = windowMap[windowMapIndex+1];
     }
@@ -1190,7 +1218,7 @@ void BM3D::BM3D_ShowBlock(int block)
 void BM3D::BM3D_Create3DBlocks(bool final)
 {
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, BM3D::context.nbBlocksPerWindow + 1);
+        dim3 numBlocks(BM3D::context.nbBlocksPerWindow, BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(8, 8);
         Create3DBlock<<<numBlocks,numThreads>>>(BM3D::context.basicImage, BM3D::context.blocks3D, BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, BM3D::context.img_width, BM3D::context.nbSimilarBlocks);
         cudaDeviceSynchronize(); 
@@ -1198,14 +1226,14 @@ void BM3D::BM3D_Create3DBlocks(bool final)
     //BM3D_ShowBlock(1000);
     if(final)
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, BM3D::context.nbBlocksPerWindow + 1);
+        dim3 numBlocks( BM3D::context.nbBlocksPerWindow, BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
         dim3 numThreads(8, 8);
         Create3DBlock<<<numBlocks,numThreads>>>(BM3D::context.noisyImage, BM3D::context.blocks3DOrig, BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, BM3D::context.img_width, BM3D::context.nbSimilarBlocks);
         cudaDeviceSynchronize(); 
     }
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
-        dim3 numThreads(BM3D::context.nbBlocksPerWindow + 1);
+        dim3 numBlocks(BM3D::context.nbBlocksPerWindow, BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
+        dim3 numThreads(1);
         AddBlockPosition<<<numBlocks,numThreads>>>(BM3D::context.blocks3D, BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.windowSize, BM3D::context.nbSimilarBlocks);
         cudaDeviceSynchronize(); 
     }
@@ -1308,8 +1336,8 @@ void CreateWindowBlocks(int* windowMap, int widthBlockIntern, int p, int windowS
     int refX = windowMap[windowMapIndex];
     int refY = windowMap[windowMapIndex+1];
     int blockX = refX - halfWindowSize + threadIdx.x * p;
-    int blockY = refY - halfWindowSize + threadIdx.y * p;
-    int windowBlockIndex = windowMapIndex + 4 + (((threadIdx.y * widthBlocksWindow) + threadIdx.x) * 4);
+    int blockY = refY - halfWindowSize + blockIdx.z * p;
+    int windowBlockIndex = windowMapIndex + 4 + (((blockIdx.z * widthBlocksWindow) + threadIdx.x) * 4);
     windowMap[windowBlockIndex] = blockX;
     windowMap[windowBlockIndex+1] = blockY;
 }
@@ -1355,8 +1383,8 @@ void BM3D::BM3D_CreateWindow(bool final)
         cudaDeviceSynchronize();   
     } 
     {
-        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern);
-        dim3 numThreads(BM3D::context.widthBlocksWindow, BM3D::context.widthBlocksWindow);
+        dim3 numBlocks(BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksIntern, BM3D::context.widthBlocksWindow);
+        dim3 numThreads(BM3D::context.widthBlocksWindow);
         CreateWindowBlocks<<<numBlocks,numThreads>>>(BM3D::context.windowMap, BM3D::context.widthBlocksIntern, BM3D::context.stepInWindow, BM3D::context.windowSize, BM3D::context.offset, BM3D::context.halfWindowSize, BM3D::context.widthBlocksWindow); 
         cudaDeviceSynchronize();   
     }  
