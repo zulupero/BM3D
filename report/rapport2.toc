@@ -1,0 +1,34 @@
+\contentsline {chapter}{\numberline {1}Introduction}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {paragraph}{}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {chapter}{\numberline {2}Algorithme BM3D}{5}
+\contentsline {section}{\numberline {2.1}Concepts générals}{5}
+\contentsline {section}{\numberline {2.2}Phase 1 - Estimation basic}{5}
+\contentsline {subsection}{\numberline {2.2.1}Block matching}{5}
+\contentsline {subsection}{\numberline {2.2.2}Filtre "Hardthreshold"}{5}
+\contentsline {subsection}{\numberline {2.2.3}Aggregation}{5}
+\contentsline {section}{\numberline {2.3}Phase 2 - Estimation finale}{5}
+\contentsline {subsection}{\numberline {2.3.1}Block matching}{5}
+\contentsline {subsection}{\numberline {2.3.2}Wien filter}{5}
+\contentsline {subsection}{\numberline {2.3.3}Aggregation}{5}
+\contentsline {chapter}{\numberline {3}Réalisation}{6}
+\contentsline {section}{\numberline {3.1}Block matching}{6}
+\contentsline {subsection}{\numberline {3.1.1}Calul de la distance euclidienne}{6}
+\contentsline {subsection}{\numberline {3.1.2}Tri des blocks}{6}
+\contentsline {section}{\numberline {3.2}"3D transfom"}{6}
+\contentsline {section}{\numberline {3.3}Filtre "Hardthreshold"}{6}
+\contentsline {section}{\numberline {3.4}Filtre de "Wien"}{6}
+\contentsline {section}{\numberline {3.5}Aggregation}{6}
+\contentsline {chapter}{\numberline {4}Résulats}{7}
+\contentsline {section}{\numberline {4.1}BM3D vs BM3D-GPU}{7}
+\contentsline {section}{\numberline {4.2}Influance de la taille de la fenêtre de recherche}{7}
+\contentsline {section}{\numberline {4.3}Influance de la Kaiser-Window}{7}
+\contentsline {section}{\numberline {4.4}Influance de la transformée 2D sur les blocks avant "Block-Matching"}{7}
+\contentsline {section}{\numberline {4.5}Influance du calcul de distance sur la rapidité de l'algorithme}{7}
+\contentsline {section}{\numberline {4.6}Influance du tri des block sur la rapidité de l'algorithme}{7}
+\contentsline {chapter}{\numberline {5}Conclusion}{8}
+\contentsline {section}{\numberline {5.1}Block matching}{8}

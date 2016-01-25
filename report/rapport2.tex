@@ -17,10 +17,26 @@ Dans ce papier nous proposons une implementation open-source de l'algorithme BM3
 
 \end{abstract}
 
+\renewcommand{\contentsname}{Table des matières}
+\renewcommand{\chaptername}{Chapitre}
+\renewcommand{\bibname}{Bibliographie}
+\renewcommand\listfigurename{Liste des figures}
+\renewcommand\listtablename{Liste des tables}
+
+\tableofcontents
+
 \include{introduction}
 \include{bm3d_algo}
 \include{realisation}
 \include{resultats}
 \include{conclusion}
+
+\begin{appendix}
+  \listoffigures
+  %\listoftables
+\end{appendix}
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
 
 \end{document}

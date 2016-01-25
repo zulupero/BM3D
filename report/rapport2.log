@@ -1,4 +1,4 @@
-This is LuaTeX, Version beta-0.80.0 (TeX Live 2015) (rev 5238)  (format=lualatex 2016.1.14)  17 JAN 2016 16:01
+This is LuaTeX, Version beta-0.80.0 (TeX Live 2015) (rev 5238)  (format=lualatex 2016.1.14)  25 JAN 2016 20:40
  restricted \write18 enabled.
  file:line:error style messages enabled.
 **rapport2.tex
@@ -244,7 +244,7 @@ luatexbase-attr: luatexbase.attributes["luaotfload@cursbase"] = 6
 luatexbase-attr: luatexbase.attributes["luaotfload@curscurs"] = 7
 luatexbase-attr: luatexbase.attributes["luaotfload@cursdone"] = 8
 luatexbase-attr: luatexbase.attributes["luaotfload@state"] = 9
-luaotfload | main : fontloader loaded in 0.044 seconds
+luaotfload | main : fontloader loaded in 0.040 seconds
 luatexbase-mcb: inserting 'luaotfload.node_processor'
 at position 1 in 'pre_linebreak_filter'
 luatexbase-mcb: inserting 'luaotfload.node_processor'
@@ -820,7 +820,8 @@ luaotfload | aux : no font with id 31
 . \fontdimen 4\font =0\fontdimen 4\font \fontdimen 7\font =0\fontdimen 2\font 
 .................................................
 
-(./rapport2.aux)
+(./rapport2.aux (./introduction.aux) (./bm3d_algo.aux) (./realisation.aux)
+(./resultats.aux) (./conclusion.aux))
 \openout1 = rapport2.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
@@ -839,7 +840,8 @@ LaTeX Font Info:    Checking defaults for EU2/lmr/m/n on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
 LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 10.
 LaTeX Font Info:    Try loading font information for T3+cmr on input line 10.
- (/usr/local/texlive/2015/texmf-dist/tex/latex/tipa/t3cmr.fd
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
 LaTeX Font Info:    ... okay on input line 10.
@@ -981,37 +983,52 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf"
 [1]
+luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-regular.otf"
+luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf" (./r
+apport2.toc
+luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-regular.otf"
+luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-regular.otf"
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 9.
+ [1
+
+])
+\tf@toc=\write3
+
+\openout3 = rapport2.toc
+ [2]
 \openout2 = introduction.aux
  (./introduction.tex
-Chapter 1.
+Chapitre 1.
 luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-regular.otf"
 luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf"
-luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf"
-luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-italic.otf" [1
+luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-italic.otf" [3
 
 
-]) [2]
+]) [4]
 \openout2 = bm3d_algo.aux
  (./bm3d_algo.tex
-Chapter 2.
+Chapitre 2.
 luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-regular.otf"
 luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf"
-luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf") [3
+luaotfload | load : Lookup/name: "TeXGyreBonum" -> "texgyrebonum-bold.otf") [5
 
 
 
 ]
 \openout2 = realisation.aux
  (./realisation.tex
-Chapter 3.
-) [4
+Chapitre 3.
+) [6
 
 
 
 ]
 \openout2 = resultats.aux
  (./resultats.tex
-Chapter 4.
+Chapitre 4.
 
 Overfull \hbox (35.06366pt too wide) in paragraph at lines 6--6
 [][]\EU2/TeXGyreBonum(0)/bx/n/14.4 In-flu-ance de la taille de la fenêtre de r
@@ -1024,39 +1041,49 @@ Overfull \hbox (21.57405pt too wide) in paragraph at lines 8--8
 blocks
  []
 
-) [5
+) [7
 
 
 
 ]
 \openout2 = conclusion.aux
  (./conclusion.tex
-Chapter 5.
-) [6
+Chapitre 5.
+) [8
 
 
 
-] (./rapport2.aux (./introduction.aux) (./bm3d_algo.aux) (./realisation.aux) (.
-/resultats.aux) (./conclusion.aux)))
+] (./rapport2.lof)
+\tf@lof=\write4
+
+\openout4 = rapport2.lof
+ (./rapport2.bbl [9
+
+
+]) [10
+
+] (./rapport2.aux
+(./introduction.aux) (./bm3d_algo.aux) (./realisation.aux) (./resultats.aux)
+(./conclusion.aux)))
 
 Here is how much of LuaTeX's memory you used:
- 14877 strings out of 494693
+ 14962 strings out of 494693
  100000,383344 words of node,token memory allocated
- 319 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 1 kern, 5 attribute, 43 glue_spec, 5 attrib
-ute_list, 2 write nodes
-   avail lists: 2:5347,3:46,4:409,5:235,6:1704,7:48,9:34,10:156
- 18074 multiletter control sequences out of 65536+600000
- 55 fonts using 6826319 bytes
+ 313 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 1 kern, 4 attribute, 43 glue_spec, 4 attrib
+ute_list, 1 write nodes
+   avail lists: 2:5349,3:123,4:579,5:234,6:1704,7:48,9:180,10:155
+ 18086 multiletter control sequences out of 65536+600000
+ 66 fonts using 7797679 bytes
  48i,6n,102p,1208b,231s stack positions out of 5000i,500n,10000p,200000b,100000s
 </usr/local/texlive/2015/texmf-dist/fonts/opentype/public/tex-gyre/texgyrebonum-
 italic.otf></usr/local/texlive/2015/texmf-dist/fonts/opentype/public/tex-gyre/te
 xgyrebonum-bold.otf></usr/local/texlive/2015/texmf-dist/fonts/opentype/public/te
 x-gyre/texgyrebonum-regular.otf>
-Output written on rapport2.pdf (8 pages, 25074 bytes).
+Output written on rapport2.pdf (12 pages, 28154 bytes).
 
-PDF statistics: 50 PDF objects out of 1000 (max. 8388607)
- 30 compressed objects within 1 object stream
+PDF statistics: 64 PDF objects out of 1000 (max. 8388607)
+ 40 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
