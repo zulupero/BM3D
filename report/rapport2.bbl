@@ -1,7 +1,22 @@
 \begin{thebibliography}{1}
 
-\bibitem{b1}
-test.
-\newblock test, 1992.
+\bibitem{1}
+V.~Katkovnik K.~Dabov, A.~Foi and K.~Egiazising.
+\newblock Image denoising by sparse 3d transform-domain collaborative
+  filtering, August 2007.
+
+\bibitem{2}
+Marc Lebrun.
+\newblock An analysis and implementation of the bm3d image denoising method,
+  2012.
+
+\bibitem{4}
+TAMPERE UNIVERSITY~OF TECHNOLOGY.
+\newblock Image and video denoising by sparse 3d transform-domain collaborative
+  filtering.
+
+\bibitem{3}
+Wikip{\'e}dia.
+\newblock Transform{\'e}e de hadamard.
 
 \end{thebibliography}

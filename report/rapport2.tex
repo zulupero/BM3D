@@ -1,21 +1,33 @@
 % !TEX TS-program = LuaLaTeX
 % !TEX encoding = UTF-8 Unicode
-\documentclass{report}
+%! program = pdflatex
+\documentclass[12pt,a4paper]{memoir} % for a long document
+
+\renewcommand\printtoctitle[1]{\huge\bfseries #1}
+\chapterstyle{dash}
+
+%\documentclass[12pt,a4paper,article]{memoir} % for a short document
+%\documentclass{report}
 \usepackage{fontspec}
-\setmainfont[Ligatures=TeX]{TeX Gyre Bonum}
-\setsansfont[Ligatures=TeX,Scale=MatchLowercase]{Latin Modern Sans}
-\setmonofont[Scale=MatchLowercase]{Menlo}
+\setmainfont{Arial}
+%\setmainfont[Ligatures=TeX]{TeX Gyre Bonum}
+%\setsansfont[Ligatures=TeX,Scale=MatchLowercase]{Latin Modern Sans}
+%\setmonofont[Scale=MatchLowercase]{Menlo}
 \linespread{1.1}% spread lines out a little
 \frenchspacing % remove extra space after punctuation
+
 \begin{document}
 \title{BM3D "Image denoising by sparse 3D transform-domain collaborative filtering" sur GPU}
-\author{Stéphane Cuenat}
+\author{\small{Stéphane Cuenat}}
+\date{\small{17 mars 2016}}
 \maketitle
 
 \begin{abstract}
-Dans ce papier nous proposons une implementation open-source de l'algorithme BM3D porté sur GPU. Nous discutons du choix de l'ensemble des paramètres et de l'influence de ceux-ci . Chaque phase est étudié séparément afin d'en déterminer les valeurs optimales en ce qui concerne la qualité et la rapidité de l'algorithme. Nous démontrons que BM3D est parallelisable, donc exécutable dans un monde GPU.   
+Dans ce papier nous proposons une implementation open-source de l'algorithme BM3D porté sur GPU. Nous discutons du choix de l'ensemble des paramètres et de l'influence de ceux-ci . Chaque phase est étudié séparément afin d'en déterminer les valeurs optimales en ce qui concerne la qualité et la rapidité de l'algorithme. Nous démontrons que BM3D est parallélisable, donc exécutable dans un monde GPU.   
 
 \end{abstract}
+
+\newpage
 
 \renewcommand{\contentsname}{Table des matières}
 \renewcommand{\chaptername}{Chapitre}
