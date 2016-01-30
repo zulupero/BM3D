@@ -9,6 +9,7 @@
 %\documentclass[12pt,a4paper,article]{memoir} % for a short document
 %\documentclass{report}
 \usepackage{fontspec}
+\usepackage{amsmath}
 \setmainfont{Arial}
 %\setmainfont[Ligatures=TeX]{TeX Gyre Bonum}
 %\setsansfont[Ligatures=TeX,Scale=MatchLowercase]{Latin Modern Sans}
@@ -16,10 +17,16 @@
 \linespread{1.1}% spread lines out a little
 \frenchspacing % remove extra space after punctuation
 
+\renewcommand{\contentsname}{Table des matières}
+\renewcommand{\chaptername}{Chapitre}
+\renewcommand{\bibname}{Bibliographie}
+\renewcommand\listfigurename{Liste des figures}
+\renewcommand\listtablename{Liste des tables}
+
 \begin{document}
 \title{BM3D "Image denoising by sparse 3D transform-domain collaborative filtering" sur GPU}
 \author{\small{Stéphane Cuenat}}
-\date{\small{17 mars 2016}}
+\date{\small{30 janvier 2016}}
 \maketitle
 
 \begin{abstract}
@@ -28,12 +35,6 @@ Dans ce papier nous proposons une implementation open-source de l'algorithme BM3
 \end{abstract}
 
 \newpage
-
-\renewcommand{\contentsname}{Table des matières}
-\renewcommand{\chaptername}{Chapitre}
-\renewcommand{\bibname}{Bibliographie}
-\renewcommand\listfigurename{Liste des figures}
-\renewcommand\listtablename{Liste des tables}
 
 \tableofcontents
 

@@ -2,16 +2,92 @@
 % !TEX encoding = UTF-8 Unicode
 
 \chapter{Algorithme BM3D}
+%-------------------------------------------General-----------------------------------
+\section{Concept général}
+Dans ce chapitre nous allons présenter les différentes étapes de l'algorithme BM3D sur des images de niveau de gris. Concernant l'application de l'algorithme sur des images couleurs, vous trouverez une explication dans \cite{2}. Dans la suite, nous assumons que le bruit est un bruit Gaussien et sa variance est equal à \(\sigma^2\) (\sigma \: étant la déviation standard du bruit appliqué sur l'image originale).
+\newline
+\newline
+L'algorithme est divisé en deux étapes:
+\newline
+\newline
+\begin{enumerate}
+\item La première étape consiste à estimer le bruit par "hard thresholding" lors du filtrage collaboratif. Les paramètres de cette étapes sont représentés par l'exposant \textbf{hard}.
+\item La deuxième étage est basée sur l'image bruité et sur l'estimation issue de la première étape. Cette étape utilise un filtre "Wiener Filter" lors du filtrage collaboratif. Les paramètres liés à cette étape sont représentés à l'aide de l'exposant \textbf{wiener}.
+\end{enumerate}
+\newpage
 
-\section{Concepts générals}
-
-
+%-------------------------------------------Basic estimate-----------------------------------
 \section{Phase 1 - Estimation basic}
-\subsection{Block matching}
-\subsection{Filtre "Hardthreshold"}
-\subsection{Aggregation}
+On dénote par P le patch (bloc) de référence de taille \(K^{hard} * K^{hard}\).
+\subsection{Groupement ("Block matching")}
+Cette première sous-étape regroupe l'ensemble des patches similaires à chaque patch de référence P. Pour chaque patch de référence P, on recherche les patches Q similaire à P dans une fenêtre centrée sur P de taille \(n^{hard} * n^{hard}\). Le groupe de patches est défini par: 
+\begin{equation}
+P(P) = \{Q: d(P,Q) \leq \tau^{hard}\}
+\end{equation}
+\newline
+Ou
+\begin{itemize}
+\item \( \tau^{hard} \): est la distance limite pour laquelle deux patches sont considérés comme similaire.
+\item \(d(P,Q) = \frac{\parallel \gamma' (P) - \gamma'(Q) \parallel_2^2}{(k^{hard})^2} \) est la distance quadratique normalisée entre deux patches\footnote{Nous avons ici calculé la distance Euclidienne carrée.}.
+\item \gamma' est le seuil du filtre qui est equal à \(\lambda^{hard}_{2D}\sigma \). Pour un \sigma \leq 40, le seuil est equal à \(\lambda^{hard}_{2D}\sigma \) = 0. Pour \sigma \leq 40, tous les coefficients sont inchangés\footnote{Nous verrons au chapitre 3 (Réalisation) que nous avons omis cette étape ayant pris en compte des images avec un \sigma \leq 30 pour nos tests.}.  
+\item \(\sigma^2\) \: est la variance du bruit Gaussien appliquée à l'image.
+\end{itemize}
 
+Le groupe 3D représenté par \(P \)(P) est construit en regroupant les patches similaire \(P \)(P). Pour augmenter la performance de l'algorithme, seulement les \(N^{hard} \) patches de \(P \)(P) qui sont les plus proches du patch de référence P sont gardé pour formé le groupe 3D\footnote{Au chapitre 3 nous verrons que \(N^{hard} \) doit être une puissance de 2.}. L'ordre des patches dans le groupe 3D n'a aucune influence sur le résultat. Ceux-ci peuvent être désordonnés. 
+\newpage
+\subsection{Filtre collaboratif}
+Une fois les groupe 3D construit, le filtre collaboratif est appliqué. On applique une transformée linéaire selon Z (profondeur du groupe 3D). Cette étape est suivie par un seuillage des coefficients du domaine spectrale. Pour finir nous appliquons une transformée 3D inverse afin de connaître l'estimation pour chaque patch du groupe. 
+\begin{equation}
+P(P)^{hard} = \tau^{hard^-1}_{3D} (\gamma (\tau^{hard}_{3D}(P(P))))
+\end{equation}
+Ou \gamma \: est l'opérateur de seuil avec une limite \(\lambda^{hard}_{3D}\sigma\):
+\[ \gamma(x) =
+  \begin{cases}
+    0       & \quad \text{si} \: x  \leq \lambda^{hard}_{3D}\sigma \\
+    x       & \quad \text{sinon}\\
+  \end{cases}
+\]
+Pour une raison pratique que nous démontrerons dans les prochains chapitres, la transformée 3D \(\tau^{hard}_{3D}\) du groupe 3D P(P) est effectuée en deux étapes. Nous appliquons une première transformée 2D dénoté \(\tau^{hard}_{2D}\)sur chaque patch. Ensuite une transformée 1D dénoté par \(\tau^{hard}_{1D}\) est appliquée sur la troisième dimension du groupe 3D (profondeur).  
+
+\subsection{Agrégation}
+La dernière étape est l'agrégation. Nous avons une estimation pour chaque patch et donc une estimation pour chaque pixel. Ces estimations sont sauvegardées dans un buffer ainsi défini:
+\[ \forall Q \in  P(P), \forall x \in Q, 
+  \begin{cases}
+    v(x) = v(x) + w^{hard}_P u^{hard}_{Q,P}(x) \\
+    \delta(x) = \delta(x) + w^{hard}_P  \\
+  \end{cases}
+\]
+Ou:
+\begin{itemize}
+\item \(v (resp. \: \delta ) \) représente le numérateur (resp. le dénominateur) de l'estimation basic de l'image obtenue à la fin de l'étape de groupage.
+\item \(u^{hard}_{Q,P} \) est l'estimation du pxiel \(x \) qui appartient au patch Q obtenu lors de la phase du filtre collaboratif du patch P.
+\end{itemize}
+\newpage
+L'intérêt de cet méthode est qu'elle donne aux patches homogènes (ou beaucoup de coefficient ont été éliminés). Un patch avec des effets de bords sera moins pris en compte que des patches homogènes. La figure ci-dessous montre cette effet. L'algorithme donne plus d'importance aux patches vert durant la phase d'agrégation.
+\newline
+\newline
+Afin de réduire les effets de bords qui peuvent apparaître, nous appliquons une Kaiser window (\( k^{hard} * k^{hard}\)) après la transformée 3D inverse sur chaque patch. Cela revient à multiplier chaque coefficient de la Kaiser window avec le coefficient du patch \footnote{Nous montrerons au chapitre 4 (Résultat) que cette étape influence peu le résultat final comme mentionné dans \cite{2}.}.  
+\newline 
+\newline
+L'estimation basic obtenue après cette première étape est donnée par:
+\begin{equation}
+u^{basic}(x) = \frac{\displaystyle\sum_{P}w^{hard}_P \displaystyle\sum_{Q \in P(P)}X_Q(x)u^{hard}_{Q,P}(x)}{\displaystyle\sum_{P}w^{hard}_P \displaystyle\sum_{Q \in P(P)}X_Q(x)}
+\end{equation}
+Avec \(X_Q(x)\) définit ainsi:
+\[ X_Q(x) =
+  \begin{cases}
+    1       & \quad \text{si et seulement si} \: x  \in Q \\
+    0       & \quad \text{sinon}\\
+  \end{cases}
+\]
+Ce résultat est simplement obtenue en divisant les deux buffers préalablement calculés pour chaque pixel de l'image original: 
+\begin{equation}
+u^{basic}(x) = \frac{v(x)}{\delta(x)}
+\end{equation}
+\newpage
+
+%-------------------------------------------Final estimate-----------------------------------
 \section{Phase 2 - Estimation finale}
-\subsection{Block matching}
-\subsection{Wien filter}
-\subsection{Aggregation}
+\subsection{Groupement ("Block matching")}
+\subsection{Filtre collaboratif}
+\subsection{Agrégation}

@@ -7,31 +7,31 @@
 \contentsline {paragraph}{}{6}
 \contentsline {paragraph}{}{6}
 \contentsline {chapter}{\chapternumberline {2}Algorithme BM3D}{7}
-\contentsline {section}{\numberline {2.1}Concepts générals}{7}
-\contentsline {section}{\numberline {2.2}Phase 1 - Estimation basic}{7}
-\contentsline {subsection}{Block matching}{7}
-\contentsline {subsection}{Filtre "Hardthreshold"}{7}
-\contentsline {subsection}{Aggregation}{7}
-\contentsline {section}{\numberline {2.3}Phase 2 - Estimation finale}{7}
-\contentsline {subsection}{Block matching}{7}
-\contentsline {subsection}{Wien filter}{7}
-\contentsline {subsection}{Aggregation}{7}
-\contentsline {chapter}{\chapternumberline {3}Réalisation}{9}
-\contentsline {section}{\numberline {3.1}Block matching}{9}
-\contentsline {subsection}{Calul de la distance euclidienne}{9}
-\contentsline {subsection}{Tri des blocks}{9}
-\contentsline {section}{\numberline {3.2}"3D transfom"}{9}
-\contentsline {section}{\numberline {3.3}Filtre "Hardthreshold"}{9}
-\contentsline {section}{\numberline {3.4}Filtre de "Wien"}{9}
-\contentsline {section}{\numberline {3.5}Aggregation}{9}
-\contentsline {chapter}{\chapternumberline {4}Résulats}{11}
-\contentsline {section}{\numberline {4.1}BM3D vs BM3D-GPU}{11}
-\contentsline {section}{\numberline {4.2}Influance de la taille de la fenêtre de recherche}{11}
-\contentsline {section}{\numberline {4.3}Influance de la Kaiser-Window}{11}
-\contentsline {section}{\numberline {4.4}Influance de la transformée 2D sur les blocks avant "Block-Matching"}{11}
-\contentsline {section}{\numberline {4.5}Influance du calcul de distance sur la rapidité de l'algorithme}{11}
-\contentsline {section}{\numberline {4.6}Influance du tri des block sur la rapidité de l'algorithme}{11}
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{13}
-\contentsline {section}{\numberline {5.1}Block matching}{13}
-\contentsline {chapter}{Liste des figures}{14}
-\contentsline {chapter}{Bibliographie}{15}
+\contentsline {section}{\numberline {2.1}Concept général}{7}
+\contentsline {section}{\numberline {2.2}Phase 1 - Estimation basic}{8}
+\contentsline {subsection}{Groupement ("Block matching")}{8}
+\contentsline {subsection}{Filtre collaboratif}{9}
+\contentsline {subsection}{Agrégation}{9}
+\contentsline {section}{\numberline {2.3}Phase 2 - Estimation finale}{11}
+\contentsline {subsection}{Groupement ("Block matching")}{11}
+\contentsline {subsection}{Filtre collaboratif}{11}
+\contentsline {subsection}{Agrégation}{11}
+\contentsline {chapter}{\chapternumberline {3}Réalisation}{13}
+\contentsline {section}{\numberline {3.1}Block matching}{13}
+\contentsline {subsection}{Calul de la distance euclidienne}{13}
+\contentsline {subsection}{Tri des blocks}{13}
+\contentsline {section}{\numberline {3.2}"3D transfom"}{13}
+\contentsline {section}{\numberline {3.3}Filtre "Hardthreshold"}{13}
+\contentsline {section}{\numberline {3.4}Filtre de "Wien"}{13}
+\contentsline {section}{\numberline {3.5}Aggregation}{13}
+\contentsline {chapter}{\chapternumberline {4}Résulats}{15}
+\contentsline {section}{\numberline {4.1}BM3D vs BM3D-GPU}{15}
+\contentsline {section}{\numberline {4.2}Influance de la taille de la fenêtre de recherche}{15}
+\contentsline {section}{\numberline {4.3}Influance de la Kaiser-Window}{15}
+\contentsline {section}{\numberline {4.4}Influance de la transformée 2D sur les blocks avant "Block-Matching"}{15}
+\contentsline {section}{\numberline {4.5}Influance du calcul de distance sur la rapidité de l'algorithme}{15}
+\contentsline {section}{\numberline {4.6}Influance du tri des block sur la rapidité de l'algorithme}{15}
+\contentsline {chapter}{\chapternumberline {5}Conclusion}{17}
+\contentsline {section}{\numberline {5.1}Block matching}{17}
+\contentsline {chapter}{Liste des figures}{18}
+\contentsline {chapter}{Bibliographie}{19}
