@@ -12,6 +12,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \setmainfont{Arial}
+\graphicspath{ {images/} }
 %\setmainfont[Ligatures=TeX]{TeX Gyre Bonum}
 %\setsansfont[Ligatures=TeX,Scale=MatchLowercase]{Latin Modern Sans}
 %\setmonofont[Scale=MatchLowercase]{Menlo}
@@ -25,6 +26,7 @@
 \renewcommand\listtablename{Liste des tables}
 
 \begin{document}
+\begin{titlingpage}
 \title{BM3D sur GPU "Image denoising by sparse 3D transform-domain collaborative filtering"}
 \author{\small{Stéphane Cuenat}}
 \date{\small{30 janvier 2016}}
@@ -32,12 +34,12 @@
 
 \begin{abstract}
 Dans ce papier nous proposons une implementation open-source (C++/Cuda) de l'algorithme BM3D porté sur GPU. Nous discutons du choix de l'ensemble des paramètres et de l'influence de ceux-ci sur l'algorithme. Chaque phase (estimation basic \& estimation finale) est étudié séparément afin d'obtenir la meilleure qualité et vitesse de l'algorithme. Nous démontrons que BM3D est parallélisable, donc exécutable dans un monde GPU.   
-
 \end{abstract}
+\end{titlingpage}
 
-\newpage
-
+%\begin{tableofcontents}
 \tableofcontents
+%\end{tableofcontents}
 
 \include{introduction}
 \include{bm3d_algo}

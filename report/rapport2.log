@@ -1,4 +1,4 @@
-This is LuaTeX, Version beta-0.80.0 (TeX Live 2015) (rev 5238)  (format=lualatex 2016.1.14)  31 JAN 2016 14:01
+This is LuaTeX, Version beta-0.80.0 (TeX Live 2015) (rev 5238)  (format=lualatex 2016.1.14)  31 JAN 2016 15:35
  restricted \write18 enabled.
  file:line:error style messages enabled.
 **rapport2.tex
@@ -552,7 +552,7 @@ luatexbase-attr: luatexbase.attributes["luaotfload@cursbase"] = 6
 luatexbase-attr: luatexbase.attributes["luaotfload@curscurs"] = 7
 luatexbase-attr: luatexbase.attributes["luaotfload@cursdone"] = 8
 luatexbase-attr: luatexbase.attributes["luaotfload@state"] = 9
-luaotfload | main : fontloader loaded in 0.061 seconds
+luaotfload | main : fontloader loaded in 0.042 seconds
 luatexbase-mcb: inserting 'luaotfload.node_processor'
 at position 1 in 'pre_linebreak_filter'
 luatexbase-mcb: inserting 'luaotfload.node_processor'
@@ -966,27 +966,27 @@ oduction.aux) (./bm3d_algo.aux) (./realisation.aux) (./resultats.aux) (./conclu
 sion.aux))
 \openout1 = rapport2.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for EU2/lmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 27.
-LaTeX Font Info:    Try loading font information for T3+cmr on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for EU2/lmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 28.
+LaTeX Font Info:    Try loading font information for T3+cmr on input line 28.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    ... okay on input line 28.
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1044,73 +1044,73 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 .................................................
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 27.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 27.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 27.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 27.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 27.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 27.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 27.
-LaTeX Font Info:    Redeclaring math accent \check on input line 27.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 27.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 27.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 27.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 27.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 28.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 28.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 28.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 28.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 28.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 28.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 28.
+LaTeX Font Info:    Redeclaring math accent \check on input line 28.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 28.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 28.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 28.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU2' for symbol font
-(Font)              `operators' in the math version `normal' on input line 27.
+(Font)              `operators' in the math version `normal' on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> EU2/Arial(0)/m/n on input line 27.
+(Font)                  OT1/cmr/m/n --> EU2/Arial(0)/m/n on input line 28.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU2' for symbol font
-(Font)              `operators' in the math version `bold' on input line 27.
+(Font)              `operators' in the math version `bold' on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> EU2/Arial(0)/m/n on input line 27.
+(Font)                  OT1/cmr/bx/n --> EU2/Arial(0)/m/n on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  EU2/Arial(0)/m/n --> EU2/Arial(0)/m/n on input line 27.
+(Font)                  EU2/Arial(0)/m/n --> EU2/Arial(0)/m/n on input line 28.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> EU2/Arial(0)/m/it on input line 27.
+(Font)                  OT1/cmr/m/it --> EU2/Arial(0)/m/it on input line 28.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> EU2/Arial(0)/bx/n on input line 27.
+(Font)                  OT1/cmr/bx/n --> EU2/Arial(0)/bx/n on input line 28.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> EU2/lmss/m/n on input line 27.
+(Font)                  OT1/cmss/m/n --> EU2/lmss/m/n on input line 28.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> EU2/lmtt/m/n on input line 27.
+(Font)                  OT1/cmtt/m/n --> EU2/lmtt/m/n on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  EU2/Arial(0)/m/n --> EU2/Arial(0)/bx/n on input line 27.
+(Font)                  EU2/Arial(0)/m/n --> EU2/Arial(0)/bx/n on input line 28.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> EU2/Arial(0)/bx/it on input line 27.
+(Font)                  OT1/cmr/bx/it --> EU2/Arial(0)/bx/it on input line 28.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> EU2/lmss/bx/n on input line 27.
+(Font)                  OT1/cmss/bx/n --> EU2/lmss/bx/n on input line 28.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> EU2/lmtt/bx/n on input line 27.
+(Font)                  OT1/cmtt/m/n --> EU2/lmtt/bx/n on input line 28.
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
-LaTeX Font Info:    Try loading font information for U+msa on input line 31.
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 31.
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
 luaotfload | load : Lookup/name: "Arial" -> "Arial Bold.ttf"
-Overfull \hbox (3.41371pt too wide) in paragraph at lines 34--35
+Overfull \hbox (3.41371pt too wide) in paragraph at lines 36--37
 [][]\EU2/Arial(0)/m/n/10.95 Dans ce pa-pier nous pro-posons une im-ple-men-ta-t
 ion open-source
  []
@@ -1118,37 +1118,38 @@ ion open-source
 [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2
+
+]
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
-luaotfload | load : Lookup/name: "Arial" -> "Arial Bold.ttf"
-(./rapport2.toc
+luaotfload | load : Lookup/name: "Arial" -> "Arial Bold.ttf" (./rapport2.toc
 luaotfload | load : Lookup/name: "Arial" -> "Arial Bold.ttf"
 luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
-luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf" [2])
+luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf" [1])
 LaTeX Font Info:    Font shape `EU2/Arial(0)/m/sl' in size <12> not available
 (Font)              Font shape `EU2/Arial(0)/m/it' tried instead on input line 4
-2.
+4.
 luaotfload | load : Lookup/name: "Arial" -> "Arial Italic.ttf"
 luaotfload | load : Lookup/name: "Arial" -> "Arial Italic.ttf"
 
 Class memoir Warning: The material used in the headers is too large
 (15.08441pt) for the given head height (14.5pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 42.
+(in both cases you will find help in the memoir manual). on input line 44.
 
 
 Overfull \vbox (0.58441pt too high) has occurred while \output is active []
 
 
-[3]
+[2]
 \openout2 = introduction.aux
- (./introduction.tex [4
+ (./introduction.tex
+luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf" [3
 
 
-]
-luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf" [5]) [6]
+]) [4]
 \openout2 = bm3d_algo.aux
- (./bm3d_algo.t
-ex
+ (./bm3d_algo.tex
 luaotfload | load : Lookup/name: "Arial" -> "Arial Bold.ttf"
 Underfull \hbox (badness 10000) in paragraph at lines 7--14
 
@@ -1164,69 +1165,101 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--14
 
  []
 
-luaotfload | load : Lookup/name: "Arial" -> "Arial Italic.ttf" [7
+[5
 
 
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 22--26
+] <images/algo.png, id=29, 533.1117pt x 587.3142pt>
+File: images/algo.png Graphic file (type png)
+ <use images/algo.png>
+Package pdftex.def Info: images/algo.png used on input line 19.
+(pdftex.def)             Requested size: 426.48993pt x 469.85199pt.
 
+Overfull \hbox (43.48993pt too wide) in paragraph at lines 19--20
+[][][] 
  []
 
+[6<./images/algo.png>] <images/bloc.png, id=34, 264.23718pt x 264.99pt>
+File: images/bloc.png Graphic file (type png)
+
+<use images/bloc.png>
+Package pdftex.def Info: images/bloc.png used on input line 29.
+(pdftex.def)             Requested size: 264.23653pt x 264.98935pt.
 luaotfload | load : Lookup/name: "Arial" -> "Arial Bold.ttf"
-luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf" [8]
-Overfull \hbox (13.36765pt too wide) in paragraph at lines 53--55
+Overfull \hbox (6.16211pt too wide) in paragraph at lines 34--35
+\EU2/Arial(0)/m/n/12 chaque bloc de référence P. Pour chaque bloc de référe
+nce P, on recherche
+ []
+
+[7<./images/bloc.png>]
+luaotfload | load : Lookup/name: "Arial" -> "Arial.ttf"
+Overfull \hbox (7.70465pt too wide) in paragraph at lines 47--48
+\EU2/Arial(0)/m/n/12 blocs sim-i-laire $\OML/cmm/m/it/12 P$\EU2/Arial(0)/m/n/12
+ (P). Pour aug-menter la per-for-mance de l’al-go-rithme, seule-
+ []
+
+
+Overfull \hbox (3.8621pt too wide) in paragraph at lines 47--48
+\EU2/Arial(0)/m/n/12 ment les $\OML/cmm/m/it/12 N[]$ \EU2/Arial(0)/m/n/12 blocs
+ de $\OML/cmm/m/it/12 P$\EU2/Arial(0)/m/n/12 (P) qui sont les plus proches du b
+loc de référence
+ []
+
+[8]
+Overfull \hbox (13.36765pt too wide) in paragraph at lines 60--62
 \EU2/Arial(0)/m/n/12 deux étapes. Nous ap-pliquons une pre-mière trans-for-m
 ée 2D dénoté $\OML/cmm/m/it/12 []$\EU2/Arial(0)/m/n/12 sur
  []
 
 
-Overfull \hbox (6.15898pt too wide) in paragraph at lines 57--58
+Overfull \hbox (6.15898pt too wide) in paragraph at lines 64--65
 []\EU2/Arial(0)/m/n/12 La dernière étape est l’agré-ga-tion. Nous avons un
 e es-ti-ma-tion pour chaque
  []
 
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 72--82
+[9] <images/chevauchement.png, id=57, 153.57375pt x 167.12437pt>
+File: images/chevauchement.png Graphic file (type png)
+
+<use images/chevauchement.png>
+Package pdftex.def Info: images/chevauchement.png used on input line 82.
+(pdftex.def)             Requested size: 153.57336pt x 167.12395pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--91
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--82
-
- []
-
-
-Overfull \hbox (1.49135pt too wide) in paragraph at lines 72--82
+Overfull \hbox (1.49135pt too wide) in paragraph at lines 79--91
 \EU2/Arial(0)/m/n/12 Afin de ré-duire les ef-fets de bords qui peu-vent ap-pa-
 raître, nous ap-pliquons
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--82
+Underfull \hbox (badness 10000) in paragraph at lines 79--91
 
  []
 
-[10] [11]) [12]
+[10<./images/chevauchement.png>] [11] [12]) [13]
 \openout2 = realisation.aux
- (./realisation.tex) [13
+ (./realisation.tex [14
 
 
 
-]
+])
+[15]
 \openout2 = resultats.aux
- (./resultats.tex [14
+ (./resultats.tex [16
 
 
 
-]) [15]
+]) [17]
 \openout2 = conclusion.aux
-
-(./conclusion.tex [16
-
+ (./conclusion.tex [18
 
 
-]) [17] (./rapport2.lof) (./rapport2.bbl [18
+
+]) [19] (./rapport2.lof)
+(./rapport2.bbl [20
 
 ]
 bibitemlist
@@ -1235,9 +1268,9 @@ bibitemlist
 Class memoir Warning: The material used in the headers is too large
 (15.08441pt) for the given head height (14.5pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 56.
+(in both cases you will find help in the memoir manual). on input line 58.
 
-[19
+[21
 
 ]
 \tf@toc=\write4
@@ -1250,15 +1283,15 @@ either increase the head height or redesign the header
 (./resultats.aux) (./conclusion.aux)))
 
 Here is how much of LuaTeX's memory you used:
- 18955 strings out of 494693
+ 18993 strings out of 494693
  100000,460012 words of node,token memory allocated
- 880 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 2 glue, 10 kern, 16 attribute, 140 glue_spec, 16 at
+ 878 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 2 glue, 10 kern, 15 attribute, 140 glue_spec, 15 at
 tribute_list, 2 write nodes
-   avail lists: 2:5214,3:149,4:613,5:86,6:1714,7:39,9:184,10:146
- 22074 multiletter control sequences out of 65536+600000
- 85 fonts using 14844463 bytes
- 55i,10n,59p,1185b,269s stack positions out of 5000i,500n,10000p,200000b,100000s
+   avail lists: 2:5220,3:151,4:612,5:87,6:1714,7:39,9:184,10:146
+ 22091 multiletter control sequences out of 65536+600000
+ 84 fonts using 14460503 bytes
+ 55i,10n,59p,1185b,270s stack positions out of 5000i,500n,10000p,200000b,100000s
 </Library/Fonts/Arial Italic.ttf></Library/Fonts/Arial Bold.ttf></Library/Fonts/
 Arial.ttf><</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb><</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
@@ -1273,10 +1306,10 @@ local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><</usr/l
 ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><</usr/loc
 al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><</usr/local
 /texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on rapport2.pdf (19 pages, 204785 bytes).
+Output written on rapport2.pdf (23 pages, 284246 bytes).
 
-PDF statistics: 137 PDF objects out of 1000 (max. 8388607)
- 93 compressed objects within 1 object stream
+PDF statistics: 157 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
